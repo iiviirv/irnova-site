@@ -1,7 +1,8 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import Icon from './Icon.jsx'
 import { LangSwitch, ThemeToggle } from './Controls.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
+import { fetchSources, randomIPsFromCidrs } from '../lib/cleanips.js'
 
 const ALL_PORTS = [8443, 2087, 2083, 2053, 443, 2096]
 
@@ -71,6 +72,82 @@ export default function IPTools() {
 
   function onKeyDown(e) {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) generate()
+  }
+
+  // --- Clean Cloudflare IPs ---
+  const [sources, setSources] = useState([])
+  const [selSrc, setSelSrc] = useState(() => new Set())
+  const [srcCount, setSrcCount] = useState(100)
+  const [srcOutput, setSrcOutput] = useState('')
+  const [srcCopied, setSrcCopied] = useState(false)
+
+  useEffect(() => {
+    let alive = true
+    fetchSources().then((s) => {
+      if (!alive) return
+      setSources(s)
+      setSelSrc(new Set(s.length ? [s[0].id] : []))
+    })
+    return () => {
+      alive = false
+    }
+  }, [])
+
+  function toggleSrc(id) {
+    setSelSrc((prev) => {
+      const next = new Set(prev)
+      if (next.has(id)) next.delete(id)
+      else next.add(id)
+      return next
+    })
+  }
+
+  function getIPs() {
+    const cidrs = sources.filter((s) => selSrc.has(s.id)).flatMap((s) => s.cidrs)
+    setSrcOutput(randomIPsFromCidrs(cidrs, srcCount).join('\n'))
+  }
+
+  async function copySrc() {
+    if (!srcOutput) return
+    try {
+      await navigator.clipboard.writeText(srcOutput)
+    } catch {
+      /* clipboard may be blocked */
+    }
+    setSrcCopied(true)
+    setTimeout(() => setSrcCopied(false), 1500)
+  }
+
+  // --- Connection check ---
+  const [chk, setChk] = useState(null)
+  const [chkBusy, setChkBusy] = useState(false)
+
+  async function runCheck() {
+    setChkBusy(true)
+    setChk(null)
+    const times = []
+    let reachable = false
+    for (let i = 0; i < 5; i++) {
+      try {
+        const t0 = performance.now()
+        await fetch('https://speed.cloudflare.com/__down?bytes=1000&_=' + Math.random(), {
+          mode: 'no-cors',
+          cache: 'no-store',
+        })
+        reachable = true
+        if (i > 0) times.push(performance.now() - t0) // drop first (warm-up)
+      } catch {
+        /* unreachable attempt */
+      }
+    }
+    if (reachable && times.length) {
+      const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length)
+      const label = avg < 150 ? tt.chkGood : avg < 400 ? tt.chkOk : tt.chkSlow
+      setChk({ reachable: true, avgMs: avg, label })
+    } else {
+      setChk({ reachable })
+    }
+    setChkBusy(false)
   }
 
   return (
@@ -182,6 +259,94 @@ export default function IPTools() {
             </button>
           </div>
           <div className="tool-hint">{tt.hint}</div>
+        </div>
+
+        {/* Clean Cloudflare IPs */}
+        <div className="tool-card">
+          <div className="tool-label">{tt.srcTitle}</div>
+          <p className="tool-sub">{tt.srcIntro}</p>
+
+          <div className="tool-mini-label">{tt.srcSelect}</div>
+          <div className="port-chips">
+            {sources.map((s) => (
+              <button
+                key={s.id}
+                type="button"
+                className={`port-chip${selSrc.has(s.id) ? ' on' : ''}`}
+                aria-pressed={selSrc.has(s.id)}
+                onClick={() => toggleSrc(s.id)}
+              >
+                {s.name} <span className="chip-count">{s.cidrs.length}</span>
+              </button>
+            ))}
+          </div>
+
+          <div className="tool-mini-label">{tt.srcCount}</div>
+          <div className="port-chips">
+            {[50, 100, 200].map((n) => (
+              <button
+                key={n}
+                type="button"
+                className={`port-chip${srcCount === n ? ' on' : ''}`}
+                onClick={() => setSrcCount(n)}
+              >
+                {n}
+              </button>
+            ))}
+          </div>
+
+          <div className="tool-actions">
+            <button type="button" className="btn btn-primary" onClick={getIPs} disabled={selSrc.size === 0}>
+              <Icon name="radar" size={16} /> {tt.srcGet}
+            </button>
+          </div>
+
+          {srcOutput && (
+            <>
+              <pre className="tool-output" dir="ltr" style={{ minHeight: '120px' }}>
+                {srcOutput}
+              </pre>
+              <div className="tool-actions">
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => {
+                    setInput(srcOutput)
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }}
+                >
+                  {tt.srcUse}
+                </button>
+                <button type="button" className="btn btn-ghost" onClick={copySrc}>
+                  {srcCopied ? tt.copied : tt.srcCopy}
+                </button>
+              </div>
+            </>
+          )}
+          <div className="tool-hint">{tt.srcNote}</div>
+        </div>
+
+        {/* Connection check */}
+        <div className="tool-card">
+          <div className="tool-label">{tt.chkTitle}</div>
+          <p className="tool-sub">{tt.chkIntro}</p>
+          <div className="tool-actions">
+            <button type="button" className="btn btn-primary" onClick={runCheck} disabled={chkBusy}>
+              <Icon name="radar" size={16} /> {chkBusy ? tt.chkRunning : tt.chkRun}
+            </button>
+          </div>
+          {chk && (
+            <div className={`check-result ${chk.reachable ? 'ok' : 'bad'}`}>
+              <Icon name={chk.reachable ? 'check' : 'shield'} size={18} />
+              <span>{chk.reachable ? tt.chkReachable : tt.chkUnreachable}</span>
+              {chk.reachable && chk.avgMs !== undefined && (
+                <span className="check-latency">
+                  {tt.chkLatency}: <strong>{chk.avgMs} ms</strong> · {chk.label}
+                </span>
+              )}
+            </div>
+          )}
+          <div className="tool-hint">{tt.chkNote}</div>
         </div>
       </div>
     </div>

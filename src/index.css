@@ -1114,6 +1114,125 @@ h3 {
   border-color: transparent;
 }
 
+/* ---------- IP Tools page ---------- */
+.tools-inner {
+  max-width: 760px;
+}
+
+.tool-card {
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  padding: 20px 22px;
+  margin-bottom: 16px;
+}
+
+.tool-label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
+}
+
+.port-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.port-chip {
+  font-family: ui-monospace, monospace;
+  font-size: 0.85rem;
+  padding: 6px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  color: var(--muted);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  transition: all 0.15s;
+}
+
+.port-chip:hover {
+  color: var(--text);
+}
+
+.port-chip.on {
+  color: #05060a;
+  background: var(--grad);
+  border-color: transparent;
+}
+
+.tool-textarea {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: #cfe8ff;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  outline: none;
+}
+
+.tool-textarea:focus {
+  border-color: var(--border-strong);
+}
+
+.tool-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.tool-actions .btn {
+  padding: 10px 18px;
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+  transform: none;
+}
+
+.tool-stats {
+  font-size: 0.88rem;
+  color: var(--muted);
+}
+
+.tool-stats strong {
+  color: var(--text);
+}
+
+.tool-output {
+  width: 100%;
+  min-height: 180px;
+  max-height: 420px;
+  overflow: auto;
+  padding: 12px 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: #cfe8ff;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  line-height: 1.7;
+  white-space: pre;
+  margin: 0;
+}
+
+.tool-hint {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin-top: 10px;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .project-grid,

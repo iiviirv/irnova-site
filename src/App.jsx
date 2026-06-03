@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
 import Guide from './components/Guide.jsx'
+import IPTools from './components/IPTools.jsx'
 import Icon from './components/Icon.jsx'
 import { LangSwitch, ThemeToggle } from './components/Controls.jsx'
 import { projects, capabilities } from './data/projects.js'
@@ -49,12 +50,13 @@ export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
 
-  // Scroll to top whenever we enter the guide view.
+  // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
-    if (route === '#/guide') window.scrollTo(0, 0)
+    if (route === '#/guide' || route === '#/tools') window.scrollTo(0, 0)
   }, [route])
 
   if (route === '#/guide') return <Guide />
+  if (route === '#/tools') return <IPTools />
 
   const totalStars = projects.reduce((sum, p) => sum + p.stars, 0)
   const stats = [
@@ -72,6 +74,7 @@ export default function App() {
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#/guide">{t.nav.guide}</a>
+          <a href="#/tools">{t.nav.tools}</a>
           <a href="#about">{t.nav.about}</a>
           <ThemeToggle />
           <LangSwitch />
@@ -182,6 +185,7 @@ export default function App() {
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#/guide">{t.nav.guide}</a>
+          <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">
             {t.nav.github}
           </a>

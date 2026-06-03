@@ -45,6 +45,29 @@ const paths = {
     />
   ),
   arrow: <path d="M5 12h14M13 6l6 6-6 6" />,
+  check: <path d="M4 12.5l5 5 11-12" />,
+  copy: (
+    <>
+      <rect x="9" y="9" width="11" height="11" rx="2.2" />
+      <path d="M5 15V6a2 2 0 0 1 2-2h9" />
+    </>
+  ),
+  chevron: <path d="M9 6l6 6-6 6" />,
+  book: (
+    <>
+      <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z" />
+      <path d="M4 20.5A2.5 2.5 0 0 1 6.5 18H20" />
+    </>
+  ),
+  cloud: (
+    <path d="M7 18a4 4 0 0 1 0-8 5 5 0 0 1 9.6-1.3A3.8 3.8 0 0 1 18 18z" />
+  ),
+  phone: (
+    <>
+      <rect x="7" y="3" width="10" height="18" rx="2.4" />
+      <path d="M11 18h2" />
+    </>
+  ),
 }
 
 export default function Icon({ name, size = 24, className }) {

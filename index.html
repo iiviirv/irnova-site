@@ -7,15 +7,31 @@
     <meta name="theme-color" content="#05060a" />
     <meta
       name="description"
-      content="IRNova builds open-source networking and proxy tools — Nova-Proxy, Nova-Proxy-App, and NovaRadar — engineered to keep the internet open, fast, and reachable."
+      content="Nova Proxy builds open-source networking and proxy tools — Nova-Proxy, Nova-Proxy-App, and NovaRadar — engineered to keep the internet open, fast, and reachable."
     />
-    <meta property="og:title" content="IRNova — Open-Source Networking Tools" />
+    <meta property="og:title" content="Nova Proxy — Open-Source Networking Tools" />
     <meta
       property="og:description"
       content="A suite of open-source proxy and networking tools designed to bypass filtering and keep connectivity flowing."
     />
     <meta property="og:type" content="website" />
-    <title>IRNova — Open-Source Networking Tools</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <title>Nova Proxy — Open-Source Networking Tools</title>
+    <script>
+      // Apply the saved language/direction before paint to avoid a flash.
+      (function () {
+        try {
+          var l = localStorage.getItem('irnova-lang') || 'en'
+          document.documentElement.lang = l
+          document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr'
+        } catch (e) {}
+      })()
+    </script>
   </head>
   <body>
     <div id="root"></div>

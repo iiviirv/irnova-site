@@ -1,11 +1,26 @@
+import { useEffect, useState } from 'react'
 import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
+import Guide from './components/Guide.jsx'
 import Icon from './components/Icon.jsx'
 import { projects, capabilities } from './data/projects.js'
+import { useLang } from './i18n/LanguageContext.jsx'
+
+// Tiny hash router: '#/guide' shows the setup guide, everything else (including
+// in-page anchors like '#projects') shows the landing page.
+function useHashRoute() {
+  const [hash, setHash] = useState(() => window.location.hash)
+  useEffect(() => {
+    const onChange = () => setHash(window.location.hash)
+    window.addEventListener('hashchange', onChange)
+    return () => window.removeEventListener('hashchange', onChange)
+  }, [])
+  return hash
+}
 
 const GITHUB = 'https://github.com/IRNova'
 
-function Logo() {
+function Logo({ brand }) {
   return (
     <span className="logo">
       <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
@@ -24,30 +39,61 @@ function Logo() {
           </linearGradient>
         </defs>
       </svg>
-      <span className="logo-text">IRNova</span>
+      <span className="logo-text">{brand}</span>
     </span>
   )
 }
 
+function LangSwitch() {
+  const { lang, setLang, langs } = useLang()
+  return (
+    <div className="lang-switch" role="group" aria-label="Language / زبان">
+      {langs.map((l) => (
+        <button
+          key={l.code}
+          type="button"
+          className={lang === l.code ? 'active' : ''}
+          aria-pressed={lang === l.code}
+          onClick={() => setLang(l.code)}
+        >
+          {l.label}
+        </button>
+      ))}
+    </div>
+  )
+}
+
 export default function App() {
+  const { t, lang } = useLang()
+  const route = useHashRoute()
+
+  // Scroll to top whenever we enter the guide view.
+  useEffect(() => {
+    if (route === '#/guide') window.scrollTo(0, 0)
+  }, [route])
+
+  if (route === '#/guide') return <Guide />
+
   const totalStars = projects.reduce((sum, p) => sum + p.stars, 0)
   const stats = [
-    { value: `${(totalStars / 1000).toFixed(1)}k+`, label: 'GitHub Stars' },
-    { value: projects.length, label: 'Open Projects' },
-    { value: 'Go · React', label: 'Built With' },
-    { value: '100%', label: 'Open Source' },
+    { value: `${(totalStars / 1000).toFixed(1)}k+`, label: t.stats.stars },
+    { value: projects.length, label: t.stats.projects },
+    { value: 'Go · React', label: t.stats.builtWith },
+    { value: '100%', label: t.stats.openSource },
   ]
 
   return (
     <div className="app">
       <header className="nav">
-        <Logo />
+        <Logo brand={t.brand} />
         <nav className="nav-links">
-          <a href="#projects">Projects</a>
-          <a href="#capabilities">Capabilities</a>
-          <a href="#about">About</a>
+          <a href="#projects">{t.nav.projects}</a>
+          <a href="#capabilities">{t.nav.capabilities}</a>
+          <a href="#/guide">{t.nav.guide}</a>
+          <a href="#about">{t.nav.about}</a>
+          <LangSwitch />
           <a className="nav-cta" href={GITHUB} target="_blank" rel="noreferrer noopener">
-            <Icon name="github" size={18} /> GitHub
+            <Icon name="github" size={18} /> {t.nav.github}
           </a>
         </nav>
       </header>
@@ -56,22 +102,21 @@ export default function App() {
         <section className="hero">
           <NetworkBackground />
           <div className="hero-inner">
-            <span className="pill">Open-source networking tools</span>
+            <span className="pill">{t.hero.pill}</span>
             <h1>
-              Keep the internet
-              <span className="grad"> open, fast, and reachable.</span>
+              {t.hero.titleLine1}
+              <span className="grad"> {t.hero.titleAccent}</span>
             </h1>
-            <p className="hero-sub">
-              IRNova builds a suite of open-source proxy and networking tools — engineered to
-              slip past filtering, find the cleanest routes, and deliver reliable connectivity on
-              every platform.
-            </p>
+            <p className="hero-sub">{t.hero.sub}</p>
             <div className="hero-actions">
-              <a className="btn btn-primary" href="#projects">
-                Explore Projects <Icon name="arrow" size={18} />
+              <a className="btn btn-primary" href="#/guide">
+                <Icon name="book" size={18} /> {t.hero.guide}
+              </a>
+              <a className="btn btn-ghost" href="#projects">
+                {t.hero.explore} <Icon name="arrow" size={18} className="icon-arrow" />
               </a>
               <a className="btn btn-ghost" href={GITHUB} target="_blank" rel="noreferrer noopener">
-                <Icon name="github" size={18} /> Follow on GitHub
+                <Icon name="github" size={18} /> {t.hero.follow}
               </a>
             </div>
             <div className="stats">
@@ -87,12 +132,9 @@ export default function App() {
 
         <section id="projects" className="section">
           <div className="section-head">
-            <span className="eyebrow">The toolkit</span>
-            <h2>Projects</h2>
-            <p>
-              Four open-source projects that work together — from a full control panel to a
-              low-level proxy engine and an IP scanner that proves what actually works.
-            </p>
+            <span className="eyebrow">{t.projectsSection.eyebrow}</span>
+            <h2>{t.projectsSection.title}</h2>
+            <p>{t.projectsSection.desc}</p>
           </div>
           <div className="project-grid">
             {projects.map((p) => (
@@ -103,21 +145,18 @@ export default function App() {
 
         <section id="capabilities" className="section section-alt">
           <div className="section-head">
-            <span className="eyebrow">Under the hood</span>
-            <h2>Capabilities</h2>
-            <p>
-              The techniques behind the Nova toolchain — built to stay reliable in hostile network
-              conditions.
-            </p>
+            <span className="eyebrow">{t.capsSection.eyebrow}</span>
+            <h2>{t.capsSection.title}</h2>
+            <p>{t.capsSection.desc}</p>
           </div>
           <div className="cap-grid">
             {capabilities.map((c) => (
-              <div className="cap-card" key={c.title}>
+              <div className="cap-card" key={c.icon}>
                 <span className="cap-icon">
                   <Icon name={c.icon} size={22} />
                 </span>
-                <h3>{c.title}</h3>
-                <p>{c.text}</p>
+                <h3>{c.title[lang]}</h3>
+                <p>{c.text[lang]}</p>
               </div>
             ))}
           </div>
@@ -126,42 +165,27 @@ export default function App() {
         <section id="about" className="section">
           <div className="about">
             <div className="about-copy">
-              <span className="eyebrow">About</span>
-              <h2>Built in the open by IRNova</h2>
-              <p>
-                IRNova is a developer focused on connectivity and circumvention tooling. Every
-                project is shipped openly on GitHub — auditable, free to run, and shaped by a
-                community that depends on an open internet.
-              </p>
-              <p>
-                Written primarily in Go and React, the tools favor real-world reliability:
-                two-phase endpoint verification, intelligent routing, and a steady stream of
-                techniques to stay ahead of filtering.
-              </p>
+              <span className="eyebrow">{t.about.eyebrow}</span>
+              <h2>{t.about.title}</h2>
+              <p>{t.about.p1}</p>
+              <p>{t.about.p2}</p>
               <a className="btn btn-primary" href={GITHUB} target="_blank" rel="noreferrer noopener">
-                <Icon name="github" size={18} /> Visit the GitHub profile
+                <Icon name="github" size={18} /> {t.about.cta}
               </a>
             </div>
             <div className="about-card">
               <div className="about-card-head">
-                <Logo />
+                <Logo brand={t.brand} />
                 <a href={GITHUB} target="_blank" rel="noreferrer noopener" className="about-handle">
                   @IRNova
                 </a>
               </div>
               <ul className="about-list">
-                <li>
-                  <Icon name="route" size={18} /> Proxy & routing infrastructure
-                </li>
-                <li>
-                  <Icon name="radar" size={18} /> Network scanning & verification
-                </li>
-                <li>
-                  <Icon name="shield" size={18} /> Anti-censorship techniques
-                </li>
-                <li>
-                  <Icon name="open" size={18} /> Fully open source
-                </li>
+                {t.about.list.map((item, i) => (
+                  <li key={i}>
+                    <Icon name={['route', 'radar', 'shield', 'open'][i]} size={18} /> {item}
+                  </li>
+                ))}
               </ul>
             </div>
           </div>
@@ -169,18 +193,17 @@ export default function App() {
       </main>
 
       <footer className="footer">
-        <Logo />
-        <p className="footer-note">
-          Open-source networking tools. Built for an open internet.
-        </p>
+        <Logo brand={t.brand} />
+        <p className="footer-note">{t.footer.note}</p>
         <div className="footer-links">
-          <a href="#projects">Projects</a>
-          <a href="#capabilities">Capabilities</a>
+          <a href="#projects">{t.nav.projects}</a>
+          <a href="#capabilities">{t.nav.capabilities}</a>
+          <a href="#/guide">{t.nav.guide}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">
-            GitHub
+            {t.nav.github}
           </a>
         </div>
-        <span className="footer-copy">© {new Date().getFullYear()} IRNova</span>
+        <span className="footer-copy">© {new Date().getFullYear()} Nova Proxy</span>
       </footer>
     </div>
   )

@@ -1,48 +1,81 @@
 // Project data for IRNova's open-source tools.
 // Sourced from https://github.com/IRNova
+// Translatable fields carry both English (en) and Farsi (fa) values.
 export const projects = [
   {
     name: 'Nova-Proxy',
-    tagline: 'Subscription & routing control panel',
-    description:
-      'A graphical panel for delivering Worker subscriptions with proxies, Trojan, and Warp — alongside proxy chains, full DNS management, clean-IP selection, and advanced routing for users on every platform.',
+    tagline: {
+      en: 'Subscription & routing control panel',
+      fa: 'پنل مدیریت اشتراک و مسیریابی',
+    },
+    description: {
+      en: 'A graphical panel for delivering Worker subscriptions with proxies, Trojan, and Warp — alongside proxy chains, full DNS management, clean-IP selection, and advanced routing for users on every platform.',
+      fa: 'یک پنل گرافیکی برای ارائه‌ی اشتراک‌های Worker همراه با پراکسی، Trojan و Warp — به‌همراه زنجیره‌ی پراکسی، مدیریت کامل DNS، انتخاب آی‌پی تمیز و مسیریابی پیشرفته برای کاربران در هر پلتفرم.',
+    },
     language: 'HTML',
     stars: 1301,
     url: 'https://github.com/IRNova/Nova-Proxy',
-    tags: ['Subscriptions', 'Trojan', 'Warp', 'DNS', 'Routing'],
+    tags: {
+      en: ['Subscriptions', 'Trojan', 'Warp', 'DNS', 'Routing'],
+      fa: ['اشتراک‌ها', 'Trojan', 'Warp', 'DNS', 'مسیریابی'],
+    },
     featured: true,
   },
   {
     name: 'Nova-Proxy-App',
-    tagline: 'Local proxy engine that bypasses filtering',
-    description:
-      'A powerful local proxy with GSA capabilities: Domain Fronting, TLS fragmentation, ECH injection, QUIC replay, MITM, and intelligent routing — engineered to slip past filtering systems.',
+    tagline: {
+      en: 'Local proxy engine that bypasses filtering',
+      fa: 'موتور پراکسی محلی برای عبور از فیلترینگ',
+    },
+    description: {
+      en: 'A powerful local proxy with GSA capabilities: Domain Fronting, TLS fragmentation, ECH injection, QUIC replay, MITM, and intelligent routing — engineered to slip past filtering systems.',
+      fa: 'یک پراکسی محلی قدرتمند با قابلیت‌های GSA: Domain Fronting، تکه‌تکه‌سازی TLS، تزریق ECH، بازپخش QUIC، MITM و مسیریابی هوشمند — طراحی‌شده برای عبور از سامانه‌های فیلترینگ.',
+    },
     language: 'Go',
     stars: 709,
     url: 'https://github.com/IRNova/Nova-Proxy-App',
-    tags: ['Domain Fronting', 'TLS Fragmentation', 'ECH', 'QUIC', 'Smart Routing'],
+    tags: {
+      en: ['Domain Fronting', 'TLS Fragmentation', 'ECH', 'QUIC', 'Smart Routing'],
+      fa: ['Domain Fronting', 'تکه‌تکه‌سازی TLS', 'ECH', 'QUIC', 'مسیریابی هوشمند'],
+    },
     featured: true,
   },
   {
     name: 'NovaRadar',
-    tagline: 'Desktop Cloudflare IP scanner',
-    description:
-      'A desktop IP scanner built with Go + React. It scans Cloudflare IP ranges from multiple selectable sources and runs real two-phase verification (TCP + TLS handshake) to surface the cleanest, fastest endpoints.',
+    tagline: {
+      en: 'Desktop Cloudflare IP scanner',
+      fa: 'اسکنر آی‌پی کلودفلر برای دسکتاپ',
+    },
+    description: {
+      en: 'A desktop IP scanner built with Go + React. It scans Cloudflare IP ranges from multiple selectable sources and runs real two-phase verification (TCP + TLS handshake) to surface the cleanest, fastest endpoints.',
+      fa: 'یک اسکنر آی‌پی دسکتاپ ساخته‌شده با Go + React. محدوده‌های آی‌پی کلودفلر را از چند منبع قابل‌انتخاب اسکن می‌کند و با بررسی واقعی دومرحله‌ای (دست‌دادن TCP + TLS) تمیزترین و سریع‌ترین نقاط اتصال را پیدا می‌کند.',
+    },
     language: 'Go + React',
     stars: 97,
     url: 'https://github.com/IRNova/NovaRadar',
-    tags: ['IP Scanning', 'Cloudflare', 'TCP + TLS', 'Desktop'],
+    tags: {
+      en: ['IP Scanning', 'Cloudflare', 'TCP + TLS', 'Desktop'],
+      fa: ['اسکن آی‌پی', 'Cloudflare', 'TCP + TLS', 'دسکتاپ'],
+    },
     featured: false,
   },
   {
     name: 'Tools',
-    tagline: 'Handy networking utilities',
-    description:
-      'A growing collection of smaller utilities and helpers that support the Nova toolchain and day-to-day networking workflows.',
+    tagline: {
+      en: 'Handy networking utilities',
+      fa: 'ابزارهای کاربردی شبکه',
+    },
+    description: {
+      en: 'A growing collection of smaller utilities and helpers that support the Nova toolchain and day-to-day networking workflows.',
+      fa: 'مجموعه‌ای رو به رشد از ابزارها و کمک‌ابزارهای کوچک که از مجموعه‌ابزار نوا و کارهای روزمره‌ی شبکه پشتیبانی می‌کنند.',
+    },
     language: 'Utilities',
     stars: 5,
     url: 'https://github.com/IRNova/Tools',
-    tags: ['Utilities', 'Helpers'],
+    tags: {
+      en: ['Utilities', 'Helpers'],
+      fa: ['ابزارها', 'کمک‌ابزارها'],
+    },
     featured: false,
   },
 ]
@@ -50,32 +83,50 @@ export const projects = [
 export const capabilities = [
   {
     icon: 'shield',
-    title: 'Bypass Filtering',
-    text: 'Domain fronting, TLS fragmentation, ECH injection and QUIC replay work together to keep connections alive where they would otherwise be blocked.',
+    title: { en: 'Bypass Filtering', fa: 'عبور از فیلترینگ' },
+    text: {
+      en: 'Domain fronting, TLS fragmentation, ECH injection and QUIC replay work together to keep connections alive where they would otherwise be blocked.',
+      fa: 'Domain fronting، تکه‌تکه‌سازی TLS، تزریق ECH و بازپخش QUIC در کنار هم کار می‌کنند تا اتصال‌ها را جایی که در غیر این صورت مسدود می‌شدند، برقرار نگه دارند.',
+    },
   },
   {
     icon: 'route',
-    title: 'Intelligent Routing',
-    text: 'Proxy chains, rule-based routing, and clean-IP selection automatically steer traffic down the fastest, most reliable path.',
+    title: { en: 'Intelligent Routing', fa: 'مسیریابی هوشمند' },
+    text: {
+      en: 'Proxy chains, rule-based routing, and clean-IP selection automatically steer traffic down the fastest, most reliable path.',
+      fa: 'زنجیره‌ی پراکسی، مسیریابی مبتنی بر قاعده و انتخاب آی‌پی تمیز، ترافیک را به‌صورت خودکار از سریع‌ترین و پایدارترین مسیر هدایت می‌کنند.',
+    },
   },
   {
     icon: 'radar',
-    title: 'Real Verification',
-    text: 'Two-phase TCP + TLS handshake testing means every endpoint is proven reachable before you ever rely on it.',
+    title: { en: 'Real Verification', fa: 'بررسی واقعی' },
+    text: {
+      en: 'Two-phase TCP + TLS handshake testing means every endpoint is proven reachable before you ever rely on it.',
+      fa: 'آزمایش دومرحله‌ای دست‌دادن TCP + TLS یعنی پیش از آنکه به هر نقطه‌ی اتصالی تکیه کنید، دسترس‌پذیری آن اثبات شده است.',
+    },
   },
   {
     icon: 'globe',
-    title: 'Cross-Platform',
-    text: 'A consistent experience across desktop and every major platform, with subscription delivery that just works.',
+    title: { en: 'Cross-Platform', fa: 'چندسکویی' },
+    text: {
+      en: 'A consistent experience across desktop and every major platform, with subscription delivery that just works.',
+      fa: 'تجربه‌ای یکپارچه روی دسکتاپ و همه‌ی پلتفرم‌های اصلی، با ارائه‌ی اشتراکی که به‌سادگی کار می‌کند.',
+    },
   },
   {
     icon: 'dns',
-    title: 'Full DNS Control',
-    text: 'Complete DNS settings management with support for Warp, Trojan, and custom upstreams baked right in.',
+    title: { en: 'Full DNS Control', fa: 'کنترل کامل DNS' },
+    text: {
+      en: 'Complete DNS settings management with support for Warp, Trojan, and custom upstreams baked right in.',
+      fa: 'مدیریت کامل تنظیمات DNS با پشتیبانی داخلی از Warp، Trojan و سرورهای بالادست سفارشی.',
+    },
   },
   {
     icon: 'open',
-    title: 'Open Source',
-    text: 'Every project is open source on GitHub — auditable, community-driven, and free to study, run, and improve.',
+    title: { en: 'Open Source', fa: 'متن‌باز' },
+    text: {
+      en: 'Every project is open source on GitHub — auditable, community-driven, and free to study, run, and improve.',
+      fa: 'هر پروژه روی گیت‌هاب متن‌باز است — قابل‌بازبینی، جامعه‌محور و رایگان برای مطالعه، اجرا و بهبود.',
+    },
   },
 ]

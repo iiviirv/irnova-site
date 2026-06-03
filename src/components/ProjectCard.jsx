@@ -1,10 +1,12 @@
 import Icon from './Icon.jsx'
+import { useLang } from '../i18n/LanguageContext.jsx'
 
 function formatStars(n) {
   return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : `${n}`
 }
 
 export default function ProjectCard({ project }) {
+  const { t, lang } = useLang()
   const { name, tagline, description, language, stars, url, tags, featured } = project
   return (
     <a
@@ -13,7 +15,7 @@ export default function ProjectCard({ project }) {
       target="_blank"
       rel="noreferrer noopener"
     >
-      {featured && <span className="project-badge">Flagship</span>}
+      {featured && <span className="project-badge">{t.flagship}</span>}
       <div className="project-head">
         <h3>{name}</h3>
         <span className="project-stars">
@@ -21,12 +23,12 @@ export default function ProjectCard({ project }) {
           {formatStars(stars)}
         </span>
       </div>
-      <p className="project-tagline">{tagline}</p>
-      <p className="project-desc">{description}</p>
+      <p className="project-tagline">{tagline[lang]}</p>
+      <p className="project-desc">{description[lang]}</p>
       <div className="project-tags">
-        {tags.map((t) => (
-          <span key={t} className="tag">
-            {t}
+        {tags[lang].map((tag) => (
+          <span key={tag} className="tag">
+            {tag}
           </span>
         ))}
       </div>
@@ -35,7 +37,7 @@ export default function ProjectCard({ project }) {
           <span className="lang-dot" /> {language}
         </span>
         <span className="project-link">
-          View on GitHub <Icon name="arrow" size={16} />
+          {t.viewOnGithub} <Icon name="arrow" size={16} className="icon-arrow" />
         </span>
       </div>
     </a>

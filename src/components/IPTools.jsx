@@ -1,8 +1,9 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import Icon from './Icon.jsx'
 import { LangSwitch, ThemeToggle } from './Controls.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
-import { fetchSources, randomIPsFromCidrs } from '../lib/cleanips.js'
+
+const NOVARADAR_URL = 'https://github.com/IRNova/NovaRadar/releases'
 
 const ALL_PORTS = [8443, 2087, 2083, 2053, 443, 2096]
 
@@ -72,50 +73,6 @@ export default function IPTools() {
 
   function onKeyDown(e) {
     if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) generate()
-  }
-
-  // --- Clean Cloudflare IPs ---
-  const [sources, setSources] = useState([])
-  const [selSrc, setSelSrc] = useState(() => new Set())
-  const [srcCount, setSrcCount] = useState(100)
-  const [srcOutput, setSrcOutput] = useState('')
-  const [srcCopied, setSrcCopied] = useState(false)
-
-  useEffect(() => {
-    let alive = true
-    fetchSources().then((s) => {
-      if (!alive) return
-      setSources(s)
-      setSelSrc(new Set(s.length ? [s[0].id] : []))
-    })
-    return () => {
-      alive = false
-    }
-  }, [])
-
-  function toggleSrc(id) {
-    setSelSrc((prev) => {
-      const next = new Set(prev)
-      if (next.has(id)) next.delete(id)
-      else next.add(id)
-      return next
-    })
-  }
-
-  function getIPs() {
-    const cidrs = sources.filter((s) => selSrc.has(s.id)).flatMap((s) => s.cidrs)
-    setSrcOutput(randomIPsFromCidrs(cidrs, srcCount).join('\n'))
-  }
-
-  async function copySrc() {
-    if (!srcOutput) return
-    try {
-      await navigator.clipboard.writeText(srcOutput)
-    } catch {
-      /* clipboard may be blocked */
-    }
-    setSrcCopied(true)
-    setTimeout(() => setSrcCopied(false), 1500)
   }
 
   // --- Connection check ---
@@ -192,6 +149,28 @@ export default function IPTools() {
           <p>{tt.intro}</p>
         </div>
 
+        {/* How to get clean IPs */}
+        <div className="tool-card">
+          <div className="tool-label">{tt.scanTitle}</div>
+          <p className="tool-sub">{tt.scanIntro}</p>
+          <ol className="scan-steps">
+            <li>{tt.scanStep1}</li>
+            <li>{tt.scanStep2}</li>
+            <li>{tt.scanStep3}</li>
+          </ol>
+          <div className="tool-actions">
+            <a
+              className="btn btn-primary"
+              href={NOVARADAR_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="radar" size={16} /> {tt.scanCta}
+            </a>
+          </div>
+          <div className="tool-hint">{tt.scanNote}</div>
+        </div>
+
         {/* Ports */}
         <div className="tool-card">
           <div className="tool-label">{tt.portsLabel}</div>
@@ -259,71 +238,6 @@ export default function IPTools() {
             </button>
           </div>
           <div className="tool-hint">{tt.hint}</div>
-        </div>
-
-        {/* Clean Cloudflare IPs */}
-        <div className="tool-card">
-          <div className="tool-label">{tt.srcTitle}</div>
-          <p className="tool-sub">{tt.srcIntro}</p>
-
-          <div className="tool-mini-label">{tt.srcSelect}</div>
-          <div className="port-chips">
-            {sources.map((s) => (
-              <button
-                key={s.id}
-                type="button"
-                className={`port-chip${selSrc.has(s.id) ? ' on' : ''}`}
-                aria-pressed={selSrc.has(s.id)}
-                onClick={() => toggleSrc(s.id)}
-              >
-                {s.name} <span className="chip-count">{s.cidrs.length}</span>
-              </button>
-            ))}
-          </div>
-
-          <div className="tool-mini-label">{tt.srcCount}</div>
-          <div className="port-chips">
-            {[50, 100, 200].map((n) => (
-              <button
-                key={n}
-                type="button"
-                className={`port-chip${srcCount === n ? ' on' : ''}`}
-                onClick={() => setSrcCount(n)}
-              >
-                {n}
-              </button>
-            ))}
-          </div>
-
-          <div className="tool-actions">
-            <button type="button" className="btn btn-primary" onClick={getIPs} disabled={selSrc.size === 0}>
-              <Icon name="radar" size={16} /> {tt.srcGet}
-            </button>
-          </div>
-
-          {srcOutput && (
-            <>
-              <pre className="tool-output" dir="ltr" style={{ minHeight: '120px' }}>
-                {srcOutput}
-              </pre>
-              <div className="tool-actions">
-                <button
-                  type="button"
-                  className="btn btn-ghost"
-                  onClick={() => {
-                    setInput(srcOutput)
-                    window.scrollTo({ top: 0, behavior: 'smooth' })
-                  }}
-                >
-                  {tt.srcUse}
-                </button>
-                <button type="button" className="btn btn-ghost" onClick={copySrc}>
-                  {srcCopied ? tt.copied : tt.srcCopy}
-                </button>
-              </div>
-            </>
-          )}
-          <div className="tool-hint">{tt.srcNote}</div>
         </div>
 
         {/* Connection check */}

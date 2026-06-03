@@ -4,7 +4,7 @@ import ProjectCard from './components/ProjectCard.jsx'
 import Guide from './components/Guide.jsx'
 import IPTools from './components/IPTools.jsx'
 import Icon from './components/Icon.jsx'
-import { LangSwitch, ThemeToggle } from './components/Controls.jsx'
+import Nav, { Logo } from './components/Nav.jsx'
 import { projects, capabilities } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
 
@@ -21,30 +21,6 @@ function useHashRoute() {
 }
 
 const GITHUB = 'https://github.com/IRNova'
-
-function Logo({ brand }) {
-  return (
-    <span className="logo">
-      <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
-        <path
-          d="M 28 22 L 28 64 A 13 13 0 0 0 54 64 L 54 36 A 13 13 0 0 1 80 36 L 80 78"
-          fill="none"
-          stroke="url(#lg)"
-          strokeWidth="15"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#22d3ee" />
-            <stop offset="1" stopColor="#a855f7" />
-          </linearGradient>
-        </defs>
-      </svg>
-      <span className="logo-text">{brand}</span>
-    </span>
-  )
-}
 
 export default function App() {
   const { t, lang } = useLang()
@@ -68,21 +44,7 @@ export default function App() {
 
   return (
     <div className="app">
-      <header className="nav">
-        <Logo brand={t.brand} />
-        <nav className="nav-links">
-          <a href="#projects">{t.nav.projects}</a>
-          <a href="#capabilities">{t.nav.capabilities}</a>
-          <a href="#/guide">{t.nav.guide}</a>
-          <a href="#/tools">{t.nav.tools}</a>
-          <a href="#about">{t.nav.about}</a>
-          <ThemeToggle />
-          <LangSwitch />
-          <a className="nav-cta" href={GITHUB} target="_blank" rel="noreferrer noopener">
-            <Icon name="github" size={18} /> {t.nav.github}
-          </a>
-        </nav>
-      </header>
+      <Nav />
 
       <main>
         <section className="hero">

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import Icon from './Icon.jsx'
-import { LangSwitch, ThemeToggle } from './Controls.jsx'
+import Nav from './Nav.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
 
@@ -74,36 +74,7 @@ export default function Guide() {
 
   return (
     <div className="guide">
-      <header className="guide-bar">
-        <a className="brand-link" href="#/">
-          <span className="logo">
-            <svg viewBox="0 0 100 100" width="26" height="26" aria-hidden="true">
-              <path
-                d="M 28 22 L 28 64 A 13 13 0 0 0 54 64 L 54 36 A 13 13 0 0 1 80 36 L 80 78"
-                fill="none"
-                stroke="url(#glg)"
-                strokeWidth="15"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-              <defs>
-                <linearGradient id="glg" x1="0" y1="0" x2="1" y2="1">
-                  <stop offset="0" stopColor="#22d3ee" />
-                  <stop offset="1" stopColor="#a855f7" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <span className="logo-text">{t.brand}</span>
-          </span>
-        </a>
-        <div className="guide-controls">
-          <ThemeToggle />
-          <LangSwitch />
-          <a className="back-home" href="#/">
-            <Icon name="arrow" size={16} className="icon-back" /> {g.backHome}
-          </a>
-        </div>
-      </header>
+      <Nav />
 
       <div className="guide-inner">
         <div className="guide-head">

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import Icon from './Icon.jsx'
+import { LangSwitch, ThemeToggle } from './Controls.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
 
@@ -95,9 +96,13 @@ export default function Guide() {
             <span className="logo-text">{t.brand}</span>
           </span>
         </a>
-        <a className="back-home" href="#/">
-          <Icon name="arrow" size={16} className="icon-back" /> {g.backHome}
-        </a>
+        <div className="guide-controls">
+          <ThemeToggle />
+          <LangSwitch />
+          <a className="back-home" href="#/">
+            <Icon name="arrow" size={16} className="icon-back" /> {g.backHome}
+          </a>
+        </div>
       </header>
 
       <div className="guide-inner">

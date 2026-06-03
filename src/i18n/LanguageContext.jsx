@@ -11,7 +11,7 @@ function getInitialLang() {
   } catch {
     /* ignore unavailable storage */
   }
-  return 'en'
+  return 'fa'
 }
 
 export function LanguageProvider({ children }) {

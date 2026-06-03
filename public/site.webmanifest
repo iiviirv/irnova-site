@@ -1,0 +1,25 @@
+{
+  "name": "Nova Proxy",
+  "short_name": "Nova Proxy",
+  "description": "Open-source proxy & networking tools to keep the internet open, fast, and reachable.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#05060a",
+  "theme_color": "#05060a",
+  "lang": "fa",
+  "dir": "rtl",
+  "icons": [
+    {
+      "src": "./android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

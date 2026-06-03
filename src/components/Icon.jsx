@@ -75,6 +75,8 @@ const paths = {
     </>
   ),
   moon: <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8z" />,
+  menu: <path d="M4 7h16M4 12h16M4 17h16" />,
+  close: <path d="M6 6l12 12M6 18L18 6" />,
 }
 
 export default function Icon({ name, size = 24, className }) {

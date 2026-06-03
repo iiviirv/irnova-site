@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import Icon from './Icon.jsx'
 import { LangSwitch, ThemeToggle } from './Controls.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
@@ -28,28 +29,60 @@ export function Logo({ brand }) {
   )
 }
 
-// Shared site header — used on the landing page and every sub-page so the
-// navigation is consistent everywhere. In-page anchors (#projects, #about…)
-// route back to the home page and scroll; #/guide and #/tools are sub-pages.
+// Shared site header — consistent on every page. On mobile the links collapse
+// into a hamburger menu. In-page anchors (#projects, #about…) route back to the
+// home page and scroll; #/guide and #/tools are sub-pages.
 export default function Nav() {
   const { t } = useLang()
+  const [open, setOpen] = useState(false)
+  const close = () => setOpen(false)
+
   return (
     <header className="nav">
-      <a className="brand-link" href="#/">
+      <a className="brand-link" href="#/" onClick={close}>
         <Logo brand={t.brand} />
       </a>
-      <nav className="nav-links">
-        <a href="#projects">{t.nav.projects}</a>
-        <a href="#capabilities">{t.nav.capabilities}</a>
-        <a href="#/guide">{t.nav.guide}</a>
-        <a href="#/tools">{t.nav.tools}</a>
-        <a href="#about">{t.nav.about}</a>
-        <ThemeToggle />
-        <LangSwitch />
-        <a className="nav-cta" href={GITHUB} target="_blank" rel="noreferrer noopener">
+
+      <nav className={`nav-links${open ? ' open' : ''}`}>
+        <a href="#projects" onClick={close}>
+          {t.nav.projects}
+        </a>
+        <a href="#capabilities" onClick={close}>
+          {t.nav.capabilities}
+        </a>
+        <a href="#/guide" onClick={close}>
+          {t.nav.guide}
+        </a>
+        <a href="#/tools" onClick={close}>
+          {t.nav.tools}
+        </a>
+        <a href="#about" onClick={close}>
+          {t.nav.about}
+        </a>
+        <a
+          className="nav-cta"
+          href={GITHUB}
+          target="_blank"
+          rel="noreferrer noopener"
+          onClick={close}
+        >
           <Icon name="github" size={18} /> {t.nav.github}
         </a>
       </nav>
+
+      <div className="nav-actions">
+        <ThemeToggle />
+        <LangSwitch />
+        <button
+          type="button"
+          className="nav-toggle"
+          aria-label="Menu"
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+        >
+          <Icon name={open ? 'close' : 'menu'} size={22} />
+        </button>
+      </div>
     </header>
   )
 }

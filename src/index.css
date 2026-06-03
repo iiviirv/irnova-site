@@ -116,6 +116,7 @@ h3 {
   align-items: center;
   gap: clamp(14px, 3vw, 30px);
   font-size: 0.95rem;
+  margin-inline-start: auto; /* push links + actions to the end on desktop */
 }
 
 .nav-links a {
@@ -125,6 +126,29 @@ h3 {
 
 .nav-links a:hover {
   color: var(--text);
+}
+
+.nav-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.nav-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.nav-toggle:hover {
+  background: var(--surface-2);
 }
 
 .nav-cta {
@@ -1315,8 +1339,38 @@ h3 {
   .stats {
     grid-template-columns: repeat(2, 1fr);
   }
-  .nav-links a:not(.nav-cta) {
+
+  /* Mobile: collapse the links into a hamburger dropdown. */
+  .nav-toggle {
+    display: inline-flex;
+  }
+  .nav-links {
+    position: absolute;
+    top: 100%;
+    inset-inline: 0;
     display: none;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 2px;
+    margin: 0;
+    padding: 10px clamp(20px, 5vw, 48px) 16px;
+    background: var(--bg-alt);
+    border-bottom: 1px solid var(--border);
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.35);
+  }
+  .nav-links.open {
+    display: flex;
+  }
+  .nav-links a {
+    padding: 12px 6px;
+    border-radius: 8px;
+  }
+  .nav-links a:hover {
+    background: var(--surface);
+  }
+  .nav-links .nav-cta {
+    justify-content: center;
+    margin-top: 6px;
   }
 }
 

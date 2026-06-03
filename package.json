@@ -3,12 +3,12 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "description": "Showcase site for IRNova — open-source networking & proxy tools",
+  "description": "Showcase site for IRNova, open-source networking & proxy tools",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "deploy": "vite build && npx --yes wrangler pages deploy"
+    "deploy": "vite build && npx --yes wrangler pages deploy dist --branch main"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",

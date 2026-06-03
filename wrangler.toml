@@ -1,5 +1,5 @@
 # Cloudflare Pages config for direct uploads (no Git connection).
 # Deploy with:  npm run deploy
 # That builds the site and uploads ./dist to the "nova-proxy" Pages project.
-name = "nova-proxy-90m"
+name = "nova-proxy"
 pages_build_output_dir = "./dist"

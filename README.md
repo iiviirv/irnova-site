@@ -30,7 +30,17 @@ Update star counts, descriptions, tags, or add new projects there — the UI upd
 
 ## Deploying
 
-The build is fully static (`base: './'`), so `dist/` can be hosted anywhere:
+This site auto-deploys to **Cloudflare Pages** via Git integration: every push to
+the production branch triggers a build (`npm run build`) and deploys `dist/`
+plus the `functions/` Pages Functions. No manual step required.
 
-- **GitHub Pages** — push `dist/` to a `gh-pages` branch, or use an Actions workflow
-- **Netlify / Vercel / Cloudflare Pages** — build command `npm run build`, publish dir `dist`
+Pages project build settings:
+
+- **Root directory:** `irnova-site`
+- **Build command:** `npm run build`
+- **Build output directory:** `dist`
+- **Node version:** pinned to 20 via `.node-version`
+
+The build is fully static (`base: './'`), so `dist/` can alternatively be hosted
+on any static host (Netlify, Vercel, GitHub Pages, etc.).
+

@@ -3,6 +3,7 @@ import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
 import Guide from './components/Guide.jsx'
 import Icon from './components/Icon.jsx'
+import { LangSwitch, ThemeToggle } from './components/Controls.jsx'
 import { projects, capabilities } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
 
@@ -44,25 +45,6 @@ function Logo({ brand }) {
   )
 }
 
-function LangSwitch() {
-  const { lang, setLang, langs } = useLang()
-  return (
-    <div className="lang-switch" role="group" aria-label="Language / زبان">
-      {langs.map((l) => (
-        <button
-          key={l.code}
-          type="button"
-          className={lang === l.code ? 'active' : ''}
-          aria-pressed={lang === l.code}
-          onClick={() => setLang(l.code)}
-        >
-          {l.label}
-        </button>
-      ))}
-    </div>
-  )
-}
-
 export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
@@ -91,6 +73,7 @@ export default function App() {
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#/guide">{t.nav.guide}</a>
           <a href="#about">{t.nav.about}</a>
+          <ThemeToggle />
           <LangSwitch />
           <a className="nav-cta" href={GITHUB} target="_blank" rel="noreferrer noopener">
             <Icon name="github" size={18} /> {t.nav.github}

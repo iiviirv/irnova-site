@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="fa" dir="rtl" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
@@ -17,12 +17,14 @@
     <meta property="og:type" content="website" />
     <title>Nova Proxy — Open-Source Networking Tools</title>
     <script>
-      // Apply the saved language/direction before paint to avoid a flash.
+      // Apply the saved language/direction/theme before paint to avoid a flash.
       (function () {
         try {
-          var l = localStorage.getItem('irnova-lang') || 'en'
+          var l = localStorage.getItem('irnova-lang') || 'fa'
           document.documentElement.lang = l
           document.documentElement.dir = l === 'fa' ? 'rtl' : 'ltr'
+          var th = localStorage.getItem('nova-theme')
+          document.documentElement.dataset.theme = th === 'light' ? 'light' : 'dark'
         } catch (e) {}
       })()
     </script>

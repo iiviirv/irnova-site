@@ -12,8 +12,36 @@
   --grad: linear-gradient(120deg, #22d3ee 0%, #818cf8 50%, #a855f7 100%);
   --radius: 16px;
   --maxw: 1140px;
+  --nav-bg: rgba(5, 6, 10, 0.7);
+  --code-bg: #0b0e16;
   --font-sans: 'Inter', system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   --font-fa: 'Vazirmatn', 'Inter', system-ui, -apple-system, Segoe UI, Tahoma, Arial, sans-serif;
+}
+
+/* Light theme */
+:root[data-theme='light'] {
+  --bg: #f7f8fc;
+  --bg-alt: #eef1f7;
+  --surface: rgba(15, 23, 42, 0.04);
+  --surface-2: rgba(15, 23, 42, 0.07);
+  --border: rgba(15, 23, 42, 0.12);
+  --border-strong: rgba(15, 23, 42, 0.22);
+  --text: #0d1117;
+  --muted: #51607a;
+  --cyan: #0891b2;
+  --violet: #9333ea;
+  --nav-bg: rgba(247, 248, 252, 0.8);
+}
+
+/* Keep accents readable on the light background. */
+:root[data-theme='light'] .pill {
+  color: #0e7490;
+}
+:root[data-theme='light'] .project-stars {
+  color: #b45309;
+}
+:root[data-theme='light'] .all-done {
+  color: #047857;
 }
 
 * {
@@ -67,7 +95,7 @@ h3 {
   justify-content: space-between;
   padding: 18px clamp(20px, 5vw, 48px);
   backdrop-filter: blur(14px);
-  background: rgba(5, 6, 10, 0.7);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -321,18 +349,28 @@ h3 {
   background: linear-gradient(180deg, rgba(99, 102, 241, 0.08), var(--surface));
 }
 
+.project-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
 .project-badge {
-  position: absolute;
-  top: 18px;
-  right: 18px;
-  font-size: 0.7rem;
-  letter-spacing: 0.08em;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  padding: 4px 10px;
+  padding: 3px 9px;
   border-radius: 999px;
-  color: #cbd5ff;
-  background: rgba(129, 140, 248, 0.18);
+  white-space: nowrap;
+  color: #6366f1;
+  background: rgba(129, 140, 248, 0.16);
   border: 1px solid rgba(129, 140, 248, 0.4);
+}
+
+:root[data-theme='dark'] .project-badge {
+  color: #cbd5ff;
 }
 
 .project-head {
@@ -592,6 +630,31 @@ h3 {
   background: var(--grad);
 }
 
+.theme-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  transition: color 0.2s, background 0.2s, border-color 0.2s;
+}
+
+.theme-toggle:hover {
+  color: var(--text);
+  background: var(--surface-2);
+}
+
+.guide-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
 /* ---------- RTL adjustments ---------- */
 [dir='rtl'] .icon-arrow {
   transform: scaleX(-1);
@@ -627,7 +690,7 @@ h3 {
   justify-content: space-between;
   padding: 16px clamp(20px, 5vw, 48px);
   backdrop-filter: blur(14px);
-  background: rgba(5, 6, 10, 0.7);
+  background: var(--nav-bg);
   border-bottom: 1px solid var(--border);
 }
 
@@ -942,7 +1005,7 @@ h3 {
   padding: 10px 12px;
   margin-bottom: 12px;
   border-radius: 10px;
-  background: #0b0e16;
+  background: var(--code-bg);
   border: 1px solid var(--border);
 }
 

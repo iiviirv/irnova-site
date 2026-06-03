@@ -15,9 +15,11 @@ export default function ProjectCard({ project }) {
       target="_blank"
       rel="noreferrer noopener"
     >
-      {featured && <span className="project-badge">{t.flagship}</span>}
       <div className="project-head">
-        <h3>{name}</h3>
+        <div className="project-title-wrap">
+          <h3>{name}</h3>
+          {featured && <span className="project-badge">{t.flagship}</span>}
+        </div>
         <span className="project-stars">
           <Icon name="star" size={15} />
           {formatStars(stars)}

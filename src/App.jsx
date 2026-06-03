@@ -8,18 +8,15 @@ const GITHUB = 'https://github.com/IRNova'
 function Logo() {
   return (
     <span className="logo">
-      <svg viewBox="0 0 64 64" width="28" height="28" aria-hidden="true">
-        <circle cx="32" cy="32" r="7" fill="url(#lg)" />
-        <g fill="none" stroke="url(#lg)" strokeWidth="3" opacity="0.9">
-          <circle cx="32" cy="32" r="14" />
-          <circle cx="32" cy="32" r="22" opacity="0.5" />
-        </g>
-        <g fill="url(#lg)">
-          <circle cx="32" cy="10" r="3" />
-          <circle cx="54" cy="32" r="3" />
-          <circle cx="32" cy="54" r="3" />
-          <circle cx="10" cy="32" r="3" />
-        </g>
+      <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
+        <path
+          d="M 28 22 L 28 64 A 13 13 0 0 0 54 64 L 54 36 A 13 13 0 0 1 80 36 L 80 78"
+          fill="none"
+          stroke="url(#lg)"
+          strokeWidth="15"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
         <defs>
           <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
             <stop offset="0" stopColor="#22d3ee" />

@@ -1233,6 +1233,55 @@ h3 {
   margin-top: 10px;
 }
 
+.tool-sub {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 6px;
+}
+
+.tool-mini-label {
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 16px 0 8px;
+}
+
+.chip-count {
+  opacity: 0.65;
+  font-size: 0.8em;
+}
+
+.check-result {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.92rem;
+}
+
+.check-result.ok {
+  border-color: rgba(34, 211, 238, 0.4);
+}
+.check-result.ok svg {
+  color: var(--cyan);
+}
+.check-result.bad {
+  border-color: rgba(245, 158, 11, 0.4);
+}
+.check-result.bad svg {
+  color: #f59e0b;
+}
+.check-latency {
+  color: var(--muted);
+}
+.check-latency strong {
+  color: var(--text);
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 860px) {
   .project-grid,

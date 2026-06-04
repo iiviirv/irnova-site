@@ -22,7 +22,7 @@ function useHashRoute() {
 
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
-const YOUTUBE = 'https://www.youtube.com/watch?v=NGywxMUPtio'
+const YOUTUBE = 'https://youtube.com/@novaproxyir'
 
 export default function App() {
   const { t, lang } = useLang()
@@ -190,6 +190,12 @@ export default function App() {
           <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">
             {t.nav.github}
+          </a>
+          <a href={TELEGRAM} target="_blank" rel="noreferrer noopener">
+            Telegram
+          </a>
+          <a href={YOUTUBE} target="_blank" rel="noreferrer noopener">
+            YouTube
           </a>
         </div>
         <span className="footer-copy">© {new Date().getFullYear()} Nova Proxy</span>

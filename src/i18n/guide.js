@@ -10,7 +10,7 @@ export const guide = {
   en: {
     title: 'Setup Guide',
     intro:
-      'Follow these friendly, step-by-step instructions to set up Nova Proxy and connect your device. No technical experience needed — just pick a track below and check off each step as you go.',
+      'Follow these friendly, step-by-step instructions to set up Nova Proxy and connect your device. No technical experience needed, just pick a track below and check off each step as you go.',
     backHome: 'Back to home',
     tracksTitle: 'Choose what you want to do',
     ui: {
@@ -24,7 +24,7 @@ export const guide = {
       prereqTitle: 'Before you start',
       timeLabel: 'Time',
       complete: 'complete',
-      allDone: 'All steps complete — nicely done! 🎉',
+      allDone: 'All steps complete, nicely done! 🎉',
     },
     tracks: {
       panel: {
@@ -48,7 +48,7 @@ export const guide = {
             ],
             note: {
               tone: 'tip',
-              text: 'Use a password you don’t use anywhere else — this account controls your panel.',
+              text: 'Use a password you don’t use anywhere else, this account controls your panel.',
             },
           },
           {
@@ -66,7 +66,7 @@ export const guide = {
             body: 'Now we paste in the Nova Proxy program.',
             list: [
               'Open the Nova-Proxy repository on GitHub',
-              'Open the worker file (for example _worker.js) and copy all of its content',
+              'Open the main worker file (the large .js file, currently “Nova Proxy Worker V2 obfuscated.js”) and copy all of its content',
               'Back in the Cloudflare code editor, delete the sample code and paste the Nova Proxy code',
               'Select Deploy (or Save and deploy)',
             ],
@@ -129,11 +129,11 @@ export const guide = {
           },
           {
             title: 'Copy your subscription link',
-            body: 'Inside the panel you’ll find your personal subscription link and QR code — you’ll use these to connect.',
+            body: 'Inside the panel you’ll find your personal subscription link and QR code, you’ll use these to connect.',
             list: [
               'In the panel, find the Subscription section',
               'Copy the subscription link, or save the QR code',
-              'Keep this link private — anyone who has it can use your proxy',
+              'Keep this link private, anyone who has it can use your proxy',
             ],
             note: {
               tone: 'info',
@@ -156,7 +156,7 @@ export const guide = {
             body: 'You need a subscription link that starts with https://. You can get it from your own Nova Proxy panel, or from whoever shared it with you.',
             note: {
               tone: 'tip',
-              text: 'Don’t post your link publicly — treat it like a password.',
+              text: 'Don’t post your link publicly, treat it like a password.',
             },
           },
           {
@@ -206,7 +206,7 @@ export const guide = {
             ],
             note: {
               tone: 'info',
-              text: 'That’s it — you’re connected. Re-run Update in the app later to refresh your servers.',
+              text: 'That’s it, you’re connected. Re-run Update in the app later to refresh your servers.',
             },
           },
         ],
@@ -217,7 +217,7 @@ export const guide = {
   fa: {
     title: 'راهنمای راه‌اندازی',
     intro:
-      'این راهنمای ساده و گام‌به‌گام را دنبال کنید تا نوا پراکسی را راه‌اندازی کنید و دستگاه خود را وصل کنید. به هیچ دانش فنی‌ای نیاز نیست — کافی است یکی از مسیرهای زیر را انتخاب کنید و هر مرحله را که انجام دادید علامت بزنید.',
+      'این راهنمای ساده و گام‌به‌گام را دنبال کنید تا نوا پراکسی را راه‌اندازی کنید و دستگاه خود را وصل کنید. به هیچ دانش فنی‌ای نیاز نیست، کافی است یکی از مسیرهای زیر را انتخاب کنید و هر مرحله را که انجام دادید علامت بزنید.',
     backHome: 'بازگشت به خانه',
     tracksTitle: 'انتخاب کنید چه می‌خواهید انجام دهید',
     ui: {
@@ -231,7 +231,7 @@ export const guide = {
       prereqTitle: 'پیش از شروع',
       timeLabel: 'زمان',
       complete: 'تکمیل‌شده',
-      allDone: 'همه‌ی مراحل تکمیل شد — عالی بود! 🎉',
+      allDone: 'همه‌ی مراحل تکمیل شد، عالی بود! 🎉',
     },
     tracks: {
       panel: {
@@ -255,7 +255,7 @@ export const guide = {
             ],
             note: {
               tone: 'tip',
-              text: 'از رمزی استفاده کنید که جای دیگری به کار نبرده‌اید — این حساب کنترل پنل شما را در دست دارد.',
+              text: 'از رمزی استفاده کنید که جای دیگری به کار نبرده‌اید، این حساب کنترل پنل شما را در دست دارد.',
             },
           },
           {
@@ -273,7 +273,7 @@ export const guide = {
             body: 'حالا برنامه‌ی نوا پراکسی را جای‌گذاری می‌کنیم.',
             list: [
               'مخزن Nova-Proxy را در گیت‌هاب باز کنید',
-              'فایل worker (برای مثال _worker.js) را باز کنید و تمام محتوای آن را کپی کنید',
+              'فایل اصلی worker (فایل بزرگ .js، در حال حاضر «Nova Proxy Worker V2 obfuscated.js») را باز کنید و تمام محتوای آن را کپی کنید',
               'در ویرایشگر کد Cloudflare، کد نمونه را پاک کنید و کد نوا پراکسی را جای‌گذاری کنید',
               'روی Deploy (یا Save and deploy) بزنید',
             ],
@@ -336,11 +336,11 @@ export const guide = {
           },
           {
             title: 'کپی لینک اشتراک',
-            body: 'داخل پنل، لینک اشتراک شخصی و کد QR شما قرار دارد — برای اتصال از همین‌ها استفاده می‌کنید.',
+            body: 'داخل پنل، لینک اشتراک شخصی و کد QR شما قرار دارد، برای اتصال از همین‌ها استفاده می‌کنید.',
             list: [
               'در پنل، بخش Subscription را پیدا کنید',
               'لینک اشتراک را کپی کنید یا کد QR را ذخیره کنید',
-              'این لینک را خصوصی نگه دارید — هر کسی آن را داشته باشد می‌تواند از پراکسی شما استفاده کند',
+              'این لینک را خصوصی نگه دارید، هر کسی آن را داشته باشد می‌تواند از پراکسی شما استفاده کند',
             ],
             note: {
               tone: 'info',
@@ -363,7 +363,7 @@ export const guide = {
             body: 'به یک لینک اشتراک نیاز دارید که با https:// شروع می‌شود. می‌توانید آن را از پنل نوا پراکسی خودتان یا از کسی که برایتان فرستاده دریافت کنید.',
             note: {
               tone: 'tip',
-              text: 'لینک خود را عمومی منتشر نکنید — با آن مانند یک رمز عبور رفتار کنید.',
+              text: 'لینک خود را عمومی منتشر نکنید، با آن مانند یک رمز عبور رفتار کنید.',
             },
           },
           {
@@ -413,7 +413,7 @@ export const guide = {
             ],
             note: {
               tone: 'info',
-              text: 'تمام شد — وصل شدید. بعداً برای به‌روزرسانی سرورها دوباره Update را بزنید.',
+              text: 'تمام شد، وصل شدید. بعداً برای به‌روزرسانی سرورها دوباره Update را بزنید.',
             },
           },
         ],

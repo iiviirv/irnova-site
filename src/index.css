@@ -85,6 +85,55 @@ h3 {
   overflow-x: hidden;
 }
 
+/* ---------- Top social bar ---------- */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 8px 16px;
+  font-size: 0.85rem;
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.16), rgba(168, 85, 247, 0.16));
+  border-bottom: 1px solid var(--border);
+}
+
+.topbar-text {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.topbar-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 13px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 0.82rem;
+  color: #fff;
+  transition: transform 0.15s, opacity 0.2s;
+}
+
+.topbar-link:hover {
+  transform: translateY(-1px);
+  opacity: 0.92;
+}
+
+.topbar-link.tg {
+  background: linear-gradient(135deg, #2aabee, #229ed9);
+}
+
+.topbar-link.yt {
+  background: #ff0000;
+}
+
+@media (max-width: 420px) {
+  .topbar-text {
+    display: none;
+  }
+}
+
 /* ---------- Nav ---------- */
 .nav {
   position: sticky;

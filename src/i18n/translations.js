@@ -94,6 +94,7 @@ export const ui = {
         'Fully open source',
       ],
     },
+    social: { follow: 'Follow us' },
     telegram: {
       title: 'Join us on Telegram',
       text: 'Get the latest clean IPs, updates, and announcements first.',
@@ -197,6 +198,7 @@ export const ui = {
         'کاملاً متن‌باز',
       ],
     },
+    social: { follow: 'ما را دنبال کنید' },
     telegram: {
       title: 'ما را در تلگرام دنبال کنید',
       text: 'آخرین آی‌پی‌های تمیز، به‌روزرسانی‌ها و اخبار را زودتر از همه دریافت کنید.',

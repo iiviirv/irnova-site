@@ -21,6 +21,8 @@ function useHashRoute() {
 }
 
 const GITHUB = 'https://github.com/IRNova'
+const TELEGRAM = 'https://t.me/irnova_proxy'
+const YOUTUBE = 'https://www.youtube.com/watch?v=NGywxMUPtio'
 
 export default function App() {
   const { t, lang } = useLang()
@@ -137,6 +139,44 @@ export default function App() {
               </ul>
             </div>
           </div>
+        </section>
+
+        <section id="watch" className="section">
+          <div className="section-head">
+            <span className="eyebrow">
+              <Icon name="youtube" size={14} /> {t.youtube.eyebrow}
+            </span>
+            <h2>{t.youtube.title}</h2>
+            <p>{t.youtube.desc}</p>
+          </div>
+          <a
+            className="yt-card"
+            href={YOUTUBE}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label={t.youtube.label}
+          >
+            <span className="yt-play">
+              <Icon name="play" size={30} />
+            </span>
+            <span className="yt-label">{t.youtube.label}</span>
+            <span className="yt-cta">
+              {t.youtube.cta} <Icon name="arrow" size={16} className="icon-arrow" />
+            </span>
+          </a>
+        </section>
+
+        <section className="section tg-section">
+          <a className="tg-banner" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
+            <span className="tg-icon">
+              <Icon name="telegram" size={26} />
+            </span>
+            <span className="tg-text">
+              <strong>{t.telegram.title}</strong>
+              <span>{t.telegram.text}</span>
+            </span>
+            <span className="btn btn-primary tg-cta">{t.telegram.cta}</span>
+          </a>
         </section>
       </main>
 

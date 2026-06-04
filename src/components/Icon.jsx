@@ -77,6 +77,14 @@ const paths = {
   moon: <path d="M21 12.8A8.5 8.5 0 1 1 11.2 3 6.6 6.6 0 0 0 21 12.8z" />,
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="M6 6l12 12M6 18L18 6" />,
+  telegram: <path d="M22 3 2 11l6 2 2 6 3-4 5 4 4-16z M8 13l11-7-8 9" />,
+  play: <path d="M8 5v14l11-7z" fill="currentColor" stroke="none" />,
+  youtube: (
+    <>
+      <rect x="2" y="5" width="20" height="14" rx="4" />
+      <path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none" />
+    </>
+  ),
 }
 
 export default function Icon({ name, size = 24, className }) {

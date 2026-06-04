@@ -9,8 +9,8 @@ export const projects = [
       fa: 'پنل مدیریت اشتراک و مسیریابی',
     },
     description: {
-      en: 'A graphical panel for delivering Worker subscriptions with proxies, Trojan, and Warp — alongside proxy chains, full DNS management, clean-IP selection, and advanced routing for users on every platform.',
-      fa: 'یک پنل گرافیکی برای ارائه‌ی اشتراک‌های Worker همراه با پراکسی، Trojan و Warp — به‌همراه زنجیره‌ی پراکسی، مدیریت کامل DNS، انتخاب آی‌پی تمیز و مسیریابی پیشرفته برای کاربران در هر پلتفرم.',
+      en: 'A graphical panel for delivering Worker subscriptions with proxies, Trojan, and Warp, alongside proxy chains, full DNS management, clean-IP selection, and advanced routing for users on every platform.',
+      fa: 'یک پنل گرافیکی برای ارائه‌ی اشتراک‌های Worker همراه با پراکسی، Trojan و Warp، به‌همراه زنجیره‌ی پراکسی، مدیریت کامل DNS، انتخاب آی‌پی تمیز و مسیریابی پیشرفته برای کاربران در هر پلتفرم.',
     },
     language: 'HTML',
     stars: 1301,
@@ -28,8 +28,8 @@ export const projects = [
       fa: 'موتور پراکسی محلی برای عبور از فیلترینگ',
     },
     description: {
-      en: 'A powerful local proxy with GSA capabilities: Domain Fronting, TLS fragmentation, ECH injection, QUIC replay, MITM, and intelligent routing — engineered to slip past filtering systems.',
-      fa: 'یک پراکسی محلی قدرتمند با قابلیت‌های GSA: Domain Fronting، تکه‌تکه‌سازی TLS، تزریق ECH، بازپخش QUIC، MITM و مسیریابی هوشمند — طراحی‌شده برای عبور از سامانه‌های فیلترینگ.',
+      en: 'A powerful local proxy with GSA capabilities: Domain Fronting, TLS fragmentation, ECH injection, QUIC replay, MITM, and intelligent routing, engineered to slip past filtering systems.',
+      fa: 'یک پراکسی محلی قدرتمند با قابلیت‌های GSA: Domain Fronting، تکه‌تکه‌سازی TLS، تزریق ECH، بازپخش QUIC، MITM و مسیریابی هوشمند، طراحی‌شده برای عبور از سامانه‌های فیلترینگ.',
     },
     language: 'Go',
     stars: 709,
@@ -125,8 +125,8 @@ export const capabilities = [
     icon: 'open',
     title: { en: 'Open Source', fa: 'متن‌باز' },
     text: {
-      en: 'Every project is open source on GitHub — auditable, community-driven, and free to study, run, and improve.',
-      fa: 'هر پروژه روی گیت‌هاب متن‌باز است — قابل‌بازبینی، جامعه‌محور و رایگان برای مطالعه، اجرا و بهبود.',
+      en: 'Every project is open source on GitHub, auditable, community-driven, and free to study, run, and improve.',
+      fa: 'هر پروژه روی گیت‌هاب متن‌باز است، قابل‌بازبینی، جامعه‌محور و رایگان برای مطالعه، اجرا و بهبود.',
     },
   },
 ]

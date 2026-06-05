@@ -30,7 +30,17 @@ export default function App() {
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
-    if (route === '#/guide' || route === '#/tools' || route === '#/deploy') window.scrollTo(0, 0)
+    if (route === '#/guide' || route === '#/tools' || route === '#/deploy') {
+      window.scrollTo(0, 0)
+    } else if (route && route.length > 1 && route.startsWith('#') && !route.startsWith('#/')) {
+      // In-page anchor (e.g. #projects) clicked from a sub-page: the landing page
+      // has just mounted, so scroll to the target after it paints.
+      const id = route.slice(1)
+      setTimeout(() => {
+        const el = document.getElementById(id)
+        if (el) el.scrollIntoView({ behavior: 'smooth' })
+      }, 60)
+    }
   }, [route])
 
   if (route === '#/guide' || route === '#/deploy') return <Guide />

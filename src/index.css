@@ -674,10 +674,12 @@ h3 {
 /* ---------- Language switch ---------- */
 .lang-switch {
   display: inline-flex;
+  align-items: center;
   padding: 3px;
+  height: 36px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
   gap: 2px;
 }
 
@@ -687,6 +689,8 @@ h3 {
   font: inherit;
   font-size: 0.82rem;
   font-weight: 600;
+  min-width: 34px;
+  text-align: center;
   padding: 5px 12px;
   border-radius: 999px;
   color: var(--muted);
@@ -710,9 +714,9 @@ h3 {
   width: 36px;
   height: 36px;
   border-radius: 999px;
-  border: 1px solid var(--border);
-  background: var(--surface);
-  color: var(--muted);
+  border: 1px solid var(--border-strong);
+  background: var(--surface-2);
+  color: var(--text);
   cursor: pointer;
   transition: color 0.2s, background 0.2s, border-color 0.2s;
 }

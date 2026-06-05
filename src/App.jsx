@@ -3,6 +3,7 @@ import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
 import Guide from './components/Guide.jsx'
 import IPTools from './components/IPTools.jsx'
+import Deploy from './components/Deploy.jsx'
 import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
 import { projects, capabilities } from './data/projects.js'
@@ -35,6 +36,7 @@ export default function App() {
 
   if (route === '#/guide') return <Guide />
   if (route === '#/tools') return <IPTools />
+  if (route === '#/deploy') return <Deploy />
 
   const totalStars = projects.reduce((sum, p) => sum + p.stars, 0)
   const stats = [
@@ -188,6 +190,7 @@ export default function App() {
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#/guide">{t.nav.guide}</a>
           <a href="#/tools">{t.nav.tools}</a>
+          <a href="#/deploy">{t.nav.deploy}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">
             {t.nav.github}
           </a>

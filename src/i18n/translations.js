@@ -12,7 +12,7 @@ export const ui = {
     nav: {
       projects: 'Projects',
       capabilities: 'Capabilities',
-      guide: 'Setup Guide',
+      guide: 'Deploy & Setup',
       tools: 'IP Tools',
       about: 'About',
       deploy: 'Deploy',
@@ -63,7 +63,7 @@ export const ui = {
       titleAccent: 'open, fast, and reachable.',
       sub: 'Nova Proxy is a suite of open-source proxy and networking tools, engineered to slip past filtering, find the cleanest routes, and deliver reliable connectivity on every platform.',
       explore: 'Explore Projects',
-      guide: 'Setup Guide',
+      guide: 'Deploy & Setup',
       follow: 'Follow on GitHub',
     },
     stats: {
@@ -137,7 +137,7 @@ export const ui = {
     nav: {
       projects: 'پروژه‌ها',
       capabilities: 'قابلیت‌ها',
-      guide: 'راهنمای راه‌اندازی',
+      guide: 'استقرار و راه‌اندازی',
       tools: 'ابزار آی‌پی',
       about: 'درباره',
       deploy: 'استقرار',
@@ -188,7 +188,7 @@ export const ui = {
       titleAccent: 'باز، سریع و در دسترس نگه دارید.',
       sub: 'نوا پراکسی مجموعه‌ای از ابزارهای پراکسی و شبکه‌ی متن‌باز است، طراحی‌شده برای عبور از فیلترینگ، یافتن پاک‌ترین مسیرها و ارائه‌ی اتصالی پایدار روی هر پلتفرم.',
       explore: 'مشاهده پروژه‌ها',
-      guide: 'راهنمای راه‌اندازی',
+      guide: 'استقرار و راه‌اندازی',
       follow: 'دنبال کردن در گیت‌هاب',
     },
     stats: {

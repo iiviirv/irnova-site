@@ -71,9 +71,6 @@ export default function Nav() {
         <a href="#about" onClick={close}>
           {t.nav.about}
         </a>
-        <a href="#/deploy" onClick={close}>
-          {t.nav.deploy}
-        </a>
         <a
           className="nav-cta"
           href={GITHUB}

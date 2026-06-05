@@ -11,3 +11,13 @@ wherever possible — they're vector and stay sharp at any size.
 | `nova-logo-black.svg` / `.png` | solid black | transparent | light backgrounds, print, stamps |
 
 PNGs are exported at 1024×1024. Brand gradient: `#22d3ee → #a855f7`.
+
+## Social cover
+
+| File | Format | Size | Best for |
+|------|--------|------|----------|
+| `nova-x-cover.svg` / `.png` | gradient on dark | 1500×500 | X / Twitter header, social banners |
+
+Regenerate the cover with `npm run cover` (renders `scripts/build-cover.mjs`).
+The layout is centered so a profile avatar in the lower-left corner never
+overlaps the logo or text.

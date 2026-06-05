@@ -1557,3 +1557,4 @@ h3 {
 .deploy-steps { list-style: none; max-width: 660px; margin: 0 auto; padding: 0; display: flex; flex-direction: column; gap: 0.85rem; }
 .deploy-steps li { display: flex; gap: 0.85rem; align-items: flex-start; line-height: 1.75; color: var(--text-2, inherit); }
 .deploy-num { flex: 0 0 1.7rem; width: 1.7rem; height: 1.7rem; border-radius: 0.55rem; display: inline-flex; align-items: center; justify-content: center; font-weight: 800; font-size: 0.85rem; background: linear-gradient(120deg, #22d3ee, #a855f7); color: #fff; }
+.guide-deploy-sub { color: var(--text-2, inherit); opacity: 0.85; font-size: 0.95rem; margin: -0.4rem 0 1.3rem; max-width: 640px; line-height: 1.7; }

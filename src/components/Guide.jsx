@@ -4,6 +4,9 @@ import Nav from './Nav.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
 
+const AUTO_URL = 'https://nova-deploy.pages.dev'
+const ONECLICK_URL =
+  'https://deploy.workers.cloudflare.com/?url=https://github.com/iiviirv/nova-proxy-worker'
 const PROGRESS_KEY = 'nova-guide-progress'
 const TRACK_ICON = { panel: 'cloud', connect: 'phone' }
 
@@ -37,6 +40,7 @@ function CopyButton({ value, copyLabel, copiedLabel }) {
 export default function Guide() {
   const { t, lang } = useLang()
   const g = guide[lang]
+  const d = t.deploy
   const trackKeys = Object.keys(g.tracks)
 
   const [track, setTrack] = useState('panel')
@@ -83,6 +87,36 @@ export default function Guide() {
           </span>
           <h1>{g.title}</h1>
           <p>{g.intro}</p>
+        </div>
+
+        {/* Deploy options (merged into the setup guide) */}
+        <h2 className="guide-subtitle">
+          {d.title} <span className="grad">{d.titleAccent}</span>
+        </h2>
+        <p className="guide-deploy-sub">{d.sub}</p>
+        <div className="deploy-grid">
+          <div className="cap-card deploy-card">
+            <span className="cap-icon">
+              <Icon name="cloud" size={22} />
+            </span>
+            <span className="pill deploy-pill">{d.opt1Tag}</span>
+            <h3>{d.opt1Title}</h3>
+            <p>{d.opt1Text}</p>
+            <a className="btn btn-primary deploy-btn" href={AUTO_URL} target="_blank" rel="noreferrer noopener">
+              {d.opt1Cta} <Icon name="arrow" size={16} className="icon-arrow" />
+            </a>
+          </div>
+          <div className="cap-card deploy-card">
+            <span className="cap-icon">
+              <Icon name="globe" size={22} />
+            </span>
+            <span className="pill deploy-pill">{d.opt2Tag}</span>
+            <h3>{d.opt2Title}</h3>
+            <p>{d.opt2Text}</p>
+            <a className="btn btn-ghost deploy-btn" href={ONECLICK_URL} target="_blank" rel="noreferrer noopener">
+              {d.opt2Cta}
+            </a>
+          </div>
         </div>
 
         {/* Track selector */}

@@ -62,6 +62,9 @@ export default function Nav() {
         <a href="#capabilities" onClick={close}>
           {t.nav.capabilities}
         </a>
+        <a href="#deploy" onClick={close}>
+          {t.nav.deploy}
+        </a>
         <a href="#/guide" onClick={close}>
           {t.nav.guide}
         </a>

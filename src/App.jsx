@@ -23,6 +23,9 @@ function useHashRoute() {
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
+// One-click "Deploy to Cloudflare" — logs the user into Cloudflare (no API
+// token), forks the repo, and creates the Worker + KV automatically.
+const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy'
 
 export default function App() {
   const { t, lang } = useLang()
@@ -69,11 +72,16 @@ export default function App() {
             </h1>
             <p className="hero-sub">{t.hero.sub}</p>
             <div className="hero-actions">
-              <a className="btn btn-primary" href="#/guide">
-                <Icon name="book" size={18} /> {t.hero.guide}
+              <a
+                className="btn btn-primary"
+                href={DEPLOY_URL}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Icon name="bolt" size={18} /> {t.hero.deployCta}
               </a>
-              <a className="btn btn-ghost" href="#projects">
-                {t.hero.explore} <Icon name="arrow" size={18} className="icon-arrow" />
+              <a className="btn btn-ghost" href="#/guide">
+                <Icon name="book" size={18} /> {t.hero.guide}
               </a>
               <a className="btn btn-ghost" href={GITHUB} target="_blank" rel="noreferrer noopener">
                 <Icon name="github" size={18} /> {t.hero.follow}
@@ -119,6 +127,61 @@ export default function App() {
                 <p>{c.text[lang]}</p>
               </div>
             ))}
+          </div>
+          <p className="platform-note">
+            <Icon name="shield" size={16} /> {t.capsSection.note}
+          </p>
+        </section>
+
+        <section id="deploy" className="section">
+          <div className="section-head">
+            <span className="eyebrow">{t.deploy.eyebrow}</span>
+            <h2>
+              {t.deploy.title} <span className="grad">{t.deploy.titleAccent}</span>
+            </h2>
+            <p>{t.deploy.sub}</p>
+          </div>
+
+          <div className="deploy-cta-row">
+            <a
+              className="btn btn-primary deploy-hero-btn"
+              href={DEPLOY_URL}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="bolt" size={18} /> {t.deploy.cta}
+            </a>
+            <a className="btn btn-ghost" href="#/guide">
+              <Icon name="book" size={18} /> {t.nav.guide}
+            </a>
+          </div>
+
+          <ol className="deploy-steps">
+            {t.deploy.steps.map((s, i) => (
+              <li key={i}>
+                <span className="deploy-num">{i + 1}</span>
+                <span className="deploy-step-text">
+                  <strong>{s.title}</strong>
+                  <span>{s.text}</span>
+                </span>
+              </li>
+            ))}
+          </ol>
+
+          <div className="note note-warn deploy-iran-note">
+            <span className="note-dot" />
+            <span>
+              <strong>{t.deploy.iranNoteTitle}</strong> {t.deploy.iranNote}
+            </span>
+          </div>
+
+          <div className="deploy-links">
+            <a href={GITHUB + '/Nova-Proxy'} target="_blank" rel="noreferrer noopener">
+              <Icon name="github" size={16} /> {t.deploy.repoCta}
+            </a>
+            <a href={TELEGRAM} target="_blank" rel="noreferrer noopener">
+              <Icon name="telegram" size={16} /> {t.deploy.tgCta}
+            </a>
           </div>
         </section>
 
@@ -196,6 +259,7 @@ export default function App() {
         <div className="footer-links">
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
+          <a href="#deploy">{t.nav.deploy}</a>
           <a href="#/guide">{t.nav.guide}</a>
           <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">

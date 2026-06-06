@@ -103,6 +103,11 @@ export const ui = {
       text: 'Get the latest clean IPs, updates, and announcements first.',
       cta: 'Join the channel',
     },
+    x: {
+      title: 'Follow us on X',
+      text: 'Clean IPs, release notes, and announcements as they happen.',
+      cta: 'Follow @irNovaProxy',
+    },
     youtube: {
       eyebrow: 'Watch',
       title: 'Video tutorials',
@@ -235,6 +240,11 @@ export const ui = {
       title: 'ما را در تلگرام دنبال کنید',
       text: 'آخرین آی‌پی‌های تمیز، به‌روزرسانی‌ها و اخبار را زودتر از همه دریافت کنید.',
       cta: 'عضویت در کانال',
+    },
+    x: {
+      title: 'ما را در X دنبال کنید',
+      text: 'آی‌پی‌های تمیز، یادداشت‌های انتشار و اخبار را همان لحظه دریافت کنید.',
+      cta: 'دنبال کردن @irNovaProxy',
     },
     youtube: {
       eyebrow: 'تماشا',

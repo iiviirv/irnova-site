@@ -23,6 +23,7 @@ function useHashRoute() {
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
+const X = 'https://x.com/irNovaProxy'
 // One-click "Deploy to Cloudflare" — logs the user into Cloudflare (no API
 // token), forks the repo, and creates the Worker + KV automatically.
 const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy'
@@ -240,16 +241,28 @@ export default function App() {
         </section>
 
         <section className="section tg-section">
-          <a className="tg-banner" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
-            <span className="tg-icon">
-              <Icon name="telegram" size={26} />
-            </span>
-            <span className="tg-text">
-              <strong>{t.telegram.title}</strong>
-              <span>{t.telegram.text}</span>
-            </span>
-            <span className="btn btn-primary tg-cta">{t.telegram.cta}</span>
-          </a>
+          <div className="social-banners">
+            <a className="tg-banner" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
+              <span className="tg-icon">
+                <Icon name="telegram" size={26} />
+              </span>
+              <span className="tg-text">
+                <strong>{t.telegram.title}</strong>
+                <span>{t.telegram.text}</span>
+              </span>
+              <span className="btn btn-primary tg-cta">{t.telegram.cta}</span>
+            </a>
+            <a className="tg-banner x-banner" href={X} target="_blank" rel="noreferrer noopener">
+              <span className="tg-icon x-icon">
+                <Icon name="x" size={22} />
+              </span>
+              <span className="tg-text">
+                <strong>{t.x.title}</strong>
+                <span>{t.x.text}</span>
+              </span>
+              <span className="btn x-cta">{t.x.cta}</span>
+            </a>
+          </div>
         </section>
       </main>
 
@@ -267,6 +280,9 @@ export default function App() {
           </a>
           <a href={TELEGRAM} target="_blank" rel="noreferrer noopener">
             Telegram
+          </a>
+          <a href={X} target="_blank" rel="noreferrer noopener">
+            X
           </a>
           <a href={YOUTUBE} target="_blank" rel="noreferrer noopener">
             YouTube

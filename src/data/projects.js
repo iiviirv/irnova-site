@@ -80,15 +80,35 @@ export const projects = [
   },
 ]
 
+// The people behind Nova Proxy, shown in the Contributors section.
+// Avatars come from GitHub's `https://github.com/<user>.png` endpoint (no API,
+// no rate limit). Roles are easy to edit; adjust as the team grows.
+export const team = [
+  {
+    handle: 'IRNova',
+    name: 'IRNova',
+    url: 'https://github.com/IRNova',
+    avatar: 'https://github.com/IRNova.png?size=200',
+    role: { en: 'Creator & maintainer', fa: 'سازنده و نگه‌دارنده' },
+  },
+  {
+    handle: 'iiviirv',
+    name: 'iiviirv',
+    url: 'https://github.com/iiviirv',
+    avatar: 'https://github.com/iiviirv.png?size=200',
+    role: { en: 'Contributor', fa: 'مشارکت‌کننده' },
+  },
+]
+
 // Feature cards for the Nova Proxy Worker product. Rendered in the
 // "Capabilities" / features grid on the landing page.
 export const capabilities = [
   {
     icon: 'bolt',
-    title: { en: 'One-click deploy', fa: 'استقرار یک‌کلیکی' },
+    title: { en: 'Deploy it yourself, free', fa: 'خودت رایگان مستقر کن' },
     text: {
-      en: 'Deploy to your own free Cloudflare account in one click: it logs you in (no API token), forks the repo, creates the Worker and KV, and bundles the dashboard. Then just set a password in your browser and share your link.',
-      fa: 'با یک کلیک روی حساب رایگان کلودفلر خودت مستقر می‌شود: واردت می‌کند (بدون توکن API)، مخزن را فورک می‌کند، ورکر و KV را می‌سازد و داشبورد را داخل ورکر قرار می‌دهد. بعد کافی است در مرورگر یک رمز بگذاری و لینکت را به اشتراک بگذاری.',
+      en: 'Runs on your own free Cloudflare Worker. Grab the latest Worker file from GitHub Releases, paste it into a Worker, set a password in your browser, and share your link — no CLI, no API tokens, no secrets to manage.',
+      fa: 'روی ورکر رایگان کلودفلر خودت اجرا می‌شود. آخرین فایل ورکر را از GitHub Releases بگیر، در یک ورکر بچسبان، در مرورگر یک رمز بگذار و لینکت را به اشتراک بگذار — بدون خط فرمان، بدون توکن API و بدون رمزی برای مدیریت.',
     },
   },
   {

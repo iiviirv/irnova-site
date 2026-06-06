@@ -1724,3 +1724,98 @@ h3 {
   max-width: 640px;
   line-height: 1.7;
 }
+
+/* Version badge on the "Get the latest Worker" button */
+.deploy-ver {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  background: rgba(5, 6, 10, 0.18);
+  color: inherit;
+}
+
+.deploy-release-note {
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+  margin: 14px 0 0;
+}
+
+.deploy-release-note a {
+  color: var(--cyan);
+  font-weight: 600;
+}
+
+.deploy-release-note a:hover {
+  color: var(--text);
+}
+
+/* ---------- Contributors / team ---------- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 18px;
+  max-width: 720px;
+  margin: 0 auto;
+}
+
+.team-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 5px;
+  padding: 30px 22px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform 0.18s, border-color 0.2s, background 0.2s;
+}
+
+.team-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+
+.team-avatar {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 10px;
+  border: 2px solid var(--border-strong);
+  background: var(--surface-2);
+}
+
+.team-name {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.team-handle {
+  color: var(--cyan);
+  font-size: 0.9rem;
+}
+
+.team-role {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.team-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.team-card:hover .team-link {
+  color: var(--cyan);
+}

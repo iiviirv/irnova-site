@@ -1246,6 +1246,12 @@ h3 {
 }
 
 /* ---------- Telegram banner ---------- */
+/* The YouTube card and the social banners read as one community group, so
+   collapse the vertical gap between the #watch section and the banners. */
+#watch {
+  padding-bottom: clamp(24px, 4vw, 40px);
+}
+
 .tg-section {
   padding-top: 0;
 }

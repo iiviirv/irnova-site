@@ -61,7 +61,7 @@ export const ui = {
       pill: 'One click · runs on your own free Cloudflare account',
       titleLine1: 'Your own proxy on a',
       titleAccent: 'free Cloudflare Worker.',
-      sub: 'Nova Proxy is a personal, censorship-resistant proxy that runs entirely on your own free Cloudflare Worker. One click to deploy, set a password in your browser, and share your subscription link — no CLI, no API tokens, no secrets to manage.',
+      sub: 'Nova Proxy is a personal, censorship-resistant proxy that runs entirely on your own free Cloudflare Worker. One click to deploy, set a password in your browser, and share your subscription link. No CLI, no API tokens, no secrets to manage.',
       explore: 'Explore Projects',
       guide: 'Deploy & Setup guide',
       deployCta: 'Deploy your own',
@@ -81,8 +81,8 @@ export const ui = {
     capsSection: {
       eyebrow: 'What you get',
       title: 'Features',
-      desc: 'Everything Nova Proxy gives you the moment your Worker is live — from one-click deploy to a built-in dashboard, Telegram bot, and anti-censorship resilience tuned for Iran.',
-      note: 'How it works: a Cloudflare Worker serves VLESS / VMess / Trojan / Shadowsocks (TCP over WebSocket). It can’t serve Hysteria2, TUIC, or inbound WireGuard (no UDP/QUIC) — WARP configs work because they target Cloudflare’s WARP service, not your Worker.',
+      desc: 'Everything Nova Proxy gives you the moment your Worker is live, from one-click deploy to a built-in dashboard, Telegram bot, and anti-censorship resilience tuned for Iran.',
+      note: 'How it works: a Cloudflare Worker serves VLESS / VMess / Trojan / Shadowsocks (TCP over WebSocket). It can’t serve Hysteria2, TUIC, or inbound WireGuard (no UDP/QUIC). WARP configs work because they target Cloudflare’s WARP service, not your Worker.',
     },
     about: {
       eyebrow: 'About',
@@ -119,14 +119,14 @@ export const ui = {
       eyebrow: 'Get started',
       title: 'Deploy your own',
       titleAccent: 'Nova Proxy',
-      sub: 'It runs on your own free Cloudflare account — no CLI, no API token, no keys to manage. Grab the latest Worker file, paste it into a Cloudflare Worker, and in a few steps you have a private subscription link and QR to share.',
+      sub: 'It runs on your own free Cloudflare account. No CLI, no API token, no keys to manage. Grab the latest Worker file, paste it into a Cloudflare Worker, and in a few steps you have a private subscription link and QR to share.',
       cta: 'Get the latest Worker',
       releaseNote: 'Always links to the newest release.',
       allReleases: 'View all releases',
       steps: [
         {
           title: 'Get the latest Worker file',
-          text: 'Download the newest Nova Proxy Worker (.js) from GitHub Releases — it bundles the dashboard, install wizard, and Telegram bot. Always grab the latest version.',
+          text: 'Download the newest Nova Proxy Worker (.js) from GitHub Releases. It bundles the dashboard, install wizard, and Telegram bot. Always grab the latest version.',
         },
         {
           title: 'Create a Worker, paste & bind KV',
@@ -134,7 +134,7 @@ export const ui = {
         },
         {
           title: 'Open /install, set a password, share',
-          text: 'Open your Worker URL at /install and set an admin password, then log in at /login — the panel shows your subscription link and QR.',
+          text: 'Open your Worker URL at /install and set an admin password, then log in at /login. The panel shows your subscription link and QR.',
         },
       ],
       iranNoteTitle: 'In Iran:',
@@ -146,7 +146,7 @@ export const ui = {
     teamSection: {
       eyebrow: 'The people',
       title: 'Contributors',
-      desc: 'Nova Proxy is built and maintained in the open. These are the people behind it — contributions and pull requests are always welcome.',
+      desc: 'Nova Proxy is built and maintained in the open. These are the people behind it. Contributions and pull requests are always welcome.',
     },
     footer: { note: 'Open-source networking tools. Built for an open internet.' },
     viewOnGithub: 'View on GitHub',
@@ -206,7 +206,7 @@ export const ui = {
       pill: 'یک کلیک · روی حساب رایگان کلودفلر خودت اجرا می‌شود',
       titleLine1: 'پراکسی خودت روی',
       titleAccent: 'ورکر رایگان کلودفلر.',
-      sub: 'نوا پراکسی یک پراکسی شخصی و مقاوم در برابر سانسور است که به‌طور کامل روی ورکر رایگان کلودفلر خودت اجرا می‌شود. با یک کلیک مستقر کن، در مرورگر یک رمز بگذار و لینک اشتراکت را به اشتراک بگذار — بدون خط فرمان، بدون توکن API و بدون هیچ کلید و رمزی برای مدیریت.',
+      sub: 'نوا پراکسی یک پراکسی شخصی و مقاوم در برابر سانسور است که به‌طور کامل روی ورکر رایگان کلودفلر خودت اجرا می‌شود. با یک کلیک مستقر کن، در مرورگر یک رمز بگذار و لینک اشتراکت را به اشتراک بگذار. بدون خط فرمان، بدون توکن API و بدون هیچ کلید و رمزی برای مدیریت.',
       explore: 'مشاهده پروژه‌ها',
       guide: 'راهنمای استقرار و راه‌اندازی',
       deployCta: 'راه‌اندازی کن',
@@ -226,8 +226,8 @@ export const ui = {
     capsSection: {
       eyebrow: 'چه چیزی به دست می‌آوری',
       title: 'ویژگی‌ها',
-      desc: 'هر چیزی که نوا پراکسی همان لحظه که ورکرت فعال می‌شود در اختیارت می‌گذارد — از استقرار یک‌کلیکی تا داشبورد داخلی، ربات تلگرام و پایداری ضد سانسور تنظیم‌شده برای ایران.',
-      note: 'چطور کار می‌کند: ورکر کلودفلر، VLESS / VMess / Trojan / Shadowsocks را ارائه می‌دهد (TCP روی WebSocket). نمی‌تواند Hysteria2، TUIC یا WireGuard ورودی را ارائه دهد (چون UDP/QUIC ندارد) — کانفیگ‌های WARP کار می‌کنند چون به سرویس WARP خود کلودفلر وصل می‌شوند، نه به ورکر تو.',
+      desc: 'هر چیزی که نوا پراکسی همان لحظه که ورکرت فعال می‌شود در اختیارت می‌گذارد، از استقرار یک‌کلیکی تا داشبورد داخلی، ربات تلگرام و پایداری ضد سانسور تنظیم‌شده برای ایران.',
+      note: 'چطور کار می‌کند: ورکر کلودفلر، VLESS / VMess / Trojan / Shadowsocks را ارائه می‌دهد (TCP روی WebSocket). نمی‌تواند Hysteria2، TUIC یا WireGuard ورودی را ارائه دهد (چون UDP/QUIC ندارد). کانفیگ‌های WARP کار می‌کنند چون به سرویس WARP خود کلودفلر وصل می‌شوند، نه به ورکر تو.',
     },
     about: {
       eyebrow: 'درباره',
@@ -264,14 +264,14 @@ export const ui = {
       eyebrow: 'شروع',
       title: 'نوا پراکسی خودت را',
       titleAccent: 'مستقر کن',
-      sub: 'روی حساب رایگان کلودفلر خودت اجرا می‌شود — بدون خط فرمان، بدون توکن API و بدون هیچ کلیدی برای مدیریت. آخرین فایل ورکر را بگیر، در یک ورکر کلودفلر بچسبان و با چند قدم یک لینک اشتراک خصوصی و QR برای به اشتراک گذاشتن داشته باش.',
+      sub: 'روی حساب رایگان کلودفلر خودت اجرا می‌شود. بدون خط فرمان، بدون توکن API و بدون هیچ کلیدی برای مدیریت. آخرین فایل ورکر را بگیر، در یک ورکر کلودفلر بچسبان و با چند قدم یک لینک اشتراک خصوصی و QR برای به اشتراک گذاشتن داشته باش.',
       cta: 'دریافت آخرین نسخه‌ی ورکر',
       releaseNote: 'همیشه به جدیدترین نسخه پیوند می‌دهد.',
       allReleases: 'مشاهده‌ی همه‌ی نسخه‌ها',
       steps: [
         {
           title: 'آخرین فایل ورکر را بگیر',
-          text: 'جدیدترین ورکر نوا پراکسی (.js) را از GitHub Releases دانلود کن — داشبورد، راهنمای نصب و ربات تلگرام را در خود دارد. همیشه آخرین نسخه را بگیر.',
+          text: 'جدیدترین ورکر نوا پراکسی (.js) را از GitHub Releases دانلود کن. داشبورد، راهنمای نصب و ربات تلگرام را در خود دارد. همیشه آخرین نسخه را بگیر.',
         },
         {
           title: 'ورکر بساز، بچسبان و KV را وصل کن',
@@ -279,7 +279,7 @@ export const ui = {
         },
         {
           title: 'باز کردن /install، گذاشتن رمز و اشتراک',
-          text: 'آدرس ورکرت را با /install باز کن و یک رمز مدیر بگذار، سپس در /login وارد شو — پنل لینک اشتراک و QR تو را نشان می‌دهد.',
+          text: 'آدرس ورکرت را با /install باز کن و یک رمز مدیر بگذار، سپس در /login وارد شو. پنل لینک اشتراک و QR تو را نشان می‌دهد.',
         },
       ],
       iranNoteTitle: 'در ایران:',
@@ -291,7 +291,7 @@ export const ui = {
     teamSection: {
       eyebrow: 'افراد',
       title: 'مشارکت‌کنندگان',
-      desc: 'نوا پراکسی به‌صورت متن‌باز ساخته و نگهداری می‌شود. این‌ها افراد پشت آن هستند — از مشارکت و Pull Request شما همیشه استقبال می‌کنیم.',
+      desc: 'نوا پراکسی به‌صورت متن‌باز ساخته و نگهداری می‌شود. این‌ها افراد پشت آن هستند. از مشارکت و Pull Request شما همیشه استقبال می‌کنیم.',
     },
     footer: { note: 'ابزارهای شبکه‌ی متن‌باز. ساخته‌شده برای اینترنتی آزاد.' },
     viewOnGithub: 'مشاهده در گیت‌هاب',

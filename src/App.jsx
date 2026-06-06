@@ -5,8 +5,9 @@ import Guide from './components/Guide.jsx'
 import IPTools from './components/IPTools.jsx'
 import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
-import { projects, capabilities } from './data/projects.js'
+import { projects, capabilities, team } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
+import { useLatestRelease, RELEASES_PAGE } from './hooks/useLatestRelease.js'
 
 // Tiny hash router: '#/guide' shows the setup guide, everything else (including
 // in-page anchors like '#projects') shows the landing page.
@@ -24,13 +25,11 @@ const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
-// One-click "Deploy to Cloudflare" — logs the user into Cloudflare (no API
-// token), forks the repo, and creates the Worker + KV automatically.
-const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy'
 
 export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
+  const release = useLatestRelease()
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
@@ -73,12 +72,7 @@ export default function App() {
             </h1>
             <p className="hero-sub">{t.hero.sub}</p>
             <div className="hero-actions">
-              <a
-                className="btn btn-primary"
-                href={DEPLOY_URL}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
+              <a className="btn btn-primary" href="#deploy">
                 <Icon name="bolt" size={18} /> {t.hero.deployCta}
               </a>
               <a className="btn btn-ghost" href="#/guide">
@@ -146,16 +140,23 @@ export default function App() {
           <div className="deploy-cta-row">
             <a
               className="btn btn-primary deploy-hero-btn"
-              href={DEPLOY_URL}
+              href={release.jsUrl || release.pageUrl}
               target="_blank"
               rel="noreferrer noopener"
             >
               <Icon name="bolt" size={18} /> {t.deploy.cta}
+              {release.version ? <span className="deploy-ver">{release.version}</span> : null}
             </a>
             <a className="btn btn-ghost" href="#/guide">
               <Icon name="book" size={18} /> {t.nav.guide}
             </a>
           </div>
+          <p className="deploy-release-note">
+            {t.deploy.releaseNote}{' '}
+            <a href={RELEASES_PAGE} target="_blank" rel="noreferrer noopener">
+              {t.deploy.allReleases}
+            </a>
+          </p>
 
           <ol className="deploy-steps">
             {t.deploy.steps.map((s, i) => (
@@ -212,6 +213,40 @@ export default function App() {
                 ))}
               </ul>
             </div>
+          </div>
+        </section>
+
+        <section id="team" className="section section-alt">
+          <div className="section-head">
+            <span className="eyebrow">{t.teamSection.eyebrow}</span>
+            <h2>{t.teamSection.title}</h2>
+            <p>{t.teamSection.desc}</p>
+          </div>
+          <div className="team-grid">
+            {team.map((m) => (
+              <a
+                className="team-card"
+                key={m.handle}
+                href={m.url}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <img
+                  className="team-avatar"
+                  src={m.avatar}
+                  alt={m.name}
+                  width="84"
+                  height="84"
+                  loading="lazy"
+                />
+                <span className="team-name">{m.name}</span>
+                <span className="team-handle">@{m.handle}</span>
+                <span className="team-role">{m.role[lang]}</span>
+                <span className="team-link">
+                  <Icon name="github" size={15} /> {t.viewOnGithub}
+                </span>
+              </a>
+            ))}
           </div>
         </section>
 
@@ -273,6 +308,7 @@ export default function App() {
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#deploy">{t.nav.deploy}</a>
+          <a href="#team">{t.teamSection.title}</a>
           <a href="#/guide">{t.nav.guide}</a>
           <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">

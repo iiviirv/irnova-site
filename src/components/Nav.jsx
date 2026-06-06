@@ -6,6 +6,7 @@ import { useLang } from '../i18n/LanguageContext.jsx'
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
+const X = 'https://x.com/irNovaProxy'
 
 export function Logo({ brand }) {
   return (
@@ -45,6 +46,9 @@ export default function Nav() {
         <span className="topbar-text">{t.social.follow}</span>
         <a className="topbar-link tg" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
           <Icon name="telegram" size={15} /> Telegram
+        </a>
+        <a className="topbar-link x" href={X} target="_blank" rel="noreferrer noopener">
+          <Icon name="x" size={13} /> X
         </a>
         <a className="topbar-link yt" href={YOUTUBE} target="_blank" rel="noreferrer noopener">
           <Icon name="youtube" size={15} /> YouTube

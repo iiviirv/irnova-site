@@ -25,6 +25,9 @@ const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
+// Official Cloudflare one-click deploy. Requires a wrangler config in the
+// Nova-Proxy repo (creates the Worker + KV automatically, no API token).
+const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/Nova-Proxy'
 
 export default function App() {
   const { t, lang } = useLang()
@@ -140,11 +143,19 @@ export default function App() {
           <div className="deploy-cta-row">
             <a
               className="btn btn-primary deploy-hero-btn"
-              href={release.jsUrl || release.pageUrl}
+              href={DEPLOY_URL}
               target="_blank"
               rel="noreferrer noopener"
             >
               <Icon name="bolt" size={18} /> {t.deploy.cta}
+            </a>
+            <a
+              className="btn btn-ghost"
+              href={release.jsUrl || release.pageUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="download" size={18} /> {t.deploy.downloadCta}
               {release.version ? <span className="deploy-ver">{release.version}</span> : null}
             </a>
             <a className="btn btn-ghost" href="#/guide">

@@ -124,6 +124,11 @@ h3 {
   background: linear-gradient(135deg, #2aabee, #229ed9);
 }
 
+.topbar-link.x {
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
 .topbar-link.yt {
   background: #ff0000;
 }
@@ -1198,7 +1203,7 @@ h3 {
   display: flex;
   align-items: center;
   gap: 18px;
-  max-width: 720px;
+  max-width: 820px;
   margin: 0 auto;
   padding: 26px;
   border-radius: 20px;
@@ -1245,12 +1250,19 @@ h3 {
   padding-top: 0;
 }
 
+.social-banners {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
 .tg-banner {
   display: flex;
   align-items: center;
   gap: 18px;
-  max-width: 880px;
-  margin: 0 auto;
+  width: 100%;
   padding: 22px 26px;
   border-radius: 18px;
   border: 1px solid rgba(34, 211, 238, 0.35);
@@ -1261,6 +1273,36 @@ h3 {
 .tg-banner:hover {
   transform: translateY(-3px);
   border-color: rgba(34, 211, 238, 0.6);
+}
+
+/* X (Twitter) banner — monochrome to match the brand. */
+.x-banner {
+  border-color: var(--border-strong);
+  background: linear-gradient(120deg, rgba(255, 255, 255, 0.08), var(--surface));
+}
+
+.x-banner:hover {
+  border-color: var(--text);
+}
+
+.x-icon {
+  background: linear-gradient(135deg, #1d1d1f, #000);
+}
+
+:root[data-theme='light'] .x-icon {
+  background: #000;
+}
+
+.x-cta {
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(135deg, #1d1d1f, #000);
+  border: 1px solid var(--border-strong);
+}
+
+:root[data-theme='light'] .x-cta {
+  background: #000;
+  border-color: #000;
 }
 
 .tg-icon {

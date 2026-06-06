@@ -5,6 +5,7 @@ import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
 import { useLatestRelease, RELEASES_PAGE } from '../hooks/useLatestRelease.js'
 
+const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/Nova-Proxy'
 const REPO_URL = 'https://github.com/IRNova/Nova-Proxy'
 const TELEGRAM_URL = 'https://t.me/irnova_proxy'
 const PROGRESS_KEY = 'nova-guide-progress'
@@ -99,11 +100,19 @@ export default function Guide() {
         <div className="deploy-cta-row">
           <a
             className="btn btn-primary deploy-hero-btn"
-            href={release.jsUrl || release.pageUrl}
+            href={DEPLOY_URL}
             target="_blank"
             rel="noreferrer noopener"
           >
             <Icon name="bolt" size={18} /> {d.cta}
+          </a>
+          <a
+            className="btn btn-ghost"
+            href={release.jsUrl || release.pageUrl}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <Icon name="download" size={18} /> {d.downloadCta}
             {release.version ? <span className="deploy-ver">{release.version}</span> : null}
           </a>
         </div>

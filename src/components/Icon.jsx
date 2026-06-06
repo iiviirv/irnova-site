@@ -121,6 +121,13 @@ const paths = {
       <path d="M8 11V8a4 4 0 0 1 8 0v3" />
     </>
   ),
+  download: (
+    <>
+      <path d="M12 3v12" />
+      <path d="M7 11l5 5 5-5" />
+      <path d="M5 20h14" />
+    </>
+  ),
   play: <path d="M8 5v14l11-7z" fill="currentColor" stroke="none" />,
   youtube: (
     <>

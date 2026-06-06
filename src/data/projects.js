@@ -105,10 +105,10 @@ export const team = [
 export const capabilities = [
   {
     icon: 'bolt',
-    title: { en: 'Deploy it yourself, free', fa: 'خودت رایگان مستقر کن' },
+    title: { en: 'One-click deploy, free', fa: 'استقرار یک‌کلیکی و رایگان' },
     text: {
-      en: 'Runs on your own free Cloudflare Worker. Grab the latest Worker file from GitHub Releases, paste it into a Worker, set a password in your browser, and share your link. No CLI, no API tokens, no secrets to manage.',
-      fa: 'روی ورکر رایگان کلودفلر خودت اجرا می‌شود. آخرین فایل ورکر را از GitHub Releases بگیر، در یک ورکر بچسبان، در مرورگر یک رمز بگذار و لینکت را به اشتراک بگذار. بدون خط فرمان، بدون توکن API و بدون رمزی برای مدیریت.',
+      en: 'Deploy to your own free Cloudflare account in one click. Cloudflare creates the Worker and the KV database for you, then you set a password in the browser and share your link. No CLI, no API tokens.',
+      fa: 'با یک کلیک روی حساب رایگان کلودفلر خودت مستقر کن. Cloudflare ورکر و دیتابیس KV را برایت می‌سازد، بعد در مرورگر یک رمز می‌گذاری و لینکت را به اشتراک می‌گذاری. بدون خط فرمان و بدون توکن API.',
     },
   },
   {

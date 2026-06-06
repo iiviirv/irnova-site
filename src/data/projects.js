@@ -5,19 +5,19 @@ export const projects = [
   {
     name: 'Nova-Proxy',
     tagline: {
-      en: 'Subscription & routing control panel',
-      fa: 'پنل مدیریت اشتراک و مسیریابی',
+      en: 'One-click proxy on your own Cloudflare Worker',
+      fa: 'پراکسی یک‌کلیکی روی ورکر کلودفلر خودت',
     },
     description: {
-      en: 'A graphical panel for delivering Worker subscriptions with proxies, Trojan, and Warp, alongside proxy chains, full DNS management, clean-IP selection, and advanced routing for users on every platform.',
-      fa: 'یک پنل گرافیکی برای ارائه‌ی اشتراک‌های Worker همراه با پراکسی، Trojan و Warp، به‌همراه زنجیره‌ی پراکسی، مدیریت کامل DNS، انتخاب آی‌پی تمیز و مسیریابی پیشرفته برای کاربران در هر پلتفرم.',
+      en: 'A personal, censorship-resistant proxy that runs entirely on your own free Cloudflare Worker. Serves VLESS, Trojan, and Shadowsocks over WebSocket+TLS, with a bundled bilingual dashboard, a Telegram bot, per-ISP clean-IP optimization, and a one-click deploy — set a password in your browser and share your link.',
+      fa: 'یک پراکسی شخصی و مقاوم در برابر سانسور که به‌طور کامل روی ورکر رایگان کلودفلر خودت اجرا می‌شود. VLESS، Trojan و Shadowsocks را روی WebSocket+TLS ارائه می‌دهد، همراه با داشبورد دوزبانه‌ی داخلی، ربات تلگرام، بهینه‌سازی آی‌پی تمیز بر اساس اپراتور و استقرار یک‌کلیکی — کافی است در مرورگر یک رمز بگذاری و لینکت را به اشتراک بگذاری.',
     },
-    language: 'HTML',
+    language: 'JavaScript',
     stars: 1301,
     url: 'https://github.com/IRNova/Nova-Proxy',
     tags: {
-      en: ['Subscriptions', 'Trojan', 'Warp', 'DNS', 'Routing'],
-      fa: ['اشتراک‌ها', 'Trojan', 'Warp', 'DNS', 'مسیریابی'],
+      en: ['One-click deploy', 'VLESS', 'Trojan', 'Shadowsocks', 'Dashboard'],
+      fa: ['استقرار یک‌کلیکی', 'VLESS', 'Trojan', 'Shadowsocks', 'داشبورد'],
     },
     featured: true,
   },
@@ -80,53 +80,87 @@ export const projects = [
   },
 ]
 
+// Feature cards for the Nova Proxy Worker product. Rendered in the
+// "Capabilities" / features grid on the landing page.
 export const capabilities = [
   {
-    icon: 'shield',
-    title: { en: 'Bypass Filtering', fa: 'عبور از فیلترینگ' },
+    icon: 'bolt',
+    title: { en: 'One-click deploy', fa: 'استقرار یک‌کلیکی' },
     text: {
-      en: 'Domain fronting, TLS fragmentation, ECH injection and QUIC replay work together to keep connections alive where they would otherwise be blocked.',
-      fa: 'Domain fronting، تکه‌تکه‌سازی TLS، تزریق ECH و بازپخش QUIC در کنار هم کار می‌کنند تا اتصال‌ها را جایی که در غیر این صورت مسدود می‌شدند، برقرار نگه دارند.',
-    },
-  },
-  {
-    icon: 'route',
-    title: { en: 'Intelligent Routing', fa: 'مسیریابی هوشمند' },
-    text: {
-      en: 'Proxy chains, rule-based routing, and clean-IP selection automatically steer traffic down the fastest, most reliable path.',
-      fa: 'زنجیره‌ی پراکسی، مسیریابی مبتنی بر قاعده و انتخاب آی‌پی تمیز، ترافیک را به‌صورت خودکار از سریع‌ترین و پایدارترین مسیر هدایت می‌کنند.',
-    },
-  },
-  {
-    icon: 'radar',
-    title: { en: 'Real Verification', fa: 'بررسی واقعی' },
-    text: {
-      en: 'Two-phase TCP + TLS handshake testing means every endpoint is proven reachable before you ever rely on it.',
-      fa: 'آزمایش دومرحله‌ای دست‌دادن TCP + TLS یعنی پیش از آنکه به هر نقطه‌ی اتصالی تکیه کنید، دسترس‌پذیری آن اثبات شده است.',
+      en: 'Deploy to your own free Cloudflare account in one click: it logs you in (no API token), forks the repo, creates the Worker and KV, and bundles the dashboard. Then just set a password in your browser and share your link.',
+      fa: 'با یک کلیک روی حساب رایگان کلودفلر خودت مستقر می‌شود: واردت می‌کند (بدون توکن API)، مخزن را فورک می‌کند، ورکر و KV را می‌سازد و داشبورد را داخل ورکر قرار می‌دهد. بعد کافی است در مرورگر یک رمز بگذاری و لینکت را به اشتراک بگذاری.',
     },
   },
   {
     icon: 'globe',
-    title: { en: 'Cross-Platform', fa: 'چندسکویی' },
+    title: { en: 'Built-in bilingual dashboard', fa: 'داشبورد دوزبانه‌ی داخلی' },
     text: {
-      en: 'A consistent experience across desktop and every major platform, with subscription delivery that just works.',
-      fa: 'تجربه‌ای یکپارچه روی دسکتاپ و همه‌ی پلتفرم‌های اصلی، با ارائه‌ی اشتراکی که به‌سادگی کار می‌کند.',
+      en: 'A self-contained dashboard in English and Farsi is bundled into the Worker itself — there is no separate site or backend to set up or maintain.',
+      fa: 'یک داشبورد مستقل به دو زبان انگلیسی و فارسی داخل خود ورکر قرار دارد — هیچ سایت یا بک‌اند جداگانه‌ای برای راه‌اندازی یا نگهداری لازم نیست.',
     },
   },
   {
-    icon: 'dns',
-    title: { en: 'Full DNS Control', fa: 'کنترل کامل DNS' },
+    icon: 'link',
+    title: { en: 'Works in every major client', fa: 'سازگار با همه‌ی کلاینت‌های اصلی' },
     text: {
-      en: 'Complete DNS settings management with support for Warp, Trojan, and custom upstreams baked right in.',
-      fa: 'مدیریت کامل تنظیمات DNS با پشتیبانی داخلی از Warp، Trojan و سرورهای بالادست سفارشی.',
+      en: 'One subscription link works in Hiddify, v2rayNG, MahsaNG, FlClash, Clash Meta, NekoBox/sing-box, Karing, Streisand and more, with per-format links (mihomo.yaml / base64.txt / singbox.json).',
+      fa: 'یک لینک اشتراک در Hiddify، v2rayNG، MahsaNG، FlClash، Clash Meta، NekoBox/sing-box، Karing، Streisand و بقیه کار می‌کند، با لینک‌های جداگانه برای هر قالب (mihomo.yaml / base64.txt / singbox.json).',
     },
   },
   {
-    icon: 'open',
-    title: { en: 'Open Source', fa: 'متن‌باز' },
+    icon: 'radar',
+    title: { en: 'Per-ISP clean-IP optimization', fa: 'بهینه‌سازی آی‌پی تمیز بر اساس اپراتور' },
     text: {
-      en: 'Every project is open source on GitHub, auditable, community-driven, and free to study, run, and improve.',
-      fa: 'هر پروژه روی گیت‌هاب متن‌باز است، قابل‌بازبینی، جامعه‌محور و رایگان برای مطالعه، اجرا و بهبود.',
+      en: 'Each user automatically gets clean IPs tuned to their own network — MCI, Irancell, or Shatel — so configs use the endpoints that actually work on that ISP.',
+      fa: 'هر کاربر به‌صورت خودکار آی‌پی‌های تمیز متناسب با شبکه‌ی خودش می‌گیرد — همراه اول، ایرانسل یا شاتل — تا کانفیگ‌ها از نقاطی استفاده کنند که واقعاً روی همان اپراتور کار می‌کنند.',
+    },
+  },
+  {
+    icon: 'gauge',
+    title: { en: 'Built-in speed test', fa: 'تست سرعت داخلی' },
+    text: {
+      en: 'A built-in speed test finds the fastest clean IPs for your ISP and applies them to your configs with one tap.',
+      fa: 'تست سرعت داخلی سریع‌ترین آی‌پی‌های تمیز را برای اپراتور تو پیدا می‌کند و با یک ضربه روی کانفیگ‌هایت اعمال می‌کند.',
+    },
+  },
+  {
+    icon: 'telegram',
+    title: { en: 'Telegram bot & Mini App', fa: 'ربات تلگرام و مینی‌اپ' },
+    text: {
+      en: 'A Telegram bot sends every sub-link format, status, and announcements with colored inline buttons, plus host management and a Mini App that opens the panel right inside Telegram.',
+      fa: 'یک ربات تلگرام همه‌ی قالب‌های لینک اشتراک، وضعیت و اعلان‌ها را با دکمه‌های رنگی درون‌خطی می‌فرستد، به‌همراه مدیریت هاست و یک مینی‌اپ که پنل را همان داخل تلگرام باز می‌کند.',
+    },
+  },
+  {
+    icon: 'shield',
+    title: { en: 'Resilience for Iran', fa: 'پایداری برای ایران' },
+    text: {
+      en: 'Multi-protocol and multi-transport configs, a self-healing front-domain pool with auto-failover, a cross-infrastructure blend of non-Cloudflare nodes, NAT64 fallback, and a permanent GitHub subscription mirror.',
+      fa: 'کانفیگ‌های چندپروتکلی و چندترنسپورتی، استخر دامنه‌ی جلویی خودترمیم با جابه‌جایی خودکار، ترکیب زیرساختی با نودهای غیرکلودفلر، پشتیبان NAT64 و یک آینه‌ی اشتراک دائمی روی گیت‌هاب.',
+    },
+  },
+  {
+    icon: 'key',
+    title: { en: 'WARP / WireGuard generator', fa: 'سازنده‌ی WARP / WireGuard' },
+    text: {
+      en: 'Generate WARP and WireGuard configurations on the fly, exported as ready-to-import wireguard:// and nekoray:// lists.',
+      fa: 'کانفیگ‌های WARP و WireGuard را در لحظه بساز، به‌صورت فهرست‌های آماده‌ی وارد کردن wireguard:// و nekoray:// خروجی بگیر.',
+    },
+  },
+  {
+    icon: 'app',
+    title: { en: 'Installable PWA', fa: 'اپ نصب‌شدنی (PWA)' },
+    text: {
+      en: 'Add to Home Screen installs the panel as a standalone “Nova Proxy” app, so it opens like any other app on your phone.',
+      fa: 'با «افزودن به صفحه‌ی اصلی»، پنل به‌صورت یک اپ مستقل «نوا پراکسی» نصب می‌شود و مثل هر اپ دیگری روی گوشی‌ات باز می‌شود.',
+    },
+  },
+  {
+    icon: 'lock',
+    title: { en: 'Private by design', fa: 'حریم خصوصی از پایه' },
+    text: {
+      en: 'Everything runs on your own Cloudflare account. There is no shared server in the middle, and your traffic isn’t logged by anyone.',
+      fa: 'همه‌چیز روی حساب کلودفلر خودت اجرا می‌شود. هیچ سرور مشترکی در میانه نیست و ترافیک تو توسط هیچ‌کس ذخیره نمی‌شود.',
     },
   },
 ]

@@ -78,6 +78,49 @@ const paths = {
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="M6 6l12 12M6 18L18 6" />,
   telegram: <path d="M22 3 2 11l6 2 2 6 3-4 5 4 4-16z M8 13l11-7-8 9" />,
+  bolt: (
+    <path
+      d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"
+      fill="currentColor"
+      stroke="currentColor"
+      strokeWidth="1.2"
+      strokeLinejoin="round"
+    />
+  ),
+  gauge: (
+    <>
+      <path d="M4 18a8 8 0 1 1 16 0" />
+      <path d="M12 14l4.5-3.5" />
+      <circle cx="12" cy="14" r="1.3" fill="currentColor" stroke="none" />
+    </>
+  ),
+  link: (
+    <>
+      <path d="M9.5 14.5l5-5" />
+      <path d="M11 6.5l1.2-1.2a3.8 3.8 0 0 1 5.5 5.5L16.5 12" />
+      <path d="M13 17.5l-1.2 1.2a3.8 3.8 0 0 1-5.5-5.5L7.5 12" />
+    </>
+  ),
+  key: (
+    <>
+      <circle cx="8" cy="15" r="4" />
+      <path d="M10.8 12.2l8.2-8.2M16 4l3 3M14 6l2.2 2.2" />
+    </>
+  ),
+  app: (
+    <>
+      <rect x="4" y="4" width="7" height="7" rx="1.6" />
+      <rect x="13" y="4" width="7" height="7" rx="1.6" />
+      <rect x="4" y="13" width="7" height="7" rx="1.6" />
+      <rect x="13" y="13" width="7" height="7" rx="1.6" />
+    </>
+  ),
+  lock: (
+    <>
+      <rect x="5" y="11" width="14" height="9" rx="2" />
+      <path d="M8 11V8a4 4 0 0 1 8 0v3" />
+    </>
+  ),
   play: <path d="M8 5v14l11-7z" fill="currentColor" stroke="none" />,
   youtube: (
     <>

@@ -4,9 +4,9 @@ import Nav from './Nav.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
 
-const AUTO_URL = 'https://nova-deploy.pages.dev'
-const ONECLICK_URL =
-  'https://deploy.workers.cloudflare.com/?url=https://github.com/iiviirv/nova-proxy-worker'
+const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy'
+const REPO_URL = 'https://github.com/IRNova/Nova-Proxy'
+const TELEGRAM_URL = 'https://t.me/irnova_proxy'
 const PROGRESS_KEY = 'nova-guide-progress'
 const TRACK_ICON = { panel: 'cloud', connect: 'phone' }
 
@@ -89,34 +89,49 @@ export default function Guide() {
           <p>{g.intro}</p>
         </div>
 
-        {/* Deploy options (merged into the setup guide) */}
+        {/* One-click deploy (merged into the setup guide) */}
         <h2 className="guide-subtitle">
           {d.title} <span className="grad">{d.titleAccent}</span>
         </h2>
         <p className="guide-deploy-sub">{d.sub}</p>
-        <div className="deploy-grid">
-          <div className="cap-card deploy-card">
-            <span className="cap-icon">
-              <Icon name="cloud" size={22} />
-            </span>
-            <span className="pill deploy-pill">{d.opt1Tag}</span>
-            <h3>{d.opt1Title}</h3>
-            <p>{d.opt1Text}</p>
-            <a className="btn btn-primary deploy-btn" href={AUTO_URL} target="_blank" rel="noreferrer noopener">
-              {d.opt1Cta} <Icon name="arrow" size={16} className="icon-arrow" />
-            </a>
-          </div>
-          <div className="cap-card deploy-card">
-            <span className="cap-icon">
-              <Icon name="globe" size={22} />
-            </span>
-            <span className="pill deploy-pill">{d.opt2Tag}</span>
-            <h3>{d.opt2Title}</h3>
-            <p>{d.opt2Text}</p>
-            <a className="btn btn-ghost deploy-btn" href={ONECLICK_URL} target="_blank" rel="noreferrer noopener">
-              {d.opt2Cta}
-            </a>
-          </div>
+
+        <div className="deploy-cta-row">
+          <a
+            className="btn btn-primary deploy-hero-btn"
+            href={DEPLOY_URL}
+            target="_blank"
+            rel="noreferrer noopener"
+          >
+            <Icon name="bolt" size={18} /> {d.cta}
+          </a>
+        </div>
+
+        <ol className="deploy-steps">
+          {d.steps.map((s, i) => (
+            <li key={i}>
+              <span className="deploy-num">{i + 1}</span>
+              <span className="deploy-step-text">
+                <strong>{s.title}</strong>
+                <span>{s.text}</span>
+              </span>
+            </li>
+          ))}
+        </ol>
+
+        <div className="note note-warn deploy-iran-note">
+          <span className="note-dot" />
+          <span>
+            <strong>{d.iranNoteTitle}</strong> {d.iranNote}
+          </span>
+        </div>
+
+        <div className="deploy-links">
+          <a href={REPO_URL} target="_blank" rel="noreferrer noopener">
+            <Icon name="github" size={16} /> {d.repoCta}
+          </a>
+          <a href={TELEGRAM_URL} target="_blank" rel="noreferrer noopener">
+            <Icon name="telegram" size={16} /> {d.tgCta}
+          </a>
         </div>
 
         {/* Track selector */}

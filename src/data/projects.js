@@ -9,8 +9,8 @@ export const projects = [
       fa: 'پراکسی یک‌کلیکی روی ورکر کلودفلر خودت',
     },
     description: {
-      en: 'A personal, censorship-resistant proxy that runs entirely on your own free Cloudflare Worker. Serves VLESS, Trojan, and Shadowsocks over WebSocket+TLS, with a bundled bilingual dashboard, a Telegram bot, per-ISP clean-IP optimization, and a one-click deploy — set a password in your browser and share your link.',
-      fa: 'یک پراکسی شخصی و مقاوم در برابر سانسور که به‌طور کامل روی ورکر رایگان کلودفلر خودت اجرا می‌شود. VLESS، Trojan و Shadowsocks را روی WebSocket+TLS ارائه می‌دهد، همراه با داشبورد دوزبانه‌ی داخلی، ربات تلگرام، بهینه‌سازی آی‌پی تمیز بر اساس اپراتور و استقرار یک‌کلیکی — کافی است در مرورگر یک رمز بگذاری و لینکت را به اشتراک بگذاری.',
+      en: 'A personal, censorship-resistant proxy that runs entirely on your own free Cloudflare Worker. Serves VLESS, Trojan, and Shadowsocks over WebSocket+TLS, with a bundled bilingual dashboard, a Telegram bot, per-ISP clean-IP optimization, and easy self-deploy. Set a password in your browser and share your link.',
+      fa: 'یک پراکسی شخصی و مقاوم در برابر سانسور که به‌طور کامل روی ورکر رایگان کلودفلر خودت اجرا می‌شود. VLESS، Trojan و Shadowsocks را روی WebSocket+TLS ارائه می‌دهد، همراه با داشبورد دوزبانه‌ی داخلی، ربات تلگرام، بهینه‌سازی آی‌پی تمیز بر اساس اپراتور و استقرار آسان. کافی است در مرورگر یک رمز بگذاری و لینکت را به اشتراک بگذاری.',
     },
     language: 'JavaScript',
     stars: 1301,
@@ -107,16 +107,16 @@ export const capabilities = [
     icon: 'bolt',
     title: { en: 'Deploy it yourself, free', fa: 'خودت رایگان مستقر کن' },
     text: {
-      en: 'Runs on your own free Cloudflare Worker. Grab the latest Worker file from GitHub Releases, paste it into a Worker, set a password in your browser, and share your link — no CLI, no API tokens, no secrets to manage.',
-      fa: 'روی ورکر رایگان کلودفلر خودت اجرا می‌شود. آخرین فایل ورکر را از GitHub Releases بگیر، در یک ورکر بچسبان، در مرورگر یک رمز بگذار و لینکت را به اشتراک بگذار — بدون خط فرمان، بدون توکن API و بدون رمزی برای مدیریت.',
+      en: 'Runs on your own free Cloudflare Worker. Grab the latest Worker file from GitHub Releases, paste it into a Worker, set a password in your browser, and share your link. No CLI, no API tokens, no secrets to manage.',
+      fa: 'روی ورکر رایگان کلودفلر خودت اجرا می‌شود. آخرین فایل ورکر را از GitHub Releases بگیر، در یک ورکر بچسبان، در مرورگر یک رمز بگذار و لینکت را به اشتراک بگذار. بدون خط فرمان، بدون توکن API و بدون رمزی برای مدیریت.',
     },
   },
   {
     icon: 'globe',
     title: { en: 'Built-in bilingual dashboard', fa: 'داشبورد دوزبانه‌ی داخلی' },
     text: {
-      en: 'A self-contained dashboard in English and Farsi is bundled into the Worker itself — there is no separate site or backend to set up or maintain.',
-      fa: 'یک داشبورد مستقل به دو زبان انگلیسی و فارسی داخل خود ورکر قرار دارد — هیچ سایت یا بک‌اند جداگانه‌ای برای راه‌اندازی یا نگهداری لازم نیست.',
+      en: 'A self-contained dashboard in English and Farsi is bundled into the Worker itself. There is no separate site or backend to set up or maintain.',
+      fa: 'یک داشبورد مستقل به دو زبان انگلیسی و فارسی داخل خود ورکر قرار دارد. هیچ سایت یا بک‌اند جداگانه‌ای برای راه‌اندازی یا نگهداری لازم نیست.',
     },
   },
   {
@@ -131,8 +131,8 @@ export const capabilities = [
     icon: 'radar',
     title: { en: 'Per-ISP clean-IP optimization', fa: 'بهینه‌سازی آی‌پی تمیز بر اساس اپراتور' },
     text: {
-      en: 'Each user automatically gets clean IPs tuned to their own network — MCI, Irancell, or Shatel — so configs use the endpoints that actually work on that ISP.',
-      fa: 'هر کاربر به‌صورت خودکار آی‌پی‌های تمیز متناسب با شبکه‌ی خودش می‌گیرد — همراه اول، ایرانسل یا شاتل — تا کانفیگ‌ها از نقاطی استفاده کنند که واقعاً روی همان اپراتور کار می‌کنند.',
+      en: 'Each user automatically gets clean IPs tuned to their own network (MCI, Irancell, or Shatel), so configs use the endpoints that actually work on that ISP.',
+      fa: 'هر کاربر به‌صورت خودکار آی‌پی‌های تمیز متناسب با شبکه‌ی خودش می‌گیرد (همراه اول، ایرانسل یا شاتل) تا کانفیگ‌ها از نقاطی استفاده کنند که واقعاً روی همان اپراتور کار می‌کنند.',
     },
   },
   {

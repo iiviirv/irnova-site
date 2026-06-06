@@ -29,8 +29,8 @@ export const guide = {
     tracks: {
       panel: {
         label: 'Create your own panel',
-        tagline: 'One-click deploy · free',
-        time: '~5 minutes',
+        tagline: 'Host on Cloudflare · free',
+        time: '~10 minutes',
         prereq: [
           'A free Cloudflare account (we’ll create one)',
           'An email address',
@@ -52,26 +52,50 @@ export const guide = {
             },
           },
           {
-            title: 'Click “Deploy to Cloudflare”',
-            body: 'One button does the whole setup — no code to copy, no API token, no keys to manage.',
+            title: 'Get the latest Worker file',
+            body: 'Nova Proxy ships as a single .js file on GitHub Releases that bundles the dashboard, install wizard, and Telegram bot.',
             list: [
-              'Open the Deploy link below and authorize Cloudflare when asked',
-              'Cloudflare forks the Nova Proxy repository for you',
-              'It creates the Worker, auto-creates the KV namespace, and bundles the dashboard',
-              'Wait for the build to finish, then open your new Worker URL',
+              'Open the Releases page below',
+              'Download the latest Worker .js asset (the newest version)',
+              'Open it in a text editor and copy everything, or keep the file handy',
             ],
-            code: [{ label: 'Deploy', value: 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy' }],
+            code: [{ label: 'Latest release', value: 'https://github.com/IRNova/Nova-Proxy/releases/latest' }],
             note: {
               tone: 'info',
-              text: 'Everything is created on your own account. Nobody else can see or use it.',
+              text: 'Always grab it from Releases so you get the newest version with the latest fixes.',
             },
           },
           {
-            title: 'Set your admin password',
-            body: 'Open your Worker URL and a setup wizard appears at /install.',
+            title: 'Create a Worker and paste the code',
+            body: 'A “Worker” is the small app that runs Nova Proxy.',
+            list: [
+              'In Cloudflare, open Workers & Pages, then Create, then Create Worker',
+              'Give it a name like nova (this becomes part of your web address)',
+              'Select Deploy to create it, then Edit code',
+              'Delete the sample code, paste the Nova Proxy .js, then Deploy',
+            ],
+          },
+          {
+            title: 'Add a storage (KV) namespace',
+            body: 'Nova Proxy keeps your settings in a small KV database.',
+            list: [
+              'Open Storage & Databases, then KV, then Create namespace',
+              'Give it any name (for example nova) and create it',
+              'Open your Worker, then Settings, then Bindings, and add a KV Namespace binding',
+              'Set the Variable name to KV, choose your namespace, and Save',
+            ],
+            code: [{ label: 'Variable name', value: 'KV' }],
+            note: {
+              tone: 'warn',
+              text: 'The binding name must be exactly KV (capital letters), or the install page can’t find your database.',
+            },
+          },
+          {
+            title: 'Open the install wizard and set a password',
+            body: 'Open your Worker URL with /install and a setup wizard appears.',
             list: [
               'Open https://<your-worker>.workers.dev/install',
-              'The KV database row is already green — nothing to configure',
+              'The KV database row should show green',
               'Type an admin password and select Create password',
             ],
             code: [{ label: 'Setup wizard', value: 'https://<your-worker>.workers.dev/install' }],
@@ -203,8 +227,8 @@ export const guide = {
     tracks: {
       panel: {
         label: 'ساخت پنل اختصاصی',
-        tagline: 'استقرار یک‌کلیکی · رایگان',
-        time: 'حدود ۵ دقیقه',
+        tagline: 'میزبانی روی Cloudflare · رایگان',
+        time: 'حدود ۱۰ دقیقه',
         prereq: [
           'یک حساب رایگان Cloudflare (با هم می‌سازیم)',
           'یک آدرس ایمیل',
@@ -226,26 +250,50 @@ export const guide = {
             },
           },
           {
-            title: 'روی «Deploy to Cloudflare» بزنید',
-            body: 'یک دکمه تمام راه‌اندازی را انجام می‌دهد — بدون کپی کردن کد، بدون توکن API و بدون هیچ کلیدی برای مدیریت.',
+            title: 'دریافت آخرین فایل ورکر',
+            body: 'نوا پراکسی به‌صورت یک فایل .js در GitHub Releases منتشر می‌شود که داشبورد، راهنمای نصب و ربات تلگرام را در خود دارد.',
             list: [
-              'لینک Deploy زیر را باز کنید و وقتی پرسیده شد به Cloudflare اجازه دهید',
-              'Cloudflare مخزن نوا پراکسی را برای شما فورک می‌کند',
-              'Worker را می‌سازد، فضای KV را به‌صورت خودکار ایجاد می‌کند و داشبورد را داخل آن قرار می‌دهد',
-              'تا پایان ساخت صبر کنید، سپس آدرس Worker جدید خود را باز کنید',
+              'صفحه‌ی Releases زیر را باز کنید',
+              'آخرین فایل ورکر (.js) را دانلود کنید (جدیدترین نسخه)',
+              'آن را در یک ویرایشگر متن باز کنید و همه‌چیز را کپی کنید، یا فایل را دم‌دست نگه دارید',
             ],
-            code: [{ label: 'استقرار', value: 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy' }],
+            code: [{ label: 'آخرین نسخه', value: 'https://github.com/IRNova/Nova-Proxy/releases/latest' }],
             note: {
               tone: 'info',
-              text: 'همه‌چیز روی حساب خودتان ساخته می‌شود. هیچ‌کس دیگری نمی‌تواند آن را ببیند یا استفاده کند.',
+              text: 'همیشه آن را از Releases بگیرید تا جدیدترین نسخه با آخرین اصلاحات را داشته باشید.',
             },
           },
           {
-            title: 'تعیین رمز مدیر',
-            body: 'آدرس Worker خود را باز کنید تا راهنمای راه‌اندازی در /install ظاهر شود.',
+            title: 'ساخت ورکر و جای‌گذاری کد',
+            body: '«Worker» همان برنامه‌ی کوچکی است که نوا پراکسی را اجرا می‌کند.',
+            list: [
+              'در Cloudflare، بخش Workers & Pages، سپس Create و سپس Create Worker را باز کنید',
+              'نامی مانند nova بگذارید (این نام بخشی از آدرس وب شما می‌شود)',
+              'Deploy را بزنید تا ساخته شود، سپس Edit code را انتخاب کنید',
+              'کد نمونه را پاک کنید، فایل .js نوا پراکسی را جای‌گذاری کنید و Deploy بزنید',
+            ],
+          },
+          {
+            title: 'افزودن فضای ذخیره‌سازی (KV)',
+            body: 'نوا پراکسی تنظیمات شما را در یک دیتابیس کوچک KV نگه می‌دارد.',
+            list: [
+              'بخش Storage & Databases، سپس KV و سپس Create namespace را باز کنید',
+              'هر نامی (برای مثال nova) بگذارید و آن را بسازید',
+              'Worker خود را باز کنید، به Settings و سپس Bindings بروید و یک KV Namespace binding اضافه کنید',
+              'مقدار Variable name را KV بگذارید، فضای خود را انتخاب کنید و Save کنید',
+            ],
+            code: [{ label: 'نام متغیر', value: 'KV' }],
+            note: {
+              tone: 'warn',
+              text: 'نام متغیر باید دقیقاً KV (با حروف بزرگ) باشد، وگرنه صفحه‌ی نصب نمی‌تواند دیتابیس شما را پیدا کند.',
+            },
+          },
+          {
+            title: 'باز کردن راهنمای نصب و گذاشتن رمز',
+            body: 'آدرس Worker خود را با /install باز کنید تا راهنمای راه‌اندازی ظاهر شود.',
             list: [
               'آدرس https://<your-worker>.workers.dev/install را باز کنید',
-              'ردیف دیتابیس KV از قبل سبز است — چیزی برای تنظیم نیست',
+              'ردیف دیتابیس KV باید سبز نشان داده شود',
               'یک رمز مدیر تایپ کنید و روی Create password بزنید',
             ],
             code: [{ label: 'راهنمای نصب', value: 'https://<your-worker>.workers.dev/install' }],

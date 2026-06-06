@@ -3,8 +3,8 @@ import Icon from './Icon.jsx'
 import Nav from './Nav.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
+import { useLatestRelease, RELEASES_PAGE } from '../hooks/useLatestRelease.js'
 
-const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/nova-proxy'
 const REPO_URL = 'https://github.com/IRNova/Nova-Proxy'
 const TELEGRAM_URL = 'https://t.me/irnova_proxy'
 const PROGRESS_KEY = 'nova-guide-progress'
@@ -41,6 +41,7 @@ export default function Guide() {
   const { t, lang } = useLang()
   const g = guide[lang]
   const d = t.deploy
+  const release = useLatestRelease()
   const trackKeys = Object.keys(g.tracks)
 
   const [track, setTrack] = useState('panel')
@@ -89,7 +90,7 @@ export default function Guide() {
           <p>{g.intro}</p>
         </div>
 
-        {/* One-click deploy (merged into the setup guide) */}
+        {/* Deploy (merged into the setup guide) */}
         <h2 className="guide-subtitle">
           {d.title} <span className="grad">{d.titleAccent}</span>
         </h2>
@@ -98,13 +99,20 @@ export default function Guide() {
         <div className="deploy-cta-row">
           <a
             className="btn btn-primary deploy-hero-btn"
-            href={DEPLOY_URL}
+            href={release.jsUrl || release.pageUrl}
             target="_blank"
             rel="noreferrer noopener"
           >
             <Icon name="bolt" size={18} /> {d.cta}
+            {release.version ? <span className="deploy-ver">{release.version}</span> : null}
           </a>
         </div>
+        <p className="deploy-release-note">
+          {d.releaseNote}{' '}
+          <a href={RELEASES_PAGE} target="_blank" rel="noreferrer noopener">
+            {d.allReleases}
+          </a>
+        </p>
 
         <ol className="deploy-steps">
           {d.steps.map((s, i) => (

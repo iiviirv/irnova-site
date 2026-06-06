@@ -123,7 +123,7 @@ export const guide = {
             list: [
               'Open https://<your-domain>/login and sign in with your password',
               'The panel shows your personal subscription link and a QR code',
-              'Copy the link or save the QR — keep it private, anyone with it can use your proxy',
+              'Copy the link or save the QR. Keep it private, anyone with it can use your proxy',
             ],
             code: [{ label: 'Login', value: 'https://<your-domain>/login' }],
             note: {
@@ -321,7 +321,7 @@ export const guide = {
             list: [
               'آدرس https://<your-domain>/login را باز کنید و با رمز خود وارد شوید',
               'پنل، لینک اشتراک شخصی و یک کد QR به شما نشان می‌دهد',
-              'لینک را کپی کنید یا QR را ذخیره کنید — آن را خصوصی نگه دارید، هر کسی آن را داشته باشد می‌تواند از پراکسی شما استفاده کند',
+              'لینک را کپی کنید یا QR را ذخیره کنید. آن را خصوصی نگه دارید، هر کسی آن را داشته باشد می‌تواند از پراکسی شما استفاده کند',
             ],
             code: [{ label: 'ورود', value: 'https://<your-domain>/login' }],
             note: {

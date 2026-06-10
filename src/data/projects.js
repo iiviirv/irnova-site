@@ -5,19 +5,19 @@ export const projects = [
   {
     name: 'Nova-Proxy',
     tagline: {
-      en: 'Subscription & routing control panel',
-      fa: 'پنل مدیریت اشتراک و مسیریابی',
+      en: 'Proxy + dashboard on a single Cloudflare Worker',
+      fa: 'پراکسی و داشبورد روی یک Cloudflare Worker',
     },
     description: {
-      en: 'A graphical panel for delivering Worker subscriptions with proxies, Trojan, and Warp, alongside proxy chains, full DNS management, clean-IP selection, and advanced routing for users on every platform.',
-      fa: 'یک پنل گرافیکی برای ارائه‌ی اشتراک‌های Worker همراه با پراکسی، Trojan و Warp، به‌همراه زنجیره‌ی پراکسی، مدیریت کامل DNS، انتخاب آی‌پی تمیز و مسیریابی پیشرفته برای کاربران در هر پلتفرم.',
+      en: 'A censorship-resistant proxy and control panel that runs on a single Cloudflare Worker. Delivers VLESS, Trojan, and Shadowsocks over WebSocket + TLS, with multi-format subscriptions, load balancing, health checks, encrypted DNS (DoH), GeoIP routing, per-user quotas, and 2FA.',
+      fa: 'یک پراکسی و پنل مدیریت ضد سانسور که روی یک Cloudflare Worker اجرا می‌شود. پروتکل‌های VLESS، Trojan و Shadowsocks را روی WebSocket + TLS ارائه می‌دهد، همراه با اشتراک‌های چندقالبی، توزیع بار، بررسی سلامت، DNS رمزگذاری‌شده (DoH)، مسیریابی GeoIP، سهمیه‌ی کاربری و احراز هویت دومرحله‌ای.',
     },
     language: 'HTML',
     stars: 1301,
     url: 'https://github.com/IRNova/Nova-Proxy',
     tags: {
-      en: ['Subscriptions', 'Trojan', 'Warp', 'DNS', 'Routing'],
-      fa: ['اشتراک‌ها', 'Trojan', 'Warp', 'DNS', 'مسیریابی'],
+      en: ['VLESS', 'Trojan', 'Shadowsocks', 'Subscriptions', 'WARP', '2FA'],
+      fa: ['VLESS', 'Trojan', 'Shadowsocks', 'اشتراک‌ها', 'WARP', '2FA'],
     },
     featured: true,
   },

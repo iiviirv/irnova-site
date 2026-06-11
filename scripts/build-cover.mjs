@@ -55,17 +55,17 @@ const dots = nodes
   .map((n) => `<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="#22d3ee" fill-opacity="0.5"/>`)
   .join('')
 
-// ---- Nova logo mark (from the site nav, viewBox 0 0 100 100) ----
-const markScale = 0.92
-const markSize = 100 * markScale
+// ---- Nova badge logo (the rendered brand mark) ----
+const badgeSize = 128
+const logoData = 'data:image/png;base64,' + readFileSync('brand/nova-logo-badge-round.png').toString('base64')
 // wordmark
 const wm = textPath(f800, 'Nova Proxy', 86, 0, 0, { letterSpacing: -1 })
-const gap = 30
-const lockupW = markSize * 0.78 + gap + wm.width
+const gap = 26
+const lockupW = badgeSize + gap + wm.width
 const lockupX = (W - lockupW) / 2
 const markX = lockupX
 const markBaselineY = 250
-const wmCx = markX + markSize * 0.78 + gap + wm.width / 2
+const wmCx = markX + badgeSize + gap + wm.width / 2
 const wordmark = textPath(f800, 'Nova Proxy', 86, wmCx, markBaselineY + 30, { letterSpacing: -1 })
 
 const pill = textPath(f700, 'OPEN-SOURCE NETWORKING TOOLS', 22, W / 2, 118, { letterSpacing: 3 })
@@ -110,11 +110,8 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
     <path d="${pill.d}" fill="#9fe9f6"/>
   </g>
 
-  <!-- logo mark -->
-  <g transform="translate(${markX}, ${markBaselineY - markSize + 8}) scale(${markScale})">
-    <path d="M 28 22 L 28 64 A 13 13 0 0 0 54 64 L 54 36 A 13 13 0 0 1 80 36 L 80 78"
-      fill="none" stroke="url(#brand)" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
-  </g>
+  <!-- logo badge -->
+  <image x="${markX}" y="${markBaselineY + 16 - badgeSize / 2 - 31}" width="${badgeSize}" height="${badgeSize}" href="${logoData}"/>
 
   <!-- wordmark -->
   <path d="${wordmark.d}" fill="#eef1f7"/>

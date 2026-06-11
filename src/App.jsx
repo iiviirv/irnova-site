@@ -81,10 +81,16 @@ export default function App() {
               <a className="btn btn-ghost" href="#/guide">
                 <Icon name="book" size={18} /> {t.hero.guide}
               </a>
-              <a className="btn btn-ghost" href={GITHUB} target="_blank" rel="noreferrer noopener">
-                <Icon name="github" size={18} /> {t.hero.follow}
-              </a>
             </div>
+            {t.hero.trust && (
+              <div className="hero-trust">
+                {t.hero.trust.map((item, i) => (
+                  <span key={i}>
+                    <Icon name="check" size={14} /> {item}
+                  </span>
+                ))}
+              </div>
+            )}
             <div className="stats">
               {stats.map((s) => (
                 <div className="stat" key={s.label}>

@@ -1,0 +1,75 @@
+/* ============================================================
+   overrides.css — UX-audit quick wins (June 2026)
+   Loaded AFTER index.css so these rules win without touching
+   the base stylesheet. Additive only; safe to revert by
+   removing the import in main.jsx.
+   ============================================================ */
+
+/* ---------- 1. Persian display typography ----------
+   Vazirmatn's tall ascenders/diacritics collide at display
+   sizes when they inherit the Latin line-height. Give RTL
+   headings room to breathe — the single biggest perceived-
+   quality fix for the primary (Persian) audience. */
+html[lang='fa'] .hero h1 {
+  line-height: 1.5;
+  font-weight: 800;
+}
+html[lang='fa'] .section-head h2,
+html[lang='fa'] .guide-subtitle,
+html[lang='fa'] .guide-head h1,
+html[lang='fa'] .about-copy h2 {
+  line-height: 1.55;
+}
+html[lang='fa'] .hero-sub,
+html[lang='fa'] .section-head p {
+  line-height: 1.85;
+}
+
+/* ---------- 2. Bidi safety for technical tokens ----------
+   Standalone Latin tokens (VLESS, wireguard://, v3.0.0) inside
+   RTL context can be reordered by the bidi algorithm. Isolate
+   the elements that hold them so they always render LTR and in
+   order, without affecting paragraph alignment. */
+html[lang='fa'] code,
+html[lang='fa'] .deploy-ver,
+html[lang='fa'] .project-tag,
+html[lang='fa'] .cap-card .mono,
+.deploy-ver {
+  unicode-bidi: isolate;
+  direction: ltr;
+}
+
+/* ---------- 3. Trust triplet under the hero CTA ---------- */
+.hero-trust {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 14px;
+  margin-top: 20px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.hero-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+/* the check glyph inside each trust item picks up the brand tint */
+.hero-trust span svg {
+  color: var(--brand, #37b9ff);
+  opacity: 0.9;
+}
+
+/* ---------- 4. Don't strand the lone feature card ----------
+   With 7 cards in a 3-col grid, the last one sits alone in
+   column 1 leaving two empty cells. Move that orphan to the
+   center column. Scoped tightly so it only fires when the last
+   card is genuinely alone on its row (7th, 10th, ... item).
+   The base grid is untouched, so nothing else can shift. */
+@media (min-width: 720px) {
+  .cap-grid > .cap-card:last-child:nth-child(3n + 1) {
+    grid-column: 2;
+  }
+}

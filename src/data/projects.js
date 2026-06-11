@@ -98,6 +98,13 @@ export const team = [
     avatar: 'https://github.com/iiviirv.png?size=200',
     role: { en: 'Contributor', fa: 'مشارکت‌کننده' },
   },
+  {
+    handle: 'Vahid-4444',
+    name: 'Vahid',
+    url: 'https://github.com/Vahid-4444',
+    avatar: 'https://github.com/Vahid-4444.png?size=200',
+    role: { en: 'Design', fa: 'طراحی' },
+  },
 ]
 
 // Feature cards for the Nova Proxy Worker product. Rendered in the

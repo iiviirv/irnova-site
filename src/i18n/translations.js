@@ -138,9 +138,6 @@ export const ui = {
           text: 'Sign in at /login and the panel shows your subscription link and QR. Import it into any client and you are online.',
         },
       ],
-      iranNoteTitle: 'In Iran:',
-      iranNote:
-        '*.workers.dev is blocked, so add a Custom Domain to the Worker (Settings → Domains & Routes) and your configs will use that domain’s SNI.',
       repoCta: 'View the code on GitHub',
       tgCta: 'Join on Telegram',
     },
@@ -284,9 +281,6 @@ export const ui = {
           text: 'در /login وارد شو و پنل لینک اشتراک و QR تو را نشان می‌دهد. آن را در هر کلاینتی وارد کن تا آنلاین شوی.',
         },
       ],
-      iranNoteTitle: 'در ایران:',
-      iranNote:
-        'دامنه‌ی *.workers.dev فیلتر است، پس یک دامنه‌ی اختصاصی به ورکر اضافه کن (Settings → Domains & Routes) تا کانفیگ‌ها از SNI همان دامنه استفاده کنند.',
       repoCta: 'مشاهده‌ی کد در گیت‌هاب',
       tgCta: 'عضویت در تلگرام',
     },

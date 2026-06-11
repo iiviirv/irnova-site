@@ -151,7 +151,7 @@ export default function App() {
             </a>
             <a
               className="btn btn-ghost"
-              href={release.jsUrl || release.pageUrl}
+              href={RELEASES_PAGE}
               target="_blank"
               rel="noreferrer noopener"
             >
@@ -180,13 +180,6 @@ export default function App() {
               </li>
             ))}
           </ol>
-
-          <div className="note note-warn deploy-iran-note">
-            <span className="note-dot" />
-            <span>
-              <strong>{t.deploy.iranNoteTitle}</strong> {t.deploy.iranNote}
-            </span>
-          </div>
 
           <div className="deploy-links">
             <a href={GITHUB + '/Nova-Proxy'} target="_blank" rel="noreferrer noopener">

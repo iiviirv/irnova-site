@@ -48,20 +48,23 @@ const dots = nodes
   .map((n) => `<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="#22d3ee" fill-opacity="0.45"/>`)
   .join('')
 
-// ---- lockup: badge + wordmark, centered as a unit ----
+// ---- lockup: badge + wordmark, shifted right of the avatar ----
+// X overlays a circular avatar in the lower-left, so all content is centered
+// on CX (right of that zone) to avoid being clipped.
+const CX = 940
 const badge = 84
 const logoData = 'data:image/png;base64,' + readFileSync('brand/nova-logo-badge-round.png').toString('base64')
 const wmSize = 58
 const gap = 22
-const centerY = 196
+const centerY = 190
 const wm = textPath(f800, 'Nova Proxy', wmSize, 0, 0, { letterSpacing: -1 })
 const lockupW = badge + gap + wm.width
-const lockupX = (W - lockupW) / 2
+const lockupX = CX - lockupW / 2
 const wmBaseline = centerY + wmSize * 0.34
 const wordmark = textPath(f800, 'Nova Proxy', wmSize, lockupX + badge + gap + wm.width / 2, wmBaseline, { letterSpacing: -1 })
 
-const tagline = textPath(f600, 'Keep the internet open, fast, and reachable.', 27, W / 2, 296, { letterSpacing: 0 })
-const url = textPath(f400, 'novaproxy.online', 23, W / 2, 350, { letterSpacing: 1.5 })
+const tagline = textPath(f600, 'Keep the internet open, fast, and reachable.', 27, CX, 278, { letterSpacing: 0 })
+const url = textPath(f400, 'novaproxy.online', 23, CX, 330, { letterSpacing: 1.5 })
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>

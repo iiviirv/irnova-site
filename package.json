@@ -9,7 +9,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "deploy": "vite build && npx --yes wrangler pages deploy dist --branch main",
-    "cover": "node scripts/build-cover.mjs"
+    "cover": "node scripts/build-cover.mjs",
+    "icons": "node scripts/build-icons.mjs",
+    "og": "node scripts/build-og.mjs"
   },
   "dependencies": {
     "@fontsource/inter": "^5.2.8",
@@ -20,7 +22,12 @@
   "devDependencies": {
     "@resvg/resvg-js": "^2.6.2",
     "@vitejs/plugin-react": "^4.3.4",
+    "fontkit": "^2.0.4",
     "opentype.js": "^2.0.0",
-    "vite": "^6.0.7"
+    "png-to-ico": "^2.1.8",
+    "satori": "^0.10.13",
+    "sharp": "^0.33.5",
+    "vite": "^6.0.7",
+    "wawoff2": "^2.0.1"
   }
 }

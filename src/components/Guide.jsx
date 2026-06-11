@@ -108,7 +108,7 @@ export default function Guide() {
           </a>
           <a
             className="btn btn-ghost"
-            href={release.jsUrl || release.pageUrl}
+            href={RELEASES_PAGE}
             target="_blank"
             rel="noreferrer noopener"
           >
@@ -134,13 +134,6 @@ export default function Guide() {
             </li>
           ))}
         </ol>
-
-        <div className="note note-warn deploy-iran-note">
-          <span className="note-dot" />
-          <span>
-            <strong>{d.iranNoteTitle}</strong> {d.iranNote}
-          </span>
-        </div>
 
         <div className="deploy-links">
           <a href={REPO_URL} target="_blank" rel="noreferrer noopener">

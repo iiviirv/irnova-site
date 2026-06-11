@@ -66,6 +66,7 @@ export const ui = {
       guide: 'Deploy & Setup guide',
       deployCta: 'Deploy your own',
       follow: 'View on GitHub',
+      trust: ['Open source', 'No signup', 'No server in the middle'],
     },
     stats: {
       stars: 'GitHub Stars',
@@ -209,6 +210,7 @@ export const ui = {
       guide: 'راهنمای استقرار و راه‌اندازی',
       deployCta: 'راه‌اندازی کن',
       follow: 'مشاهده در گیت‌هاب',
+      trust: ['متن‌باز', 'بدون ثبت‌نام', 'بدون سرور واسط'],
     },
     stats: {
       stars: 'ستاره‌های گیت‌هاب',

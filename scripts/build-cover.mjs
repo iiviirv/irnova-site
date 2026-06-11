@@ -2,130 +2,95 @@ import opentype from 'opentype.js'
 import { Resvg } from '@resvg/resvg-js'
 import { readFileSync, writeFileSync } from 'node:fs'
 
+// X / Twitter header. 1500x500 (3:1). Content is kept compact and within a
+// centered safe band so platform cropping never clips the lockup, and the
+// profile avatar in the lower-left corner stays clear.
 const W = 1500
 const H = 500
 
 const FONT_DIR = 'node_modules/@fontsource/inter/files'
-const fp = (w) => opentype.parse(
-  readFileSync(`${FONT_DIR}/inter-latin-${w}-normal.woff`).buffer
-)
+const fp = (w) => opentype.parse(readFileSync(`${FONT_DIR}/inter-latin-${w}-normal.woff`).buffer)
 const f800 = fp(800)
-const f700 = fp(700)
+const f600 = fp(600)
 const f400 = fp(400)
 
-// text -> centered path. Returns {d, width}. Uses charToGlyph per character to
-// avoid opentype's shaping engine (which trips on some font feature tables).
+// text -> centered path. charToGlyph avoids opentype's shaping engine.
 function textPath(font, text, size, cx, baseline, { letterSpacing = 0 } = {}) {
   const scale = size / font.unitsPerEm
   const glyphs = [...text].map((ch) => font.charToGlyph(ch))
   let width = 0
   for (const g of glyphs) width += g.advanceWidth * scale + letterSpacing
   width -= letterSpacing
-  const x = cx - width / 2
-  let pen = x
+  let pen = cx - width / 2
   const full = new opentype.Path()
   for (const g of glyphs) {
     full.extend(g.getPath(pen, baseline, size))
     pen += g.advanceWidth * scale + letterSpacing
   }
-  return { d: full.toPathData(2), width, x }
+  return { d: full.toPathData(2), width }
 }
 
-// ---- decorative network nodes (deterministic) ----
+// ---- faint network motif (deterministic) ----
 let seed = 7
 const rnd = () => (seed = (seed * 1103515245 + 12345) & 0x7fffffff) / 0x7fffffff
-const nodes = Array.from({ length: 26 }, () => ({
-  x: rnd() * W,
-  y: rnd() * H,
-  r: 1.2 + rnd() * 2.4,
-}))
+const nodes = Array.from({ length: 22 }, () => ({ x: rnd() * W, y: rnd() * H, r: 1 + rnd() * 2 }))
 let lines = ''
 for (let i = 0; i < nodes.length; i++) {
   for (let j = i + 1; j < nodes.length; j++) {
-    const dx = nodes[i].x - nodes[j].x
-    const dy = nodes[i].y - nodes[j].y
-    const d = Math.hypot(dx, dy)
-    if (d < 190) {
-      const op = (0.12 * (1 - d / 190)).toFixed(3)
+    const d = Math.hypot(nodes[i].x - nodes[j].x, nodes[i].y - nodes[j].y)
+    if (d < 200) {
+      const op = (0.1 * (1 - d / 200)).toFixed(3)
       lines += `<line x1="${nodes[i].x.toFixed(1)}" y1="${nodes[i].y.toFixed(1)}" x2="${nodes[j].x.toFixed(1)}" y2="${nodes[j].y.toFixed(1)}" stroke="#5b6478" stroke-opacity="${op}" stroke-width="1"/>`
     }
   }
 }
 const dots = nodes
-  .map((n) => `<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="#22d3ee" fill-opacity="0.5"/>`)
+  .map((n) => `<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${n.r.toFixed(1)}" fill="#22d3ee" fill-opacity="0.45"/>`)
   .join('')
 
-// ---- Nova badge logo (the rendered brand mark) ----
-const badgeSize = 128
+// ---- lockup: badge + wordmark, centered as a unit ----
+const badge = 84
 const logoData = 'data:image/png;base64,' + readFileSync('brand/nova-logo-badge-round.png').toString('base64')
-// wordmark
-const wm = textPath(f800, 'Nova Proxy', 86, 0, 0, { letterSpacing: -1 })
-const gap = 26
-const lockupW = badgeSize + gap + wm.width
+const wmSize = 58
+const gap = 22
+const centerY = 196
+const wm = textPath(f800, 'Nova Proxy', wmSize, 0, 0, { letterSpacing: -1 })
+const lockupW = badge + gap + wm.width
 const lockupX = (W - lockupW) / 2
-const markX = lockupX
-const markBaselineY = 250
-const wmCx = markX + badgeSize + gap + wm.width / 2
-const wordmark = textPath(f800, 'Nova Proxy', 86, wmCx, markBaselineY + 30, { letterSpacing: -1 })
+const wmBaseline = centerY + wmSize * 0.34
+const wordmark = textPath(f800, 'Nova Proxy', wmSize, lockupX + badge + gap + wm.width / 2, wmBaseline, { letterSpacing: -1 })
 
-const pill = textPath(f700, 'OPEN-SOURCE NETWORKING TOOLS', 22, W / 2, 118, { letterSpacing: 3 })
-const tagline = textPath(f700, 'Keep the internet open, fast, and reachable.', 34, W / 2, 350, { letterSpacing: -0.2 })
-const url = textPath(f400, 'novaproxy.online', 26, W / 2, 432, { letterSpacing: 1 })
-
-const pillPad = 26
-const pillW = pill.width + pillPad * 2
-const pillH = 44
+const tagline = textPath(f600, 'Keep the internet open, fast, and reachable.', 27, W / 2, 296, { letterSpacing: 0 })
+const url = textPath(f400, 'novaproxy.online', 23, W / 2, 350, { letterSpacing: 1.5 })
 
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <defs>
     <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#05060a"/>
-      <stop offset="1" stop-color="#0a0c14"/>
+      <stop offset="0" stop-color="#05060a"/><stop offset="1" stop-color="#0a0c14"/>
     </linearGradient>
     <linearGradient id="brand" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#22d3ee"/>
-      <stop offset="0.5" stop-color="#818cf8"/>
-      <stop offset="1" stop-color="#a855f7"/>
+      <stop offset="0" stop-color="#22d3ee"/><stop offset="0.5" stop-color="#818cf8"/><stop offset="1" stop-color="#a855f7"/>
     </linearGradient>
-    <radialGradient id="glowC" cx="22%" cy="0%" r="60%">
-      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.28"/>
-      <stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
+    <radialGradient id="glowC" cx="20%" cy="0%" r="60%">
+      <stop offset="0" stop-color="#22d3ee" stop-opacity="0.22"/><stop offset="1" stop-color="#22d3ee" stop-opacity="0"/>
     </radialGradient>
-    <radialGradient id="glowV" cx="85%" cy="20%" r="55%">
-      <stop offset="0" stop-color="#a855f7" stop-opacity="0.26"/>
-      <stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
+    <radialGradient id="glowV" cx="85%" cy="25%" r="55%">
+      <stop offset="0" stop-color="#a855f7" stop-opacity="0.20"/><stop offset="1" stop-color="#a855f7" stop-opacity="0"/>
     </radialGradient>
   </defs>
 
   <rect width="${W}" height="${H}" fill="url(#bg)"/>
   <rect width="${W}" height="${H}" fill="url(#glowC)"/>
   <rect width="${W}" height="${H}" fill="url(#glowV)"/>
-
   <g>${lines}${dots}</g>
 
-  <!-- pill -->
-  <g>
-    <rect x="${(W - pillW) / 2}" y="${118 - pillH + 12}" width="${pillW}" height="${pillH}" rx="${pillH / 2}"
-      fill="#22d3ee" fill-opacity="0.10" stroke="#22d3ee" stroke-opacity="0.35"/>
-    <path d="${pill.d}" fill="#9fe9f6"/>
-  </g>
-
-  <!-- logo badge -->
-  <image x="${markX}" y="${markBaselineY + 16 - badgeSize / 2 - 31}" width="${badgeSize}" height="${badgeSize}" href="${logoData}"/>
-
-  <!-- wordmark -->
+  <image x="${lockupX}" y="${centerY - badge / 2}" width="${badge}" height="${badge}" href="${logoData}"/>
   <path d="${wordmark.d}" fill="#eef1f7"/>
-
-  <!-- tagline -->
   <path d="${tagline.d}" fill="#aab3c6"/>
-
-  <!-- url -->
   <path d="${url.d}" fill="url(#brand)"/>
 </svg>`
 
 writeFileSync('brand/nova-x-cover.svg', svg)
-
-const resvg = new Resvg(svg, { background: 'rgba(0,0,0,0)', fitTo: { mode: 'width', value: W } })
-const png = resvg.render().asPng()
+const png = new Resvg(svg, { background: 'rgba(0,0,0,0)', fitTo: { mode: 'width', value: W } }).render().asPng()
 writeFileSync('brand/nova-x-cover.png', png)
 console.log('wrote brand/nova-x-cover.png', png.length, 'bytes')

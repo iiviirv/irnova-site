@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Icon from './Icon.jsx'
 import { LangSwitch, ThemeToggle } from './Controls.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
+import novaMark from '../assets/nova-mark.png'
 
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
@@ -11,22 +12,7 @@ const X = 'https://x.com/irNovaProxy'
 export function Logo({ brand }) {
   return (
     <span className="logo">
-      <svg viewBox="0 0 100 100" width="30" height="30" aria-hidden="true">
-        <path
-          d="M 28 22 L 28 64 A 13 13 0 0 0 54 64 L 54 36 A 13 13 0 0 1 80 36 L 80 78"
-          fill="none"
-          stroke="url(#lg)"
-          strokeWidth="15"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <defs>
-          <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#22d3ee" />
-            <stop offset="1" stopColor="#a855f7" />
-          </linearGradient>
-        </defs>
-      </svg>
+      <img className="logo-mark" src={novaMark} width="30" height="30" alt="" aria-hidden="true" />
       <span className="logo-text">{brand}</span>
     </span>
   )

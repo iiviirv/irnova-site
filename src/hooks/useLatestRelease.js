@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react'
 // newest release at runtime (from the visitor's browser) and surface a direct
 // link to its .js asset. Falls back to the Releases page if the API is rate-
 // limited or unreachable (e.g. inside Iran without a proxy).
-export const RELEASES_PAGE = 'https://github.com/IRNova/Nova-Proxy/releases/latest'
+export const RELEASES_PAGE = 'https://github.com/IRNova/Nova-Proxy/releases'
 const RELEASES_API = 'https://api.github.com/repos/IRNova/Nova-Proxy/releases/latest'
 
 export function useLatestRelease() {
@@ -22,14 +22,11 @@ export function useLatestRelease() {
       .then((r) => (r.ok ? r.json() : Promise.reject(r.status)))
       .then((data) => {
         if (cancelled) return
-        const assets = Array.isArray(data.assets) ? data.assets : []
-        const jsAsset =
-          assets.find((a) => a.name && a.name.toLowerCase().endsWith('.js')) || null
         setState({
           loading: false,
           version: data.tag_name || null,
-          jsUrl: jsAsset ? jsAsset.browser_download_url : null,
-          pageUrl: data.html_url || RELEASES_PAGE,
+          jsUrl: null,
+          pageUrl: RELEASES_PAGE,
         })
       })
       .catch(() => {

@@ -163,7 +163,7 @@ var I18N = {
     g3t:'Paste it here',g3x:'Tap <b>Paste</b> to drop your copied token into the box.',
     g4t:'Build your Nova',g4x:'Tap the button and wait — it sets up everything for you (about 30 seconds).',
     st1:'On that page, scroll <b>all the way down</b> → tap <b>Continue to summary</b>.',st2:'Tap <b>Create Token</b>, then tap the <b>Copy</b> button to copy the long code.',warn:'<b>Copy the whole code</b> before leaving that page — it\'s shown only once.',go:'Create my Nova panel',foot:'Your token is used only in your browser to talk to Cloudflare. Nothing is stored on our side.',iran:'<b>In Iran:</b> if the Cloudflare page won\'t open, turn on your current VPN first.',
-    s_verify:'Checking your token',s_account:'Finding your account',s_sub:'Setting up your subdomain',s_db:'Creating the database',s_kv:'Creating storage',s_fetch:'Downloading the latest Nova',s_deploy:'Deploying the worker',s_enable:'Turning it on',
+    s_verify:'Checking your token',s_account:'Finding your account',s_sub:'Setting up your subdomain',s_db:'Creating the database',s_kv:'Creating storage',s_fetch:'Downloading the latest Nova',s_deploy:'Deploying the worker',s_enable:'Turning it on',s_online:'Waiting for it to come online',slow:'Your panel is deploying — Cloudflare can take 1–3 minutes to make a new address live worldwide. If "Open your panel" shows an error at first, wait a minute and refresh.',
     done:'🎉 Your Nova is ready!',open:'Open your panel',setpw:'First, set your admin password here:',addr:'Your address',note_iran:'🇮🇷 workers.dev is filtered in Iran — add a Custom Domain in Cloudflare (Workers → your worker → Settings → Domains & Routes) and use that instead.',
     err_token:'That token didn\'t work. Make sure you created it with the "Edit Cloudflare Workers" template and copied all of it.',err_generic:'Something went wrong'},
   fa:{title:'نصب خودکار نوا',sub:'یک توکن Cloudflare بچسبان تا پنل را روی حساب خودت بسازیم — ورکر و دیتابیس، کاملاً آماده. روی گوشی هم کار می‌کند. توکن تو در مرورگرت می‌ماند.',tokl:'توکن API کلودفلر',tokh:'این اجازه می‌دهد نصب‌کننده ورکر را روی حساب تو بسازد. هرگز از مرورگرت خارج نمی‌شود.',tokbtn:'🔑 گرفتن توکن',paste:'چسباندن',
@@ -172,7 +172,7 @@ var I18N = {
     g3t:'اینجا بچسبان',g3x:'دکمهٔ <b>چسباندن</b> را بزن تا توکنِ کپی‌شده در کادر بیفتد.',
     g4t:'نوای خودت را بساز',g4x:'دکمه را بزن و صبر کن — همه‌چیز را برایت آماده می‌کند (حدود ۳۰ ثانیه).',
     st1:'در آن صفحه، <b>تا ته پایین</b> برو ← <b>Continue to summary</b> را بزن.',st2:'<b>Create Token</b> را بزن، بعد دکمهٔ <b>Copy</b> را بزن تا کدِ بلند کپی شود.',warn:'<b>کلِ کد را کپی کن</b> قبل از اینکه از آن صفحه بیرون بروی — فقط یک‌بار نشان داده می‌شود.',go:'پنل نوای من را بساز',foot:'توکن تو فقط در مرورگرت برای حرف‌زدن با Cloudflare استفاده می‌شود. هیچ‌چیزی سمت ما ذخیره نمی‌شود.',iran:'<b>در ایران:</b> اگر صفحهٔ Cloudflare باز نشد، اول VPN فعلی‌ات را روشن کن.',
-    s_verify:'بررسی توکن',s_account:'پیدا کردن حساب',s_sub:'تنظیم ساب‌دامنه',s_db:'ساخت دیتابیس',s_kv:'ساخت حافظه',s_fetch:'دانلود آخرین نسخهٔ نوا',s_deploy:'دیپلوی ورکر',s_enable:'روشن کردن',
+    s_verify:'بررسی توکن',s_account:'پیدا کردن حساب',s_sub:'تنظیم ساب‌دامنه',s_db:'ساخت دیتابیس',s_kv:'ساخت حافظه',s_fetch:'دانلود آخرین نسخهٔ نوا',s_deploy:'دیپلوی ورکر',s_enable:'روشن کردن',s_online:'منتظر آنلاین شدن',slow:'پنل تو در حال دیپلوی است — Cloudflare ممکن است ۱ تا ۳ دقیقه طول بکشد تا آدرس جدید در سراسر دنیا فعال شود. اگر «باز کردن پنل» اول خطا داد، یک دقیقه صبر کن و صفحه را تازه کن.',
     done:'🎉 نوای تو آماده است!',open:'باز کردن پنل',setpw:'اول، رمز ادمینت را اینجا تنظیم کن:',addr:'آدرس تو',note_iran:'🇮🇷 workers.dev در ایران فیلتر است — در Cloudflare یک دامنهٔ اختصاصی اضافه کن (Workers ← ورکر تو ← Settings ← Domains & Routes) و از آن استفاده کن.',
     err_token:'این توکن کار نکرد. مطمئن شو با قالب «Edit Cloudflare Workers» ساخته‌ای و کاملش را کپی کرده‌ای.',err_generic:'یک خطا رخ داد'}
 };
@@ -214,7 +214,7 @@ function api(method, target, token, body, ctype){
 function cfOk(res){ return res.json && res.json.success===true; }
 function cfErr(res){ try{ if(res.json && res.json.errors && res.json.errors[0]) return res.json.errors[0].message+" (code "+res.json.errors[0].code+")"; }catch(e){} return "HTTP "+res.status; }
 
-var STEPS=['verify','account','sub','db','kv','fetch','deploy','enable'];
+var STEPS=['verify','account','sub','db','kv','fetch','deploy','enable','online'];
 function renderProgress(){ var el=document.getElementById('progress'); el.innerHTML=''; STEPS.forEach(function(s){ var d=document.createElement('div'); d.className='prow'; d.id='p-'+s; d.innerHTML='<span class="dot"></span><span>'+T('s_'+s)+'</span>'; el.appendChild(d); }); }
 function setStep(s,state){ var d=document.getElementById('p-'+s); if(!d)return; d.className='prow '+state; var dot=d.querySelector('.dot'); if(state==='done')dot.textContent='✓'; else if(state==='err')dot.textContent='!'; else dot.textContent=''; }
 function showErr(msg){ var b=document.getElementById('errbox'); b.classList.remove('hidden'); b.textContent=msg; }
@@ -273,9 +273,12 @@ async function install(){
 
     setStep('deploy','run');
     var workerName='nova-'+rname();
-    var uuid=cryptoUUID();
-    var encKey='key_'+cryptoUUID().replace(/-/g,'')+cryptoUUID().replace(/-/g,'').slice(0,8);
-    var binds=[ {type:'d1',name:'DB',id:dbId}, {type:'plain_text',name:'UUID',text:uuid}, {type:'plain_text',name:'KEY',text:encKey} ];
+    // NOTE: we intentionally do NOT bind UUID or KEY here. The worker auto-generates its own
+    // encryption key and node UUID (stored in the database/KV) on first run, and — crucially —
+    // it treats an env KEY/UUID as a pre-set admin password. Binding them would silently set the
+    // password for the user. By leaving them out, the worker sends the user to /install so THEY
+    // pick their own password. Only the storage binding (D1, and KV if available) is attached.
+    var binds=[ {type:'d1',name:'DB',id:dbId} ];
     if(kvId){ binds.unshift({type:'kv_namespace',name:'KV',namespace_id:kvId}); }
     var metadata={ main_module:'worker.js', compatibility_date:'2024-09-23', compatibility_flags:['nodejs_compat','global_fetch_strictly_public'], bindings:binds };
     var boundary='----nova'+Math.random().toString(16).slice(2);
@@ -291,16 +294,46 @@ async function install(){
     await api('POST','https://api.cloudflare.com/client/v4/accounts/'+accountId+'/workers/scripts/'+encodeURIComponent(workerName)+'/subdomain',token,JSON.stringify({enabled:true}),'application/json');
     setStep('enable','done');
 
-    showResult('https://'+workerName+'.'+subName+'.workers.dev');
+    // 9) Wait until the new URL actually responds — a fresh Worker + subdomain takes ~1–3 min to
+    // propagate globally. We poll through the proxy (so CORS is fine) and only call it "ready" when
+    // the panel responds. If it's still propagating after the timeout, we show the link anyway with
+    // a note, so the user is never stuck.
+    var panelUrl='https://'+workerName+'.'+subName+'.workers.dev';
+    setStep('online','run');
+    var online=await waitForOnline(panelUrl);
+    setStep('online', online ? 'done' : 'done'); // green either way; note shown if slow
+    showResult(panelUrl, online);
   }catch(e){ showErr((e&&e.message)||T('err_generic')); fail(); }
 }
 
-function showResult(url){
+// Poll the new panel until it responds (HTTP < 500 = the worker is serving). Returns true if it
+// came online within the window, false if it's still propagating (caller shows it anyway).
+async function waitForOnline(url){
+  var deadline=Date.now()+150000; // up to ~2.5 min
+  var attempt=0;
+  while(Date.now()<deadline){
+    attempt++;
+    try{
+      var r=await fetch(CORS_PROXY+'/?url='+encodeURIComponent(url+'/install'),{cache:'no-store'});
+      // Any non-5xx response means the worker is live and serving (200/301/302/401/404 all fine).
+      if(r.status>0 && r.status<500) return true;
+    }catch(e){}
+    // Update the step label so the user knows it's working, not frozen.
+    var d=document.getElementById('p-online');
+    if(d){ var span=d.querySelector('span:last-child'); if(span) span.textContent=T('s_online')+' ('+attempt+')'; }
+    await new Promise(function(res){ setTimeout(res, 4000); });
+  }
+  return false;
+}
+
+function showResult(url, online){
   var r=document.getElementById('result'); r.classList.remove('hidden');
+  var slowNote = online ? '' : ('<div class="callout warn" style="margin-top:14px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08)"><span class="ic">⏳</span><div>'+T('slow')+'</div></div>');
   r.innerHTML='<h3>'+T('done')+'</h3>'
     +'<div class="kv"><span class="k">'+T('addr')+'</span><span class="v">'+url+'</span></div>'
     +'<p style="margin:14px 0 6px;font-size:14px">'+T('setpw')+'</p>'
     +'<a class="btn" href="'+url+'/install" target="_blank" rel="noopener">'+T('open')+'</a>'
+    + slowNote
     +'<div class="callout iran" style="margin-top:14px"><span class="ic">🇮🇷</span><div>'+T('note_iran')+'</div></div>';
   r.scrollIntoView({behavior:'smooth'});
 }

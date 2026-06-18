@@ -5,7 +5,9 @@ import { useLang } from '../i18n/LanguageContext.jsx'
 import { guide } from '../i18n/guide.js'
 import { useLatestRelease, RELEASES_PAGE } from '../hooks/useLatestRelease.js'
 
-const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/Nova-Proxy'
+// In-browser auto-installer page (public/install.html): paste one Cloudflare
+// token and it builds the Worker + database on your own account automatically.
+const DEPLOY_URL = './install.html'
 const REPO_URL = 'https://github.com/IRNova/Nova-Proxy'
 const TELEGRAM_URL = 'https://t.me/irnova_proxy'
 const PROGRESS_KEY = 'nova-guide-progress'

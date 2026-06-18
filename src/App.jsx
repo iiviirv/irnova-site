@@ -25,9 +25,10 @@ const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
-// Official Cloudflare one-click deploy. Requires a wrangler config in the
-// Nova-Proxy repo (creates the Worker + KV automatically, no API token).
-const DEPLOY_URL = 'https://deploy.workers.cloudflare.com/?url=https://github.com/IRNova/Nova-Proxy'
+// In-browser auto-installer. The visitor pastes one Cloudflare API token and
+// the page builds the Worker + D1/KV on their own account — no CLI, no secrets
+// stored on our side. Served as a static page from public/install.html.
+const DEPLOY_URL = './install.html'
 
 export default function App() {
   const { t, lang } = useLang()

@@ -1,16 +1,14 @@
 import { useEffect, useState } from 'react'
 import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
-import Guide from './components/Guide.jsx'
 import IPTools from './components/IPTools.jsx'
 import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
 import { projects, capabilities, team } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
-import { useLatestRelease, RELEASES_PAGE } from './hooks/useLatestRelease.js'
 
-// Tiny hash router: '#/guide' shows the setup guide, everything else (including
-// in-page anchors like '#projects') shows the landing page.
+// Tiny hash router: '#/tools' shows the IP tools sub-page, everything else
+// (including in-page anchors like '#projects') shows the landing page.
 function useHashRoute() {
   const [hash, setHash] = useState(() => window.location.hash)
   useEffect(() => {
@@ -25,19 +23,18 @@ const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
-// In-browser auto-installer. The visitor pastes one Cloudflare API token and
-// the page builds the Worker + D1/KV on their own account — no CLI, no secrets
-// stored on our side. Served as a static page from public/install.html.
-const DEPLOY_URL = './install.html'
+// In-browser auto-installer (public/install.html): the visitor pastes one
+// Cloudflare API token and the page builds the Worker + D1/KV on their own
+// account. This is now the single deploy entry point for the whole site.
+const INSTALLER_URL = './install.html'
 
 export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
-  const release = useLatestRelease()
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
-    if (route === '#/guide' || route === '#/tools' || route === '#/deploy') {
+    if (route === '#/tools') {
       window.scrollTo(0, 0)
     } else if (route && route.length > 1 && route.startsWith('#') && !route.startsWith('#/')) {
       // In-page anchor (e.g. #projects) clicked from a sub-page: the landing page
@@ -50,7 +47,6 @@ export default function App() {
     }
   }, [route])
 
-  if (route === '#/guide' || route === '#/deploy') return <Guide />
   if (route === '#/tools') return <IPTools />
 
   const totalStars = projects.reduce((sum, p) => sum + p.stars, 0)
@@ -76,11 +72,11 @@ export default function App() {
             </h1>
             <p className="hero-sub">{t.hero.sub}</p>
             <div className="hero-actions">
-              <a className="btn btn-primary" href="#deploy">
+              <a className="btn btn-primary" href={INSTALLER_URL}>
                 <Icon name="bolt" size={18} /> {t.hero.deployCta}
               </a>
-              <a className="btn btn-ghost" href="#/guide">
-                <Icon name="book" size={18} /> {t.hero.guide}
+              <a className="btn btn-ghost" href="#projects">
+                <Icon name="app" size={18} /> {t.hero.explore}
               </a>
             </div>
             {t.hero.trust && (
@@ -136,66 +132,6 @@ export default function App() {
           <p className="platform-note">
             <Icon name="shield" size={16} /> {t.capsSection.note}
           </p>
-        </section>
-
-        <section id="deploy" className="section">
-          <div className="section-head">
-            <span className="eyebrow">{t.deploy.eyebrow}</span>
-            <h2>
-              {t.deploy.title} <span className="grad">{t.deploy.titleAccent}</span>
-            </h2>
-            <p>{t.deploy.sub}</p>
-          </div>
-
-          <div className="deploy-cta-row">
-            <a
-              className="btn btn-primary deploy-hero-btn"
-              href={DEPLOY_URL}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <Icon name="bolt" size={18} /> {t.deploy.cta}
-            </a>
-            <a
-              className="btn btn-ghost"
-              href={RELEASES_PAGE}
-              target="_blank"
-              rel="noreferrer noopener"
-            >
-              <Icon name="download" size={18} /> {t.deploy.downloadCta}
-              {release.version ? <span className="deploy-ver">{release.version}</span> : null}
-            </a>
-            <a className="btn btn-ghost" href="#/guide">
-              <Icon name="book" size={18} /> {t.nav.guide}
-            </a>
-          </div>
-          <p className="deploy-release-note">
-            {t.deploy.releaseNote}{' '}
-            <a href={RELEASES_PAGE} target="_blank" rel="noreferrer noopener">
-              {t.deploy.allReleases}
-            </a>
-          </p>
-
-          <ol className="deploy-steps">
-            {t.deploy.steps.map((s, i) => (
-              <li key={i}>
-                <span className="deploy-num">{i + 1}</span>
-                <span className="deploy-step-text">
-                  <strong>{s.title}</strong>
-                  <span>{s.text}</span>
-                </span>
-              </li>
-            ))}
-          </ol>
-
-          <div className="deploy-links">
-            <a href={GITHUB + '/Nova-Proxy'} target="_blank" rel="noreferrer noopener">
-              <Icon name="github" size={16} /> {t.deploy.repoCta}
-            </a>
-            <a href={TELEGRAM} target="_blank" rel="noreferrer noopener">
-              <Icon name="telegram" size={16} /> {t.deploy.tgCta}
-            </a>
-          </div>
         </section>
 
         <section id="about" className="section">
@@ -318,9 +254,8 @@ export default function App() {
         <div className="footer-links">
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
-          <a href="#deploy">{t.nav.deploy}</a>
+          <a href={INSTALLER_URL}>{t.nav.deploy}</a>
           <a href="#team">{t.teamSection.title}</a>
-          <a href="#/guide">{t.nav.guide}</a>
           <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">
             {t.nav.github}

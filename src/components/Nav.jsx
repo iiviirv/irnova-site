@@ -20,7 +20,7 @@ export function Logo({ brand }) {
 
 // Shared site header — consistent on every page. On mobile the links collapse
 // into a hamburger menu. In-page anchors (#projects, #about…) route back to the
-// home page and scroll; #/guide and #/tools are sub-pages.
+// home page and scroll; #/tools is a sub-page and Deploy opens /install.html.
 export default function Nav() {
   const { t } = useLang()
   const [open, setOpen] = useState(false)
@@ -52,11 +52,8 @@ export default function Nav() {
         <a href="#capabilities" onClick={close}>
           {t.nav.capabilities}
         </a>
-        <a href="#deploy" onClick={close}>
+        <a href="./install.html" onClick={close}>
           {t.nav.deploy}
-        </a>
-        <a href="#/guide" onClick={close}>
-          {t.nav.guide}
         </a>
         <a href="#/tools" onClick={close}>
           {t.nav.tools}

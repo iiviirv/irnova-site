@@ -142,7 +142,7 @@ code{background:var(--card2);border:1px solid var(--line);border-radius:6px;padd
 <script>
 // ===== CONFIG =====
 var WORKER_JS_URL = "https://raw.githubusercontent.com/IRNova/Nova-Proxy/main/worker.js"; // latest worker.js
-var CORS_PROXY    = "https://nova-proxy.vahiddhashemii3768.workers.dev";  // the deployed nova-installer-proxy Worker
+var CORS_PROXY    = "/cf";  // same-origin Pages Function (functions/cf.js) — reachable in Iran, unlike *.workers.dev
 // ==================
 
 // Deep-link to Cloudflare's Create-Token page with the permissions the installer needs pre-selected.
@@ -207,7 +207,7 @@ try{ var th=localStorage.getItem('nova-theme'); if(th){document.documentElement.
   var sv=localStorage.getItem('nova-lang'); if(sv)setLang(sv); else if((navigator.language||'').toLowerCase().startsWith('fa'))setLang('fa'); }catch(e){}
 
 function api(method, target, token, body, ctype){
-  var url=CORS_PROXY+"/?url="+encodeURIComponent(target);
+  var url=CORS_PROXY+"?url="+encodeURIComponent(target);
   var headers={}; if(token) headers["Authorization"]="Bearer "+token; if(ctype) headers["Content-Type"]=ctype;
   return fetch(url,{method:method,headers:headers,body:body}).then(function(r){ return r.text().then(function(txt){ var j=null; try{j=JSON.parse(txt)}catch(e){} return {status:r.status,json:j,text:txt}; }); });
 }
@@ -265,7 +265,7 @@ async function install(){
     setStep('kv','done');
 
     setStep('fetch','run');
-    var wjResp=await fetch(CORS_PROXY+"/?url="+encodeURIComponent(WORKER_JS_URL));
+    var wjResp=await fetch(CORS_PROXY+"?url="+encodeURIComponent(WORKER_JS_URL));
     if(!wjResp.ok){ setStep('fetch','err'); showErr('Could not download worker.js (HTTP '+wjResp.status+')'); fail(); return; }
     var workerCode=await wjResp.text();
     if(!workerCode || workerCode.length<1000 || workerCode.indexOf('export default')<0){ setStep('fetch','err'); showErr('Downloaded worker.js looks invalid.'); fail(); return; }
@@ -314,7 +314,7 @@ async function waitForOnline(url){
   while(Date.now()<deadline){
     attempt++;
     try{
-      var r=await fetch(CORS_PROXY+'/?url='+encodeURIComponent(url+'/install'),{cache:'no-store'});
+      var r=await fetch(CORS_PROXY+'?url='+encodeURIComponent(url+'/install'),{cache:'no-store'});
       // Any non-5xx response means the worker is live and serving (200/301/302/401/404 all fine).
       if(r.status>0 && r.status<500) return true;
     }catch(e){}

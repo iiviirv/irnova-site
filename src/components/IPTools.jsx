@@ -5,14 +5,41 @@ import { useLang } from '../i18n/LanguageContext.jsx'
 
 const NOVARADAR_URL = 'https://github.com/IRNova/NovaRadar/releases'
 
-const ALL_PORTS = [8443, 2087, 2083, 2053, 443, 2096]
+// Cloudflare-proxied ports. TLS ports carry security=tls configs; non-TLS
+// (HTTP) ports are for security=none / non-TLS mode (matches the worker).
+const TLS_PORTS = [443, 2053, 2083, 2087, 2096, 8443]
+const NONTLS_PORTS = [80, 8080, 8880, 2052, 2082, 2086, 2095]
+const ALL_PORTS = [...TLS_PORTS, ...NONTLS_PORTS]
 
-// Match IPv4 addresses anywhere in pasted text, de-duplicated (same logic as
-// the original nova-ip-checker tool).
+// Match IPv4 addresses anywhere in pasted text (de-duplicated).
 const IP_RE = /(?<![0-9])((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)(?![0-9])/g
+const IPV4_RE = /^((25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)\.){3}(25[0-5]|2[0-4]\d|1\d\d|[1-9]?\d)$/
+const DOMAIN_RE = /^(?=.{1,253}$)([a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?\.)+[a-z]{2,}$/i
 
-function extractIPs(text) {
-  return [...new Set([...text.matchAll(IP_RE)].map((m) => m[0]))]
+// Accept BOTH raw IPv4 addresses and domain names. Domains are passed through
+// as-is — domain:port works in every client, and keeping them unresolved means
+// nothing leaves the browser (no DNS lookup), consistent with this tool's
+// privacy promise. IPs are matched anywhere in pasted text; domains are read
+// token-by-token with any scheme/port/path stripped first.
+function extractHosts(text) {
+  const seen = new Set()
+  const hosts = []
+  const add = (h) => {
+    if (h && !seen.has(h)) {
+      seen.add(h)
+      hosts.push(h)
+    }
+  }
+  for (const m of text.matchAll(IP_RE)) add(m[0])
+  for (let tok of text.split(/[\s,]+/)) {
+    tok = tok
+      .trim()
+      .replace(/^[a-z]+:\/\//i, '')
+      .split(/[/#?]/)[0]
+      .replace(/:\d+$/, '')
+    if (tok && !IPV4_RE.test(tok) && DOMAIN_RE.test(tok)) add(tok.toLowerCase())
+  }
+  return hosts
 }
 
 function genName() {
@@ -26,12 +53,12 @@ export default function IPTools() {
   const { t } = useLang()
   const tt = t.tools
   const [input, setInput] = useState('')
-  const [ports, setPorts] = useState(() => new Set(ALL_PORTS))
+  const [ports, setPorts] = useState(() => new Set(TLS_PORTS))
   const [output, setOutput] = useState('')
   const [generated, setGenerated] = useState(false)
   const [copied, setCopied] = useState(false)
 
-  const ipCount = useMemo(() => extractIPs(input).length, [input])
+  const ipCount = useMemo(() => extractHosts(input).length, [input])
   const outLines = output ? output.split('\n').filter(Boolean).length : 0
 
   function togglePort(p) {
@@ -44,11 +71,11 @@ export default function IPTools() {
   }
 
   function generate() {
-    const ips = extractIPs(input)
+    const hosts = extractHosts(input)
     const selected = ALL_PORTS.filter((p) => ports.has(p))
     const lines = []
-    for (const ip of ips) {
-      for (const port of selected) lines.push(`${ip}:${port}#${genName()}`)
+    for (const host of hosts) {
+      for (const port of selected) lines.push(`${host}:${port}#${genName()}`)
     }
     setOutput(lines.join('\n'))
     setGenerated(true)
@@ -145,8 +172,33 @@ export default function IPTools() {
         {/* Ports */}
         <div className="tool-card">
           <div className="tool-label">{tt.portsLabel}</div>
+          <div
+            className="port-group-label"
+            style={{ fontSize: '12px', fontWeight: 600, opacity: 0.7, margin: '4px 0 8px' }}
+          >
+            {tt.portsTls}
+          </div>
           <div className="port-chips">
-            {ALL_PORTS.map((p) => (
+            {TLS_PORTS.map((p) => (
+              <button
+                key={p}
+                type="button"
+                className={`port-chip${ports.has(p) ? ' on' : ''}`}
+                aria-pressed={ports.has(p)}
+                onClick={() => togglePort(p)}
+              >
+                {p}
+              </button>
+            ))}
+          </div>
+          <div
+            className="port-group-label"
+            style={{ fontSize: '12px', fontWeight: 600, opacity: 0.7, margin: '14px 0 8px' }}
+          >
+            {tt.portsNonTls}
+          </div>
+          <div className="port-chips">
+            {NONTLS_PORTS.map((p) => (
               <button
                 key={p}
                 type="button"
@@ -170,7 +222,7 @@ export default function IPTools() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={onKeyDown}
-            placeholder={'1.1.1.1\n8.8.8.8\n...'}
+            placeholder={'1.1.1.1\n8.8.8.8\nclean.example.com\n...'}
             spellCheck="false"
           />
           <div className="tool-actions">

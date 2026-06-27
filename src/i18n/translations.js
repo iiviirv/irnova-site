@@ -43,6 +43,9 @@ export const ui = {
       probeOr: 'or test your own list',
       autoNote:
         'Auto-scan makes random IPs from Cloudflare’s public ranges and times each from your browser, no NovaRadar needed. Almost every Cloudflare IP answers, so sort by latency, keep the lowest, then confirm with a real connection. Tested in batches of ~48; it’s rougher than an on-device scanner.',
+      probeCopyIps: 'Copy IPs',
+      creditPre: 'Auto-scan and the config builder are inspired by the Cloudflare IP scanner by ',
+      creditPost: '. Rebuilt for Nova with honest, real-only measurements.',
       portsLabel: 'Ports',
       portsTls: 'TLS ports',
       portsNonTls: 'Non-TLS ports',
@@ -228,6 +231,9 @@ export const ui = {
       probeOr: 'یا فهرست خودتان را بسنجید',
       autoNote:
         'اسکن خودکار آی‌پی‌های تصادفی از رنج‌های عمومی کلودفلر می‌سازد و هرکدام را از مرورگر شما زمان‌سنجی می‌کند، بدون نیاز به NovaRadar. تقریباً همه‌ی آی‌پی‌های کلودفلر پاسخ می‌دهند، پس بر اساس تأخیر مرتب کنید، کم‌ترین‌ها را نگه دارید و سپس با یک اتصال واقعی تأیید کنید. در دسته‌های حدوداً ۴۸‌تایی بررسی می‌شود؛ از یک اسکنر روی دستگاه دقت کمتری دارد.',
+      probeCopyIps: 'کپی آی‌پی‌ها',
+      creditPre: 'اسکن خودکار و سازنده‌ی کانفیگ از اسکنر آی‌پی کلودفلر ساخته‌ی ',
+      creditPost: ' الهام گرفته شده و برای نوا با اندازه‌گیری‌های واقعی بازنویسی شده است.',
       portsLabel: 'پورت‌ها',
       portsTls: 'پورت‌های TLS',
       portsNonTls: 'پورت‌های بدون TLS',

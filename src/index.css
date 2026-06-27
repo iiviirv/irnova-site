@@ -1789,7 +1789,81 @@ h3 {
   background: rgba(168, 85, 247, 0.14);
 }
 
+/* ---------- How-to guide ---------- */
+.tool-guide {
+  border-color: var(--border-strong);
+}
+.guide-steps {
+  display: grid;
+  gap: 14px;
+  margin: 8px 0 12px;
+}
+.guide-step {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+.guide-step-num {
+  flex-shrink: 0;
+  width: 26px;
+  height: 26px;
+  border-radius: 999px;
+  background: var(--grad);
+  color: #05060a;
+  font-weight: 800;
+  font-size: 0.82rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+.guide-step-body {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.guide-step-body strong {
+  font-size: 0.92rem;
+  color: var(--text);
+}
+.guide-step-body > span {
+  font-size: 0.88rem;
+  color: var(--muted);
+  line-height: 1.55;
+}
+
 /* ---------- Config builder ---------- */
+.import-row {
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+.build-field-label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.import-row .uuid-row input {
+  flex: 1;
+  min-width: 0;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  outline: none;
+}
+.import-row .uuid-row input:focus {
+  border-color: var(--border-strong);
+}
+.import-err {
+  color: var(--warning) !important;
+}
+
 .proto-tabs {
   display: flex;
   flex-wrap: wrap;

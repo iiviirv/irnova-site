@@ -1,7 +1,58 @@
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Icon from './Icon.jsx'
 import Nav from './Nav.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
+
+// Remembered builder settings (worker host, UUID, protocol, etc.) so a returning
+// user doesn't re-type them. Password is never stored.
+const PREFS_KEY = 'nova-tools-prefs'
+function loadPrefs() {
+  try {
+    return JSON.parse(localStorage.getItem(PREFS_KEY) || '{}')
+  } catch {
+    return {}
+  }
+}
+const SAVED = typeof localStorage !== 'undefined' ? loadPrefs() : {}
+
+// Parse an existing vless:// / vmess:// / trojan:// link into builder fields, so
+// a user can drop in their current Nova config and only swap the clean IPs.
+function parseConfig(raw) {
+  const link = (raw || '').trim()
+  try {
+    if (link.startsWith('vless://') || link.startsWith('trojan://')) {
+      const isVless = link.startsWith('vless://')
+      const url = new URL(link)
+      const cred = decodeURIComponent(url.username)
+      const p = url.searchParams
+      const sec = (p.get('security') || 'tls') === 'none' ? 'none' : 'tls'
+      return {
+        protocol: isVless ? 'vless' : 'trojan',
+        uuid: isVless ? cred : '',
+        password: isVless ? '' : cred,
+        host: p.get('sni') || p.get('host') || '',
+        path: decodeURIComponent(p.get('path') || '/'),
+        security: sec,
+        network: p.get('type') || 'ws',
+      }
+    }
+    if (link.startsWith('vmess://')) {
+      const json = JSON.parse(decodeURIComponent(escape(atob(link.slice(8)))))
+      return {
+        protocol: 'vmess',
+        uuid: json.id || '',
+        password: '',
+        host: json.sni || json.host || '',
+        path: json.path || '/',
+        security: json.tls ? 'tls' : 'none',
+        network: json.net || 'ws',
+      }
+    }
+  } catch {
+    return null
+  }
+  return null
+}
 
 const NOVARADAR_URL = 'https://github.com/IRNova/NovaRadar/releases'
 
@@ -304,7 +355,7 @@ export default function IPTools() {
   const [maxPing, setMaxPing] = useState(900) // 900 = show all
   const [scanning, setScanning] = useState(false)
   const [scanStats, setScanStats] = useState({ tested: 0, found: 0 })
-  const [operator, setOperator] = useState('all')
+  const [operator, setOperator] = useState(SAVED.operator || 'all')
   const [scanCount, setScanCount] = useState(50)
   const [ipsWithPorts, setIpsWithPorts] = useState(false)
   const scanAbort = useRef(false)
@@ -429,17 +480,48 @@ export default function IPTools() {
   }
 
   // ---------- Config builder ----------
-  const [protocol, setProtocol] = useState('vless')
+  const [protocol, setProtocol] = useState(SAVED.protocol || 'vless')
   const [builderHosts, setBuilderHosts] = useState('')
-  const [workerHost, setWorkerHost] = useState('')
-  const [uuid, setUuid] = useState('')
+  const [workerHost, setWorkerHost] = useState(SAVED.workerHost || '')
+  const [uuid, setUuid] = useState(SAVED.uuid || '')
   const [password, setPassword] = useState('')
-  const [path, setPath] = useState('/')
-  const [security, setSecurity] = useState('tls')
-  const [network, setNetwork] = useState('ws')
+  const [path, setPath] = useState(SAVED.path || '/')
+  const [security, setSecurity] = useState(SAVED.security || 'tls')
+  const [network, setNetwork] = useState(SAVED.network || 'ws')
   const [builderOut, setBuilderOut] = useState('')
   const [builderCopied, setBuilderCopied] = useState(false)
+  const [importLink, setImportLink] = useState('')
+  const [importErr, setImportErr] = useState(false)
   const builderRef = useRef(null)
+
+  // Persist builder settings (not the password) whenever they change.
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        PREFS_KEY,
+        JSON.stringify({ operator, protocol, workerHost, uuid, path, security, network }),
+      )
+    } catch {
+      /* storage may be unavailable (private mode) */
+    }
+  }, [operator, protocol, workerHost, uuid, path, security, network])
+
+  function importConfig() {
+    const parsed = parseConfig(importLink)
+    if (!parsed) {
+      setImportErr(true)
+      return
+    }
+    setImportErr(false)
+    setProtocol(parsed.protocol)
+    if (parsed.uuid) setUuid(parsed.uuid)
+    if (parsed.password) setPassword(parsed.password)
+    if (parsed.host) setWorkerHost(parsed.host)
+    setPath(parsed.path || '/')
+    setSecurity(parsed.security)
+    setNetwork(parsed.network)
+    setBuilderOut('')
+  }
 
   const builderHostCount = useMemo(() => extractHosts(builderHosts).length, [builderHosts])
   const needsCred = protocol === 'trojan' ? password.trim() : uuid.trim()
@@ -533,6 +615,23 @@ export default function IPTools() {
           </span>
           <h1>{tt.title}</h1>
           <p>{tt.intro}</p>
+        </div>
+
+        {/* How to use — quick guide */}
+        <div className="tool-card tool-guide">
+          <div className="tool-label">{tt.guide.title}</div>
+          <div className="guide-steps">
+            {[1, 2, 3, 4].map((n) => (
+              <div className="guide-step" key={n}>
+                <span className="guide-step-num">{n}</span>
+                <span className="guide-step-body">
+                  <strong>{tt.guide[`s${n}t`]}</strong>
+                  <span>{tt.guide[`s${n}`]}</span>
+                </span>
+              </div>
+            ))}
+          </div>
+          <div className="tool-hint">{tt.guide.note}</div>
         </div>
 
         {/* How to get clean IPs */}
@@ -786,6 +885,29 @@ export default function IPTools() {
         <div className="tool-card">
           <div className="tool-label">{tt.buildTitle}</div>
           <p className="tool-sub">{tt.buildIntro}</p>
+
+          <div className="import-row">
+            <span className="build-field-label">{tt.importLabel}</span>
+            <div className="uuid-row">
+              <input
+                type="text"
+                dir="ltr"
+                value={importLink}
+                onChange={(e) => {
+                  setImportLink(e.target.value)
+                  if (importErr) setImportErr(false)
+                }}
+                placeholder="vless://…  ·  vmess://…  ·  trojan://…"
+                spellCheck="false"
+              />
+              <button type="button" className="mini-btn" onClick={importConfig} disabled={!importLink.trim()}>
+                <Icon name="download" size={14} /> {tt.importBtn}
+              </button>
+            </div>
+            <div className={`tool-hint${importErr ? ' import-err' : ''}`}>
+              {importErr ? tt.importBad : tt.importHint}
+            </div>
+          </div>
 
           <div className="proto-tabs">
             {PROTOCOLS.map((p) => (

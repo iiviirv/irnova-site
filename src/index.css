@@ -1991,6 +1991,36 @@ h3 {
   word-break: break-all;
 }
 
+.qr-area {
+  padding: 14px;
+  border-top: 1px solid var(--border);
+}
+.qr-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  gap: 12px;
+}
+.qr-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+.qr-card svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+.qr-name {
+  font-size: 0.72rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  color: #05060a;
+}
+
 @media (max-width: 560px) {
   .build-grid {
     grid-template-columns: 1fr;

@@ -1,7 +1,43 @@
 import { useEffect, useMemo, useRef, useState } from 'react'
+import qrcode from 'qrcode-generator'
 import Icon from './Icon.jsx'
 import Nav from './Nav.jsx'
 import { useLang } from '../i18n/LanguageContext.jsx'
+
+// Render a config string as a scannable QR (dark modules on white, with a quiet
+// zone). Generated locally — the config never leaves the browser.
+function QrSvg({ text, size = 138 }) {
+  const { rects, dim } = useMemo(() => {
+    const qr = qrcode(0, 'M')
+    qr.addData(text)
+    qr.make()
+    const c = qr.getModuleCount()
+    const margin = 2
+    const cells = []
+    for (let r = 0; r < c; r++) {
+      for (let col = 0; col < c; col++) {
+        if (qr.isDark(r, col)) cells.push(`${col + margin} ${r + margin}`)
+      }
+    }
+    return { rects: cells, dim: c + margin * 2 }
+  }, [text])
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox={`0 0 ${dim} ${dim}`}
+      shapeRendering="crispEdges"
+      role="img"
+      aria-label="QR code"
+    >
+      <rect width={dim} height={dim} fill="#ffffff" />
+      {rects.map((xy) => {
+        const [x, y] = xy.split(' ')
+        return <rect key={xy} x={x} y={y} width={1.04} height={1.04} fill="#05060a" />
+      })}
+    </svg>
+  )
+}
 
 // Remembered builder settings (worker host, UUID, protocol, etc.) so a returning
 // user doesn't re-type them. Password is never stored.
@@ -490,9 +526,18 @@ export default function IPTools() {
   const [network, setNetwork] = useState(SAVED.network || 'ws')
   const [builderOut, setBuilderOut] = useState('')
   const [builderCopied, setBuilderCopied] = useState(false)
+  const [showQR, setShowQR] = useState(false)
   const [importLink, setImportLink] = useState('')
   const [importErr, setImportErr] = useState(false)
   const builderRef = useRef(null)
+
+  // QR codes only make sense for single-link protocols (not whole Clash/Sing-box
+  // files). Cap how many we render so a big IP × port list doesn't flood the page.
+  const QR_LIMIT = 12
+  const qrLinks = useMemo(() => {
+    if (!builderOut || !['vless', 'vmess', 'trojan'].includes(protocol)) return []
+    return builderOut.split('\n').filter(Boolean).slice(0, QR_LIMIT)
+  }, [builderOut, protocol])
 
   // Persist builder settings (not the password) whenever they change.
   useEffect(() => {
@@ -576,6 +621,32 @@ export default function IPTools() {
   const [chk, setChk] = useState(null)
   const [chkBusy, setChkBusy] = useState(false)
 
+  async function measureDownloadMbps() {
+    // Pull real bytes from the same-origin /speedtest Worker and time it. The
+    // function exists only on the deployed site (Pages), so this no-ops in plain
+    // `vite preview`.
+    const sizeBytes = 6 * 1024 * 1024
+    try {
+      const t0 = performance.now()
+      const resp = await fetch('/speedtest?bytes=' + sizeBytes + '&_=' + Math.random(), {
+        cache: 'no-store',
+      })
+      if (!resp.ok || !resp.body) return null
+      const reader = resp.body.getReader()
+      let received = 0
+      for (;;) {
+        const { done, value } = await reader.read()
+        if (done) break
+        received += value.length
+      }
+      const secs = (performance.now() - t0) / 1000
+      if (secs <= 0 || received <= 0) return null
+      return (received * 8) / secs / 1e6 // Mbps
+    } catch {
+      return null
+    }
+  }
+
   async function runCheck() {
     setChkBusy(true)
     setChk(null)
@@ -594,13 +665,15 @@ export default function IPTools() {
         /* unreachable attempt */
       }
     }
+    let avg
+    let label
     if (reachable && times.length) {
-      const avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length)
-      const label = avg < 150 ? tt.chkGood : avg < 400 ? tt.chkOk : tt.chkSlow
-      setChk({ reachable: true, avgMs: avg, label })
-    } else {
-      setChk({ reachable })
+      avg = Math.round(times.reduce((a, b) => a + b, 0) / times.length)
+      label = avg < 150 ? tt.chkGood : avg < 400 ? tt.chkOk : tt.chkSlow
     }
+    // Real download throughput (independent of reachability ping above).
+    const mbps = await measureDownloadMbps()
+    setChk({ reachable: reachable || mbps != null, avgMs: avg, label, mbps })
     setChkBusy(false)
   }
 
@@ -1041,11 +1114,29 @@ export default function IPTools() {
                   <button type="button" className="mini-btn" onClick={downloadBuilder}>
                     <Icon name="download" size={14} /> {tt.buildDownload}
                   </button>
+                  {qrLinks.length > 0 && (
+                    <button type="button" className="mini-btn" onClick={() => setShowQR((v) => !v)}>
+                      <Icon name="app" size={14} /> {showQR ? tt.qrHide : tt.qrShow}
+                    </button>
+                  )}
                 </span>
               </div>
               <pre className="tool-output" dir="ltr" tabIndex={0}>
                 {builderOut}
               </pre>
+              {showQR && qrLinks.length > 0 && (
+                <div className="qr-area">
+                  <div className="qr-grid">
+                    {qrLinks.map((link, i) => (
+                      <div className="qr-card" key={i}>
+                        <QrSvg text={link} />
+                        <span className="qr-name">Nova-{i + 1}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <div className="tool-hint">{tt.qrNote}</div>
+                </div>
+              )}
             </div>
           )}
 
@@ -1065,9 +1156,14 @@ export default function IPTools() {
             <div className={`check-result ${chk.reachable ? 'ok' : 'bad'}`}>
               <Icon name={chk.reachable ? 'check' : 'shield'} size={18} />
               <span>{chk.reachable ? tt.chkReachable : tt.chkUnreachable}</span>
-              {chk.reachable && chk.avgMs !== undefined && (
+              {chk.avgMs !== undefined && (
                 <span className="check-latency">
                   {tt.chkLatency}: <strong>{chk.avgMs} ms</strong> · {chk.label}
+                </span>
+              )}
+              {chk.mbps != null && (
+                <span className="check-latency">
+                  {tt.chkDownload}: <strong>{chk.mbps.toFixed(1)} Mbps</strong>
                 </span>
               )}
             </div>

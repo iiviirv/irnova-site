@@ -1554,6 +1554,31 @@ h3 {
 }
 
 /* ---------- Latency probe ---------- */
+.auto-scan-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.probe-or {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 18px 0 12px;
+  font-size: 0.8rem;
+  color: var(--muted);
+  text-transform: lowercase;
+}
+.probe-or::before,
+.probe-or::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border);
+}
+
 .probe-filter {
   display: flex;
   align-items: center;

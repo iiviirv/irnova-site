@@ -36,6 +36,13 @@ export const ui = {
       probeNoneInRange: 'No hosts under that latency, raise the slider.',
       probeNote:
         'A rough estimate measured in your browser (TLS handshake time). Whether a host responds at all is reliable; the millisecond number is approximate and varies. Up to 40 hosts per run.',
+      autoScan: 'Auto-scan Cloudflare',
+      autoStop: 'Stop',
+      autoMore: 'Scan more',
+      autoTested: 'tested',
+      probeOr: 'or test your own list',
+      autoNote:
+        'Auto-scan makes random IPs from Cloudflare’s public ranges and times each from your browser, no NovaRadar needed. Almost every Cloudflare IP answers, so sort by latency, keep the lowest, then confirm with a real connection. Tested in batches of ~48; it’s rougher than an on-device scanner.',
       portsLabel: 'Ports',
       portsTls: 'TLS ports',
       portsNonTls: 'Non-TLS ports',
@@ -214,6 +221,13 @@ export const ui = {
       probeNoneInRange: 'میزبانی با این تأخیر نیست، اسلایدر را بالاتر ببرید.',
       probeNote:
         'یک تخمین تقریبی که در مرورگر شما اندازه‌گیری می‌شود (زمان دست‌دادن TLS). پاسخ‌دادن یا ندادن یک میزبان قابل‌اعتماد است؛ عدد میلی‌ثانیه تقریبی است و تغییر می‌کند. در هر اجرا تا ۴۰ میزبان.',
+      autoScan: 'اسکن خودکار کلودفلر',
+      autoStop: 'توقف',
+      autoMore: 'اسکن بیشتر',
+      autoTested: 'بررسی‌شده',
+      probeOr: 'یا فهرست خودتان را بسنجید',
+      autoNote:
+        'اسکن خودکار آی‌پی‌های تصادفی از رنج‌های عمومی کلودفلر می‌سازد و هرکدام را از مرورگر شما زمان‌سنجی می‌کند، بدون نیاز به NovaRadar. تقریباً همه‌ی آی‌پی‌های کلودفلر پاسخ می‌دهند، پس بر اساس تأخیر مرتب کنید، کم‌ترین‌ها را نگه دارید و سپس با یک اتصال واقعی تأیید کنید. در دسته‌های حدوداً ۴۸‌تایی بررسی می‌شود؛ از یک اسکنر روی دستگاه دقت کمتری دارد.',
       portsLabel: 'پورت‌ها',
       portsTls: 'پورت‌های TLS',
       portsNonTls: 'پورت‌های بدون TLS',

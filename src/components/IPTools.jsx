@@ -72,14 +72,28 @@ const CF_RANGES = [
   '198.41.128.0/17',
 ]
 
+// Operator hint: which Cloudflare ranges to favour per Iranian ISP. Clean IPs
+// genuinely differ between operators (each ISP routes to different CF edges), so
+// this biases the scan toward ranges that tend to work on that network. It's a
+// community heuristic, not a guarantee — "All" scans every range evenly.
+const OPERATOR_RANGES = {
+  all: CF_RANGES,
+  mci: ['104.16.0.0/13', '172.64.0.0/13', '162.159.0.0/16', '188.114.96.0/20'],
+  mtn: ['108.162.192.0/18', '104.24.0.0/14', '172.64.0.0/13', '162.158.0.0/15'],
+  tci: ['104.16.0.0/13', '162.159.0.0/16', '141.101.64.0/18'],
+  shatel: ['104.16.0.0/13', '104.24.0.0/14', '190.93.240.0/20'],
+}
+const OPERATORS = ['all', 'mci', 'mtn', 'tci', 'shatel']
+
 function ipToInt(ip) {
   return ip.split('.').reduce((acc, o) => (acc << 8) + Number(o), 0) >>> 0
 }
 function intToIp(n) {
   return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.')
 }
-function randomCfIp() {
-  const cidr = CF_RANGES[Math.floor(Math.random() * CF_RANGES.length)]
+function randomCfIp(operator = 'all') {
+  const ranges = OPERATOR_RANGES[operator] || CF_RANGES
+  const cidr = ranges[Math.floor(Math.random() * ranges.length)]
   const [base, prefix] = cidr.split('/')
   const hostBits = 32 - Number(prefix)
   const size = 2 ** hostBits
@@ -290,6 +304,9 @@ export default function IPTools() {
   const [maxPing, setMaxPing] = useState(900) // 900 = show all
   const [scanning, setScanning] = useState(false)
   const [scanStats, setScanStats] = useState({ tested: 0, found: 0 })
+  const [operator, setOperator] = useState('all')
+  const [scanCount, setScanCount] = useState(50)
+  const [ipsWithPorts, setIpsWithPorts] = useState(false)
   const scanAbort = useRef(false)
 
   const probeHostCount = useMemo(() => extractHosts(probeInput).length, [probeInput])
@@ -328,7 +345,11 @@ export default function IPTools() {
 
   const [ipsCopied, setIpsCopied] = useState(false)
   function probeIpList() {
-    return reachableResults.map((r) => r.host).join('\n')
+    const hosts = reachableResults.map((r) => r.host)
+    if (!ipsWithPorts) return hosts.join('\n')
+    const selPorts = ALL_PORTS.filter((p) => ports.has(p))
+    const usePorts = selPorts.length ? selPorts : [443]
+    return hosts.flatMap((h) => usePorts.map((p) => `${h}:${p}`)).join('\n')
   }
   async function copyProbeIps() {
     const txt = probeIpList()
@@ -373,15 +394,15 @@ export default function IPTools() {
       setResults([])
     }
     let tested = 0
-    const BATCH = 48
+    const BATCH = scanCount
     const lanes = 8
     setScanStats({ tested: 0, found: foundCount })
     const worker = async () => {
       while (!scanAbort.current && tested < BATCH) {
         tested++
-        let ip = randomCfIp()
+        let ip = randomCfIp(operator)
         let guard = 0
-        while (seen.has(ip) && guard++ < 5) ip = randomCfIp()
+        while (seen.has(ip) && guard++ < 5) ip = randomCfIp(operator)
         seen.add(ip)
         setScanStats({ tested, found: foundCount })
         const r = await probeHost(ip, port)
@@ -542,6 +563,32 @@ export default function IPTools() {
           <p className="tool-sub">{tt.probeIntro}</p>
 
           {/* Auto-scan: no list needed */}
+          <div className="scan-controls">
+            <label className="scan-control">
+              <span>{tt.operatorLabel}</span>
+              <select value={operator} onChange={(e) => setOperator(e.target.value)} disabled={scanning}>
+                {OPERATORS.map((op) => (
+                  <option key={op} value={op}>
+                    {tt.operators[op]}
+                  </option>
+                ))}
+              </select>
+            </label>
+            <label className="scan-control">
+              <span>{tt.scanCountLabel}</span>
+              <select
+                value={scanCount}
+                onChange={(e) => setScanCount(Number(e.target.value))}
+                disabled={scanning}
+              >
+                {[25, 50, 100, 200].map((n) => (
+                  <option key={n} value={n}>
+                    {n}
+                  </option>
+                ))}
+              </select>
+            </label>
+          </div>
           <div className="auto-scan-row">
             {!scanning ? (
               <button type="button" className="btn btn-primary" onClick={() => autoScan(false)}>
@@ -621,6 +668,14 @@ export default function IPTools() {
                 >
                   <Icon name="route" size={14} /> {tt.probeUse}
                 </button>
+                <label className="ports-toggle">
+                  <input
+                    type="checkbox"
+                    checked={ipsWithPorts}
+                    onChange={(e) => setIpsWithPorts(e.target.checked)}
+                  />
+                  {tt.ipsWithPorts}
+                </label>
               </div>
 
               {/* Ping filter */}

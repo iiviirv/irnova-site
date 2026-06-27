@@ -15,21 +15,22 @@ const CORS = {
   'Access-Control-Allow-Methods': 'GET,OPTIONS',
 }
 
-const MAX_BYTES = 60 * 1024 * 1024 // 60 MB cap
+const MAX_BYTES = 50 * 1024 * 1024 // 50 MB cap
 const DEFAULT_BYTES = 6 * 1024 * 1024 // 6 MB
-const CHUNK_SIZE = 64 * 1024 // 64 KB per chunk (getRandomValues max)
+const BLOCK = 16 * 1024 // 16 KB source block of randomness (well under the
+//                         65536-byte getRandomValues limit)
 
-// One block of random bytes, reused per chunk. Random (not zeros) so nothing in
-// the path can compress it and inflate the measured speed. Built lazily on the
-// first request: Cloudflare Workers forbid generating random values in global
-// (module top-level) scope, so this must not run until a request comes in.
-let CHUNK = null
-function getChunk() {
-  if (!CHUNK) {
-    CHUNK = new Uint8Array(CHUNK_SIZE)
-    crypto.getRandomValues(CHUNK)
+// A block of random bytes used as the source for every chunk. Random (not
+// zeros) so nothing in the path can compress it and inflate the measured speed.
+// Built lazily on the first request: Cloudflare Workers forbid generating random
+// values in global (module top-level) scope.
+let SOURCE = null
+function source() {
+  if (!SOURCE) {
+    SOURCE = new Uint8Array(BLOCK)
+    crypto.getRandomValues(SOURCE)
   }
-  return CHUNK
+  return SOURCE
 }
 
 export async function onRequest(context) {
@@ -37,8 +38,8 @@ export async function onRequest(context) {
   if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: CORS })
   }
-  const chunk = getChunk()
 
+  const src = source()
   const url = new URL(request.url)
   let bytes = parseInt(url.searchParams.get('bytes') || String(DEFAULT_BYTES), 10)
   if (!Number.isFinite(bytes) || bytes <= 0) bytes = DEFAULT_BYTES
@@ -51,10 +52,11 @@ export async function onRequest(context) {
         controller.close()
         return
       }
-      const remaining = bytes - sent
-      const piece = remaining >= chunk.length ? chunk : chunk.subarray(0, remaining)
-      controller.enqueue(piece)
-      sent += piece.length
+      const len = Math.min(src.length, bytes - sent)
+      // Enqueue a fresh copy each time — the runtime can detach an enqueued
+      // buffer once it's written to the socket, so a shared view would fail.
+      controller.enqueue(src.slice(0, len))
+      sent += len
     },
   })
 
@@ -62,7 +64,6 @@ export async function onRequest(context) {
     headers: {
       ...CORS,
       'Content-Type': 'application/octet-stream',
-      'Content-Length': String(bytes),
       'Cache-Control': 'no-store, no-cache, must-revalidate',
     },
   })

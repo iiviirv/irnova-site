@@ -20,15 +20,24 @@ const DEFAULT_BYTES = 6 * 1024 * 1024 // 6 MB
 const CHUNK_SIZE = 64 * 1024 // 64 KB per chunk (getRandomValues max)
 
 // One block of random bytes, reused per chunk. Random (not zeros) so nothing in
-// the path can compress it and inflate the measured speed.
-const CHUNK = new Uint8Array(CHUNK_SIZE)
-crypto.getRandomValues(CHUNK)
+// the path can compress it and inflate the measured speed. Built lazily on the
+// first request: Cloudflare Workers forbid generating random values in global
+// (module top-level) scope, so this must not run until a request comes in.
+let CHUNK = null
+function getChunk() {
+  if (!CHUNK) {
+    CHUNK = new Uint8Array(CHUNK_SIZE)
+    crypto.getRandomValues(CHUNK)
+  }
+  return CHUNK
+}
 
 export async function onRequest(context) {
   const { request } = context
   if (request.method === 'OPTIONS') {
     return new Response(null, { status: 204, headers: CORS })
   }
+  const chunk = getChunk()
 
   const url = new URL(request.url)
   let bytes = parseInt(url.searchParams.get('bytes') || String(DEFAULT_BYTES), 10)
@@ -43,9 +52,9 @@ export async function onRequest(context) {
         return
       }
       const remaining = bytes - sent
-      const chunk = remaining >= CHUNK.length ? CHUNK : CHUNK.subarray(0, remaining)
-      controller.enqueue(chunk)
-      sent += chunk.length
+      const piece = remaining >= chunk.length ? chunk : chunk.subarray(0, remaining)
+      controller.enqueue(piece)
+      sent += piece.length
     },
   })
 

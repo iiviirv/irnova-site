@@ -326,6 +326,32 @@ export default function IPTools() {
     if (good.length) setBuilderHosts(good.join('\n'))
   }
 
+  const [ipsCopied, setIpsCopied] = useState(false)
+  function probeIpList() {
+    return reachableResults.map((r) => r.host).join('\n')
+  }
+  async function copyProbeIps() {
+    const txt = probeIpList()
+    if (!txt) return
+    try {
+      await navigator.clipboard.writeText(txt)
+    } catch {
+      /* clipboard may be blocked */
+    }
+    setIpsCopied(true)
+    setTimeout(() => setIpsCopied(false), 1500)
+  }
+  function downloadProbeIps() {
+    const txt = probeIpList()
+    if (!txt) return
+    const blob = new Blob([txt], { type: 'text/plain' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = 'nova-clean-ips.txt'
+    a.click()
+    URL.revokeObjectURL(a.href)
+  }
+
   function stopScan() {
     scanAbort.current = true
   }
@@ -555,11 +581,6 @@ export default function IPTools() {
               <Icon name="radar" size={16} />{' '}
               {probing ? `${tt.probeRunning} ${progress.done}/${progress.total}` : tt.probeRun}
             </button>
-            {results.length > 0 && (
-              <button type="button" className="btn btn-ghost" onClick={useProbeInBuilder}>
-                <Icon name="route" size={16} /> {tt.probeUse}
-              </button>
-            )}
             <span className="tool-stats">
               <strong>{probeHostCount}</strong> {tt.probeHosts}
               {results.length > 0 && (
@@ -573,6 +594,35 @@ export default function IPTools() {
 
           {results.length > 0 && (
             <>
+              {/* Result actions: list of clean IPs */}
+              <div className="probe-actions">
+                <button
+                  type="button"
+                  className="mini-btn"
+                  onClick={copyProbeIps}
+                  disabled={!reachableResults.length}
+                >
+                  <Icon name={ipsCopied ? 'check' : 'copy'} size={14} />{' '}
+                  {ipsCopied ? tt.copied : `${tt.probeCopyIps} (${reachableResults.length})`}
+                </button>
+                <button
+                  type="button"
+                  className="mini-btn"
+                  onClick={downloadProbeIps}
+                  disabled={!reachableResults.length}
+                >
+                  <Icon name="download" size={14} /> {tt.buildDownload}
+                </button>
+                <button
+                  type="button"
+                  className="mini-btn"
+                  onClick={useProbeInBuilder}
+                  disabled={!reachableResults.length}
+                >
+                  <Icon name="route" size={14} /> {tt.probeUse}
+                </button>
+              </div>
+
               {/* Ping filter */}
               <div className="probe-filter">
                 <label htmlFor="maxPing">
@@ -847,6 +897,14 @@ export default function IPTools() {
           )}
           <div className="tool-hint">{tt.chkNote}</div>
         </div>
+
+        <p className="tool-credit">
+          {tt.creditPre}
+          <a href="https://t.me/survivorv" target="_blank" rel="noreferrer noopener">
+            Reza_Gm
+          </a>
+          {tt.creditPost}
+        </p>
       </div>
     </div>
   )

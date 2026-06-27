@@ -1579,6 +1579,30 @@ h3 {
   background: var(--border);
 }
 
+.probe-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.tool-credit {
+  text-align: center;
+  font-size: 0.82rem;
+  color: var(--muted);
+  margin: 6px 0 4px;
+  line-height: 1.6;
+}
+.tool-credit a {
+  color: var(--cyan);
+  font-weight: 600;
+  text-decoration: none;
+}
+.tool-credit a:hover {
+  text-decoration: underline;
+}
+
 .probe-filter {
   display: flex;
   align-items: center;

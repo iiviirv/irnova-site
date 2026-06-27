@@ -57,6 +57,36 @@ function genUUID() {
   })
 }
 
+// Cloudflare's public IPv4 ranges (the big edge blocks that answer on 443).
+// Auto-scan picks random addresses from these and probes them — the same honest
+// HTTPS-timing method used for pasted hosts, just self-fed.
+const CF_RANGES = [
+  '104.16.0.0/13',
+  '104.24.0.0/14',
+  '172.64.0.0/13',
+  '162.158.0.0/15',
+  '141.101.64.0/18',
+  '108.162.192.0/18',
+  '190.93.240.0/20',
+  '188.114.96.0/20',
+  '198.41.128.0/17',
+]
+
+function ipToInt(ip) {
+  return ip.split('.').reduce((acc, o) => (acc << 8) + Number(o), 0) >>> 0
+}
+function intToIp(n) {
+  return [(n >>> 24) & 255, (n >>> 16) & 255, (n >>> 8) & 255, n & 255].join('.')
+}
+function randomCfIp() {
+  const cidr = CF_RANGES[Math.floor(Math.random() * CF_RANGES.length)]
+  const [base, prefix] = cidr.split('/')
+  const hostBits = 32 - Number(prefix)
+  const size = 2 ** hostBits
+  const offset = 1 + Math.floor(Math.random() * (size - 2)) // skip network + broadcast
+  return intToIp((ipToInt(base) + offset) >>> 0)
+}
+
 // Browser-side latency probe. We can only honestly measure the time the browser
 // takes to attempt a TLS handshake to a host: load a tiny resource over HTTPS and
 // time how long onload/onerror takes. For a raw IP the certificate won't match so
@@ -258,6 +288,9 @@ export default function IPTools() {
   const [probing, setProbing] = useState(false)
   const [progress, setProgress] = useState({ done: 0, total: 0 })
   const [maxPing, setMaxPing] = useState(900) // 900 = show all
+  const [scanning, setScanning] = useState(false)
+  const [scanStats, setScanStats] = useState({ tested: 0, found: 0 })
+  const scanAbort = useRef(false)
 
   const probeHostCount = useMemo(() => extractHosts(probeInput).length, [probeInput])
 
@@ -291,6 +324,50 @@ export default function IPTools() {
   function useProbeInBuilder() {
     const good = reachableResults.map((r) => r.host)
     if (good.length) setBuilderHosts(good.join('\n'))
+  }
+
+  function stopScan() {
+    scanAbort.current = true
+  }
+
+  // Auto-scan: self-feed random Cloudflare IPs through the same honest probe.
+  // Tests in a batch so it can't run forever; `append` keeps prior finds and
+  // scans another batch. Concurrency is interleaved (single thread), so the
+  // shared counters mutate safely between awaits.
+  async function autoScan(append = false) {
+    setScanning(true)
+    scanAbort.current = false
+    const port = ALL_PORTS.find((p) => TLS_PORTS.includes(p) && ports.has(p)) || 443
+    const seen = new Set()
+    let foundCount = 0
+    if (append) {
+      results.forEach((r) => seen.add(r.host))
+      foundCount = results.filter((r) => r.reachable).length
+    } else {
+      setResults([])
+    }
+    let tested = 0
+    const BATCH = 48
+    const lanes = 8
+    setScanStats({ tested: 0, found: foundCount })
+    const worker = async () => {
+      while (!scanAbort.current && tested < BATCH) {
+        tested++
+        let ip = randomCfIp()
+        let guard = 0
+        while (seen.has(ip) && guard++ < 5) ip = randomCfIp()
+        seen.add(ip)
+        setScanStats({ tested, found: foundCount })
+        const r = await probeHost(ip, port)
+        if (r.reachable) {
+          foundCount++
+          setResults((prev) => [...prev, { host: ip, port, reachable: true, ms: r.ms }])
+          setScanStats({ tested, found: foundCount })
+        }
+      }
+    }
+    await Promise.all(Array.from({ length: Math.min(lanes, BATCH) }, worker))
+    setScanning(false)
   }
 
   // ---------- Ports (shared with builder) ----------
@@ -437,6 +514,34 @@ export default function IPTools() {
         <div className="tool-card">
           <div className="tool-label">{tt.probeTitle}</div>
           <p className="tool-sub">{tt.probeIntro}</p>
+
+          {/* Auto-scan: no list needed */}
+          <div className="auto-scan-row">
+            {!scanning ? (
+              <button type="button" className="btn btn-primary" onClick={() => autoScan(false)}>
+                <Icon name="radar" size={16} /> {tt.autoScan}
+              </button>
+            ) : (
+              <button type="button" className="btn btn-ghost" onClick={stopScan}>
+                <Icon name="close" size={16} /> {tt.autoStop}
+              </button>
+            )}
+            {results.length > 0 && !scanning && (
+              <button type="button" className="btn btn-ghost" onClick={() => autoScan(true)}>
+                {tt.autoMore}
+              </button>
+            )}
+            {(scanning || scanStats.tested > 0) && (
+              <span className="tool-stats">
+                <strong>{scanStats.tested}</strong> {tt.autoTested} · <strong>{scanStats.found}</strong>{' '}
+                {tt.probeResponded}
+              </span>
+            )}
+          </div>
+          <div className="tool-hint">{tt.autoNote}</div>
+
+          <div className="probe-or">{tt.probeOr}</div>
+
           <textarea
             className="tool-textarea"
             dir="ltr"
@@ -446,7 +551,7 @@ export default function IPTools() {
             spellCheck="false"
           />
           <div className="tool-actions">
-            <button type="button" className="btn btn-primary" onClick={runProbe} disabled={probing || !probeHostCount}>
+            <button type="button" className="btn btn-primary" onClick={runProbe} disabled={probing || scanning || !probeHostCount}>
               <Icon name="radar" size={16} />{' '}
               {probing ? `${tt.probeRunning} ${progress.done}/${progress.total}` : tt.probeRun}
             </button>

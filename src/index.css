@@ -1554,12 +1554,60 @@ h3 {
 }
 
 /* ---------- Latency probe ---------- */
+.scan-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.scan-control {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.scan-control > span {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+.scan-control select {
+  padding: 9px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--code-bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: none;
+}
+.scan-control select:focus {
+  border-color: var(--border-strong);
+}
+.scan-control select:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
 .auto-scan-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   gap: 12px;
   margin-bottom: 8px;
+}
+
+.ports-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+}
+.ports-toggle input {
+  accent-color: var(--cyan);
+  cursor: pointer;
 }
 
 .probe-or {

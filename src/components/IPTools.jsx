@@ -383,6 +383,9 @@ export default function IPTools() {
   const { t } = useLang()
   const tt = t.tools
 
+  // ---------- Active tab ----------
+  const [tab, setTab] = useState('scan')
+
   // ---------- Probe ----------
   const [probeInput, setProbeInput] = useState('')
   const [results, setResults] = useState([])
@@ -677,6 +680,104 @@ export default function IPTools() {
     setChkBusy(false)
   }
 
+  // ---------- IP formatter (Nova panel IP list: ADDRESS:PORT#name) ----------
+  const [fmtInput, setFmtInput] = useState('')
+  const [fmtOut, setFmtOut] = useState('')
+  const [fmtGenerated, setFmtGenerated] = useState(false)
+  const [fmtCopied, setFmtCopied] = useState(false)
+  const fmtHostCount = useMemo(() => extractHosts(fmtInput).length, [fmtInput])
+  const fmtOutLines = fmtOut ? fmtOut.split('\n').filter(Boolean).length : 0
+
+  function fmtGenerate() {
+    const hosts = extractHosts(fmtInput)
+    const sel = ALL_PORTS.filter((p) => ports.has(p))
+    const usePorts = sel.length ? sel : [443]
+    const lines = []
+    for (const h of hosts) for (const p of usePorts) lines.push(`${h}:${p}#${genName()}`)
+    setFmtOut(lines.join('\n'))
+    setFmtGenerated(true)
+  }
+  function fmtClear() {
+    setFmtInput('')
+    setFmtOut('')
+    setFmtGenerated(false)
+  }
+  async function fmtCopy() {
+    if (!fmtOut) return
+    try {
+      await navigator.clipboard.writeText(fmtOut)
+    } catch {
+      /* clipboard may be blocked */
+    }
+    setFmtCopied(true)
+    setTimeout(() => setFmtCopied(false), 1500)
+  }
+  function fmtDownload() {
+    if (!fmtOut) return
+    const blob = new Blob([fmtOut], { type: 'text/plain' })
+    const a = document.createElement('a')
+    a.href = URL.createObjectURL(blob)
+    a.download = 'nova-ip-list.txt'
+    a.click()
+    URL.revokeObjectURL(a.href)
+  }
+
+  // Send the reachable scan IPs to the formatter / builder and jump there.
+  function useScanInFormatter() {
+    const good = reachableResults.map((r) => r.host)
+    if (good.length) setFmtInput(good.join('\n'))
+    setTab('format')
+  }
+  function useScanInBuilder() {
+    useProbeInBuilder()
+    setTab('build')
+  }
+
+  // Shared ports selector (used by Format and Build tabs).
+  function renderPorts() {
+    return (
+      <>
+        <div className="port-group-label">{tt.portsTls}</div>
+        <div className="port-chips">
+          {TLS_PORTS.map((p) => (
+            <button
+              key={p}
+              type="button"
+              className={`port-chip${ports.has(p) ? ' on' : ''}`}
+              aria-pressed={ports.has(p)}
+              onClick={() => togglePort(p)}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+        <div className="port-group-label" style={{ marginTop: '14px' }}>
+          {tt.portsNonTls}
+        </div>
+        <div className="port-chips">
+          {NONTLS_PORTS.map((p) => (
+            <button
+              key={p}
+              type="button"
+              className={`port-chip${ports.has(p) ? ' on' : ''}`}
+              aria-pressed={ports.has(p)}
+              onClick={() => togglePort(p)}
+            >
+              {p}
+            </button>
+          ))}
+        </div>
+      </>
+    )
+  }
+
+  const TABS = [
+    { id: 'scan', icon: 'radar', label: tt.tabScan },
+    { id: 'format', icon: 'route', label: tt.tabFormat },
+    { id: 'build', icon: 'bolt', label: tt.tabBuild },
+    { id: 'speed', icon: 'gauge', label: tt.tabSpeed },
+  ]
+
   return (
     <div className="guide">
       <Nav />
@@ -707,6 +808,25 @@ export default function IPTools() {
           <div className="tool-hint">{tt.guide.note}</div>
         </div>
 
+        {/* Tab navigation */}
+        <div className="tool-tabs" role="tablist">
+          {TABS.map((tb) => (
+            <button
+              key={tb.id}
+              type="button"
+              role="tab"
+              aria-selected={tab === tb.id}
+              className={`tool-tab${tab === tb.id ? ' active' : ''}`}
+              onClick={() => setTab(tb.id)}
+            >
+              <Icon name={tb.icon} size={15} /> {tb.label}
+            </button>
+          ))}
+        </div>
+
+        {/* ============================= SCAN ============================= */}
+        {tab === 'scan' && (
+          <>
         {/* How to get clean IPs */}
         <div className="tool-card">
           <div className="tool-label">{tt.scanTitle}</div>
@@ -835,10 +955,18 @@ export default function IPTools() {
                 <button
                   type="button"
                   className="mini-btn"
-                  onClick={useProbeInBuilder}
+                  onClick={useScanInFormatter}
                   disabled={!reachableResults.length}
                 >
-                  <Icon name="route" size={14} /> {tt.probeUse}
+                  <Icon name="route" size={14} /> {tt.fmtUse}
+                </button>
+                <button
+                  type="button"
+                  className="mini-btn"
+                  onClick={useScanInBuilder}
+                  disabled={!reachableResults.length}
+                >
+                  <Icon name="bolt" size={14} /> {tt.probeUse}
                 </button>
                 <label className="ports-toggle">
                   <input
@@ -917,44 +1045,78 @@ export default function IPTools() {
 
           <div className="tool-hint">{tt.probeNote}</div>
         </div>
+          </>
+        )}
 
-        {/* Ports */}
-        <div className="tool-card">
-          <div className="tool-label">{tt.portsLabel}</div>
-          <div className="port-group-label">{tt.portsTls}</div>
-          <div className="port-chips">
-            {TLS_PORTS.map((p) => (
-              <button
-                key={p}
-                type="button"
-                className={`port-chip${ports.has(p) ? ' on' : ''}`}
-                aria-pressed={ports.has(p)}
-                onClick={() => togglePort(p)}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-          <div className="port-group-label" style={{ marginTop: '14px' }}>
-            {tt.portsNonTls}
-          </div>
-          <div className="port-chips">
-            {NONTLS_PORTS.map((p) => (
-              <button
-                key={p}
-                type="button"
-                className={`port-chip${ports.has(p) ? ' on' : ''}`}
-                aria-pressed={ports.has(p)}
-                onClick={() => togglePort(p)}
-              >
-                {p}
-              </button>
-            ))}
-          </div>
-          <div className="tool-hint">{tt.portsHint}</div>
-        </div>
+        {/* ============================ FORMAT ============================ */}
+        {tab === 'format' && (
+          <div className="tool-card">
+            <div className="tool-label">{tt.fmtTitle}</div>
+            <p className="tool-sub">{tt.fmtIntro}</p>
 
-        {/* Config builder */}
+            <div className="tool-mini-label">{tt.portsLabel}</div>
+            {renderPorts()}
+            <div className="tool-hint">{tt.portsHint}</div>
+
+            <div className="tool-mini-label" style={{ marginTop: '18px' }}>{tt.inputLabel}</div>
+            <textarea
+              className="tool-textarea"
+              dir="ltr"
+              value={fmtInput}
+              onChange={(e) => setFmtInput(e.target.value)}
+              placeholder={'104.16.0.1\n104.17.0.1\nclean.example.com\n...'}
+              spellCheck="false"
+            />
+            <div className="tool-actions">
+              <button type="button" className="btn btn-primary" onClick={fmtGenerate} disabled={!fmtHostCount}>
+                <Icon name="route" size={16} /> {tt.generate}
+              </button>
+              {reachableResults.length > 0 && (
+                <button
+                  type="button"
+                  className="btn btn-ghost"
+                  onClick={() => setFmtInput(reachableResults.map((r) => r.host).join('\n'))}
+                >
+                  {tt.fmtFromScan}
+                </button>
+              )}
+              <button type="button" className="btn btn-ghost" onClick={fmtClear}>
+                {tt.clear}
+              </button>
+              <span className="tool-stats">
+                <strong>{fmtHostCount}</strong> {tt.ipCount} · <strong>{fmtOutLines}</strong> {tt.outLines}
+              </span>
+            </div>
+
+            <div className="tool-mini-label" style={{ marginTop: '16px' }}>{tt.outputLabel}</div>
+            <pre className="tool-output" dir="ltr" tabIndex={0}>
+              {fmtOut}
+            </pre>
+            {fmtGenerated && !fmtOut && <div className="tool-hint">{tt.empty}</div>}
+            <div className="tool-actions">
+              <button type="button" className="btn btn-primary" onClick={fmtCopy} disabled={!fmtOut}>
+                <Icon name={fmtCopied ? 'check' : 'copy'} size={16} /> {fmtCopied ? tt.copied : tt.copy}
+              </button>
+              <button type="button" className="mini-btn" onClick={fmtDownload} disabled={!fmtOut}>
+                <Icon name="download" size={14} /> {tt.buildDownload}
+              </button>
+              <button
+                type="button"
+                className="btn btn-ghost"
+                onClick={() => {
+                  setFmtOut('')
+                  setFmtGenerated(false)
+                }}
+              >
+                {tt.clearOutput}
+              </button>
+            </div>
+            <div className="tool-hint">{tt.hint}</div>
+          </div>
+        )}
+
+        {/* ============================= BUILD ============================ */}
+        {tab === 'build' && (
         <div className="tool-card">
           <div className="tool-label">{tt.buildTitle}</div>
           <p className="tool-sub">{tt.buildIntro}</p>
@@ -1072,7 +1234,10 @@ export default function IPTools() {
             </label>
           </div>
 
-          <label className="build-field build-wide" style={{ marginTop: '14px' }}>
+          <div className="tool-mini-label" style={{ marginTop: '16px' }}>{tt.portsLabel}</div>
+          {renderPorts()}
+
+          <label className="build-field build-wide" style={{ marginTop: '16px' }}>
             <span>{tt.fieldAddresses}</span>
             <textarea
               className="tool-textarea"
@@ -1142,8 +1307,10 @@ export default function IPTools() {
 
           <div className="tool-hint">{tt.buildNote}</div>
         </div>
+        )}
 
-        {/* Connection check */}
+        {/* ============================= SPEED ============================ */}
+        {tab === 'speed' && (
         <div className="tool-card">
           <div className="tool-label">{tt.chkTitle}</div>
           <p className="tool-sub">{tt.chkIntro}</p>
@@ -1170,6 +1337,7 @@ export default function IPTools() {
           )}
           <div className="tool-hint">{tt.chkNote}</div>
         </div>
+        )}
 
         <p className="tool-credit">
           {tt.creditPre}

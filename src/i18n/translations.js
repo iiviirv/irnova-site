@@ -60,6 +60,15 @@ export const ui = {
       autoNote:
         'Auto-scan tries random IPs from Cloudflare’s public ranges and times the ones that answer from your browser, no NovaRadar needed. Sort by latency, keep the lowest, then confirm with a real connection. It’s rougher than an on-device scanner and results vary by network and moment.',
       probeCopyIps: 'Copy IPs',
+      tabScan: 'Scan',
+      tabFormat: 'Format',
+      tabBuild: 'Build',
+      tabSpeed: 'Speed',
+      fmtTitle: 'IP formatter',
+      fmtIntro:
+        'Turn clean IPs into ADDRESS:PORT#name lines for your Nova panel’s IP list. Pick ports, paste your IPs, then copy or download the result.',
+      fmtUse: 'Use in formatter',
+      fmtFromScan: 'Use scan results',
       operatorLabel: 'Operator',
       operators: { all: 'All operators', mci: 'MCI (Hamrah-e-Avval)', mtn: 'MTN Irancell', tci: 'TCI (Mokhaberat)', shatel: 'Shatel' },
       scanCountLabel: 'Scan count',
@@ -272,6 +281,15 @@ export const ui = {
       autoNote:
         'اسکن خودکار آی‌پی‌های تصادفی از رنج‌های عمومی کلودفلر را امتحان می‌کند و آن‌هایی که پاسخ می‌دهند را از مرورگر شما زمان‌سنجی می‌کند، بدون نیاز به NovaRadar. بر اساس تأخیر مرتب کنید، کم‌ترین‌ها را نگه دارید و سپس با یک اتصال واقعی تأیید کنید. از یک اسکنر روی دستگاه دقت کمتری دارد و نتایج بسته به شبکه و لحظه تغییر می‌کند.',
       probeCopyIps: 'کپی آی‌پی‌ها',
+      tabScan: 'اسکن',
+      tabFormat: 'قالب‌بند',
+      tabBuild: 'ساخت',
+      tabSpeed: 'سرعت',
+      fmtTitle: 'قالب‌بند آی‌پی',
+      fmtIntro:
+        'آی‌پی‌های تمیز را به خطوط ADDRESS:PORT#name برای فهرست آی‌پی پنل نوا تبدیل کنید. پورت‌ها را انتخاب کنید، آی‌پی‌ها را بچسبانید و سپس نتیجه را کپی یا دانلود کنید.',
+      fmtUse: 'استفاده در قالب‌بند',
+      fmtFromScan: 'استفاده از نتایج اسکن',
       operatorLabel: 'اپراتور',
       operators: { all: 'همه‌ی اپراتورها', mci: 'همراه اول (MCI)', mtn: 'ایرانسل (MTN)', tci: 'مخابرات (TCI)', shatel: 'شاتل' },
       scanCountLabel: 'تعداد اسکن',

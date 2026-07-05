@@ -23,6 +23,7 @@ const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
+const INSTAGRAM = 'https://instagram.com/irnova_proxy'
 // In-browser auto-installer (public/install.html): the visitor pastes one
 // Cloudflare API token and the page builds the Worker + D1/KV on their own
 // account. This is now the single deploy entry point for the whole site.
@@ -268,6 +269,9 @@ export default function App() {
           </a>
           <a href={YOUTUBE} target="_blank" rel="noreferrer noopener">
             YouTube
+          </a>
+          <a href={INSTAGRAM} target="_blank" rel="noreferrer noopener">
+            Instagram
           </a>
         </div>
         <span className="footer-copy">© {new Date().getFullYear()} Nova Proxy</span>

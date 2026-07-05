@@ -133,6 +133,10 @@ h3 {
   background: #ff0000;
 }
 
+.topbar-link.ig {
+  background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+}
+
 @media (max-width: 420px) {
   .topbar-text {
     display: none;

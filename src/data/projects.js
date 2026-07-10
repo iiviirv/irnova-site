@@ -3,6 +3,25 @@
 // Translatable fields carry both English (en) and Farsi (fa) values.
 export const projects = [
   {
+    name: 'Nova-Client',
+    tagline: {
+      en: 'The official Nova app for every device',
+      fa: 'اپ رسمی نوا برای همه‌ی دستگاه‌ها',
+    },
+    description: {
+      en: 'A fast, clean proxy client with the Nova Radar clean-IP scanner built right in. Connect with one tap, manage profiles and subscriptions, scan and apply the best IPs, all in one bilingual, dark-first app for Android, Windows, and macOS.',
+      fa: 'یک کلاینت پراکسی سریع و ساده با اسکنر آی‌پی تمیز نوا رادار داخل خودش. با یک ضربه وصل شو، پروفایل‌ها و اشتراک‌ها را مدیریت کن و بهترین آی‌پی‌ها را اسکن و اعمال کن، همه در یک اپ دوزبانه و تاریک‌محور برای اندروید، ویندوز و مک.',
+    },
+    language: 'Flutter',
+    stars: 1,
+    url: 'https://github.com/IRNova/Nova-Client',
+    tags: {
+      en: ['Android', 'Windows', 'macOS', 'Nova Radar', 'sing-box'],
+      fa: ['اندروید', 'ویندوز', 'مک', 'نوا رادار', 'sing-box'],
+    },
+    featured: true,
+  },
+  {
     name: 'Nova-Proxy',
     tagline: {
       en: 'One-click proxy on your own Cloudflare Worker',
@@ -77,6 +96,45 @@ export const projects = [
       fa: ['ابزارها', 'کمک‌ابزارها'],
     },
     featured: false,
+  },
+]
+
+// Nova Client app downloads, rendered in the "Get the apps" section and on the
+// installer's success screen. Direct links always resolve to the newest GitHub
+// release, so nothing here needs bumping on new versions.
+export const clientReleasesUrl = 'https://github.com/IRNova/Nova-Client/releases'
+export const clients = [
+  {
+    key: 'android',
+    icon: 'android',
+    name: { en: 'Android', fa: 'اندروید' },
+    detail: { en: 'Direct APK', fa: 'فایل مستقیم APK' },
+    url: `${clientReleasesUrl}/latest/download/nova-client.apk`,
+    available: true,
+  },
+  {
+    key: 'windows',
+    icon: 'windows',
+    name: { en: 'Windows', fa: 'ویندوز' },
+    detail: { en: 'Portable ZIP', fa: 'نسخه‌ی قابل‌حمل ZIP' },
+    url: `${clientReleasesUrl}/latest/download/Nova-Windows.zip`,
+    available: true,
+  },
+  {
+    key: 'macos',
+    icon: 'apple',
+    name: { en: 'macOS', fa: 'مک' },
+    detail: { en: 'Apple Silicon DMG', fa: 'فایل DMG برای اپل سیلیکون' },
+    url: `${clientReleasesUrl}/latest/download/Nova-macOS-arm64.dmg`,
+    available: true,
+  },
+  {
+    key: 'ios',
+    icon: 'apple',
+    name: { en: 'iOS / iPadOS', fa: 'iOS / iPadOS' },
+    detail: { en: 'Coming soon', fa: 'به‌زودی' },
+    url: clientReleasesUrl,
+    available: false,
   },
 ]
 

@@ -592,6 +592,52 @@ h3 {
   font-size: 0.93rem;
 }
 
+/* ---------- Client apps ---------- */
+.client-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+}
+
+.client-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 26px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  color: inherit;
+  text-decoration: none;
+  transition: transform 0.18s, border-color 0.2s;
+}
+
+a.client-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+}
+
+.client-card h3 {
+  font-size: 1.08rem;
+  margin: 0 0 4px;
+}
+
+.client-card p {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.client-btn {
+  margin-top: auto;
+  width: 100%;
+  justify-content: center;
+}
+
+.client-card.is-soon {
+  opacity: 0.62;
+}
+
 /* ---------- About ---------- */
 .about {
   display: grid;
@@ -2075,6 +2121,9 @@ h3 {
   .track-cards {
     grid-template-columns: 1fr;
   }
+  .client-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .step-meta {
     display: none;
   }
@@ -2353,4 +2402,10 @@ h3 {
 
 .team-card:hover .team-link {
   color: var(--cyan);
+}
+
+@media (max-width: 560px) {
+  .client-grid {
+    grid-template-columns: 1fr;
+  }
 }

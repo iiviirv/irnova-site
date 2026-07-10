@@ -12,6 +12,7 @@ export const ui = {
     nav: {
       projects: 'Projects',
       capabilities: 'Capabilities',
+      apps: 'Apps',
       guide: 'Deploy & Setup',
       tools: 'IP Tools',
       about: 'About',
@@ -154,7 +155,16 @@ export const ui = {
     projectsSection: {
       eyebrow: 'The toolkit',
       title: 'Projects',
-      desc: 'Four open-source projects that work together, from a full control panel to a low-level proxy engine and an IP scanner that proves what actually works.',
+      desc: 'Five open-source projects that work together, from a full control panel and a cross-platform client app to a low-level proxy engine and an IP scanner that proves what actually works.',
+    },
+    clientsSection: {
+      eyebrow: 'Get the apps',
+      title: 'Nova Client',
+      desc: 'The official Nova app: a fast proxy client with the Nova Radar clean-IP scanner built right in. Bilingual, dark-first, free forever. Download it, import your subscription link, and connect.',
+      download: 'Download',
+      comingSoon: 'Coming soon',
+      allReleases: 'All releases and changelog',
+      note: 'After deploying your panel, import your subscription link into the app and you are online.',
     },
     capsSection: {
       eyebrow: 'What you get',
@@ -233,6 +243,7 @@ export const ui = {
     nav: {
       projects: 'پروژه‌ها',
       capabilities: 'قابلیت‌ها',
+      apps: 'اپ‌ها',
       guide: 'استقرار و راه‌اندازی',
       tools: 'ابزار آی‌پی',
       about: 'درباره',
@@ -375,7 +386,16 @@ export const ui = {
     projectsSection: {
       eyebrow: 'جعبه‌ابزار',
       title: 'پروژه‌ها',
-      desc: 'چهار پروژه‌ی متن‌باز که در کنار هم کار می‌کنند، از یک پنل مدیریت کامل تا یک موتور پراکسی سطح‌پایین و یک اسکنر آی‌پی که نشان می‌دهد چه چیزی واقعاً کار می‌کند.',
+      desc: 'پنج پروژه‌ی متن‌باز که در کنار هم کار می‌کنند، از یک پنل مدیریت کامل و یک اپ چندسکویی تا یک موتور پراکسی سطح‌پایین و یک اسکنر آی‌پی که نشان می‌دهد چه چیزی واقعاً کار می‌کند.',
+    },
+    clientsSection: {
+      eyebrow: 'دریافت اپ‌ها',
+      title: 'نوا کلاینت',
+      desc: 'اپ رسمی نوا: یک کلاینت پراکسی سریع با اسکنر آی‌پی تمیز نوا رادار داخل خودش. دوزبانه، تاریک‌محور و همیشه رایگان. دانلودش کن، لینک اشتراکت را وارد کن و وصل شو.',
+      download: 'دانلود',
+      comingSoon: 'به‌زودی',
+      allReleases: 'همه‌ی نسخه‌ها و تغییرات',
+      note: 'بعد از راه‌اندازی پنل، لینک اشتراکت را در اپ وارد کن تا آنلاین شوی.',
     },
     capsSection: {
       eyebrow: 'چه چیزی به دست می‌آوری',

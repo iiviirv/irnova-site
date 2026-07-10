@@ -56,6 +56,9 @@ export default function Nav() {
         <a href="#capabilities" onClick={close}>
           {t.nav.capabilities}
         </a>
+        <a href="#clients" onClick={close}>
+          {t.nav.apps}
+        </a>
         <a href="./install.html" onClick={close}>
           {t.nav.deploy}
         </a>

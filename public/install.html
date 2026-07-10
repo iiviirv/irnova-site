@@ -165,6 +165,7 @@ var I18N = {
     st1:'On that page, scroll <b>all the way down</b> → tap <b>Continue to summary</b>.',st2:'Tap <b>Create Token</b>, then tap the <b>Copy</b> button to copy the long code.',warn:'<b>Copy the whole code</b> before leaving that page — it\'s shown only once.',go:'Create my Nova panel',foot:'Your token is used only in your browser to talk to Cloudflare. Nothing is stored on our side.',iran:'<b>In Iran:</b> if the Cloudflare page won\'t open, turn on your current VPN first.',
     s_verify:'Checking your token',s_account:'Finding your account',s_sub:'Setting up your subdomain',s_db:'Creating the database',s_kv:'Creating storage',s_fetch:'Downloading the latest Nova',s_deploy:'Deploying the worker',s_enable:'Turning it on',s_online:'Waiting for it to come online',slow:'Your panel is deploying — Cloudflare can take 1–3 minutes to make a new address live worldwide. If "Open your panel" shows an error at first, wait a minute and refresh.',
     done:'🎉 Your Nova is ready!',open:'Open your panel',setpw:'First, set your admin password here:',addr:'Your address',note_iran:'🇮🇷 workers.dev is filtered in Iran — add a Custom Domain in Cloudflare (Workers → your worker → Settings → Domains & Routes) and use that instead.',
+    apps:'📱 Get the Nova app',apps_text:'Install Nova Client on your device, then import your subscription link from the panel and connect.',apps_android:'Download for Android (APK)',apps_all:'All downloads (Windows / macOS)',
     err_token:'That token didn\'t work. Make sure you created it with the "Edit Cloudflare Workers" template and copied all of it.',err_generic:'Something went wrong'},
   fa:{title:'نصب خودکار نوا',sub:'یک توکن Cloudflare بچسبان تا پنل را روی حساب خودت بسازیم — ورکر و دیتابیس، کاملاً آماده. روی گوشی هم کار می‌کند. توکن تو در مرورگرت می‌ماند.',tokl:'توکن API کلودفلر',tokh:'این اجازه می‌دهد نصب‌کننده ورکر را روی حساب تو بسازد. هرگز از مرورگرت خارج نمی‌شود.',tokbtn:'🔑 گرفتن توکن',paste:'چسباندن',
     g1t:'حساب رایگان Cloudflare داری؟',g1x:'اگر نداری، یک حساب رایگان بساز (۱ دقیقه). برای نگه‌داری نوا لازم است.',g1b:'ساخت حساب رایگان',
@@ -174,6 +175,7 @@ var I18N = {
     st1:'در آن صفحه، <b>تا ته پایین</b> برو ← <b>Continue to summary</b> را بزن.',st2:'<b>Create Token</b> را بزن، بعد دکمهٔ <b>Copy</b> را بزن تا کدِ بلند کپی شود.',warn:'<b>کلِ کد را کپی کن</b> قبل از اینکه از آن صفحه بیرون بروی — فقط یک‌بار نشان داده می‌شود.',go:'پنل نوای من را بساز',foot:'توکن تو فقط در مرورگرت برای حرف‌زدن با Cloudflare استفاده می‌شود. هیچ‌چیزی سمت ما ذخیره نمی‌شود.',iran:'<b>در ایران:</b> اگر صفحهٔ Cloudflare باز نشد، اول VPN فعلی‌ات را روشن کن.',
     s_verify:'بررسی توکن',s_account:'پیدا کردن حساب',s_sub:'تنظیم ساب‌دامنه',s_db:'ساخت دیتابیس',s_kv:'ساخت حافظه',s_fetch:'دانلود آخرین نسخهٔ نوا',s_deploy:'دیپلوی ورکر',s_enable:'روشن کردن',s_online:'منتظر آنلاین شدن',slow:'پنل تو در حال دیپلوی است — Cloudflare ممکن است ۱ تا ۳ دقیقه طول بکشد تا آدرس جدید در سراسر دنیا فعال شود. اگر «باز کردن پنل» اول خطا داد، یک دقیقه صبر کن و صفحه را تازه کن.',
     done:'🎉 نوای تو آماده است!',open:'باز کردن پنل',setpw:'اول، رمز ادمینت را اینجا تنظیم کن:',addr:'آدرس تو',note_iran:'🇮🇷 workers.dev در ایران فیلتر است — در Cloudflare یک دامنهٔ اختصاصی اضافه کن (Workers ← ورکر تو ← Settings ← Domains & Routes) و از آن استفاده کن.',
+    apps:'📱 اپ نوا را بگیر',apps_text:'نوا کلاینت را روی دستگاهت نصب کن، بعد لینک اشتراکت را از پنل واردش کن و وصل شو.',apps_android:'دانلود برای اندروید (APK)',apps_all:'همه‌ی دانلودها (ویندوز / مک)',
     err_token:'این توکن کار نکرد. مطمئن شو با قالب «Edit Cloudflare Workers» ساخته‌ای و کاملش را کپی کرده‌ای.',err_generic:'یک خطا رخ داد'}
 };
 var L='en';
@@ -334,7 +336,13 @@ function showResult(url, online){
     +'<p style="margin:14px 0 6px;font-size:14px">'+T('setpw')+'</p>'
     +'<a class="btn" href="'+url+'/install" target="_blank" rel="noopener">'+T('open')+'</a>'
     + slowNote
-    +'<div class="callout iran" style="margin-top:14px"><span class="ic">🇮🇷</span><div>'+T('note_iran')+'</div></div>';
+    +'<div class="callout iran" style="margin-top:14px"><span class="ic">🇮🇷</span><div>'+T('note_iran')+'</div></div>'
+    +'<div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(148,163,184,.25)">'
+    +'<h3 style="font-size:16px;margin:0 0 6px">'+T('apps')+'</h3>'
+    +'<p style="margin:0 0 10px;font-size:14px">'+T('apps_text')+'</p>'
+    +'<a class="btn" href="https://github.com/IRNova/Nova-Client/releases/latest/download/nova-client.apk" rel="noopener">'+T('apps_android')+'</a>'
+    +'<a class="btn btn-ghost" style="margin-top:8px" href="https://github.com/IRNova/Nova-Client/releases" target="_blank" rel="noopener">'+T('apps_all')+'</a>'
+    +'</div>';
   r.scrollIntoView({behavior:'smooth'});
 }
 </script>

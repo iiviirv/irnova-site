@@ -4,7 +4,7 @@ import ProjectCard from './components/ProjectCard.jsx'
 import IPTools from './components/IPTools.jsx'
 import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
-import { projects, capabilities, team } from './data/projects.js'
+import { projects, capabilities, team, clients, clientReleasesUrl } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
 
 // Tiny hash router: '#/tools' shows the IP tools sub-page, everything else
@@ -135,6 +135,45 @@ export default function App() {
           </p>
         </section>
 
+        <section id="clients" className="section">
+          <div className="section-head">
+            <span className="eyebrow">{t.clientsSection.eyebrow}</span>
+            <h2>{t.clientsSection.title}</h2>
+            <p>{t.clientsSection.desc}</p>
+          </div>
+          <div className="client-grid">
+            {clients.map((c) =>
+              c.available ? (
+                <a className="client-card" key={c.key} href={c.url} rel="noreferrer noopener">
+                  <span className="cap-icon">
+                    <Icon name={c.icon} size={24} />
+                  </span>
+                  <h3>{c.name[lang]}</h3>
+                  <p>{c.detail[lang]}</p>
+                  <span className="btn btn-primary client-btn">
+                    <Icon name="download" size={16} /> {t.clientsSection.download}
+                  </span>
+                </a>
+              ) : (
+                <div className="client-card is-soon" key={c.key}>
+                  <span className="cap-icon">
+                    <Icon name={c.icon} size={24} />
+                  </span>
+                  <h3>{c.name[lang]}</h3>
+                  <p>{c.detail[lang]}</p>
+                  <span className="btn btn-ghost client-btn">{t.clientsSection.comingSoon}</span>
+                </div>
+              )
+            )}
+          </div>
+          <p className="platform-note">
+            <Icon name="link" size={16} /> {t.clientsSection.note}{' '}
+            <a href={clientReleasesUrl} target="_blank" rel="noreferrer noopener">
+              {t.clientsSection.allReleases}
+            </a>
+          </p>
+        </section>
+
         <section id="about" className="section">
           <div className="about">
             <div className="about-copy">
@@ -255,6 +294,7 @@ export default function App() {
         <div className="footer-links">
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
+          <a href="#clients">{t.nav.apps}</a>
           <a href={INSTALLER_URL}>{t.nav.deploy}</a>
           <a href="#team">{t.teamSection.title}</a>
           <a href="#/tools">{t.nav.tools}</a>

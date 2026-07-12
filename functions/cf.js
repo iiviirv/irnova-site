@@ -11,7 +11,10 @@
 // Usage from the page:  fetch('/cf?url=<encoded target>', { method, headers, body })
 //
 // Locked to the hosts the installer needs, so it can't be abused as an open proxy.
-const ALLOW_EXACT = ['api.cloudflare.com', 'raw.githubusercontent.com']
+// dash.cloudflare.com is the OAuth token endpoint the Nova app exchanges its
+// sign-in code at; the app falls back to this proxy when the direct call is
+// filtered (Iran), the same way the web installer routes api.cloudflare.com.
+const ALLOW_EXACT = ['api.cloudflare.com', 'dash.cloudflare.com', 'raw.githubusercontent.com']
 
 function hostAllowed(hostname) {
   if (ALLOW_EXACT.includes(hostname)) return true

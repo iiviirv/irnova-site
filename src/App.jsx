@@ -19,6 +19,57 @@ function useHashRoute() {
   return hash
 }
 
+// Live visit + install counters from the /api/stats Pages Function. On the first
+// load of a browser session we POST a visit (which returns the fresh numbers);
+// after that we just GET, so a reload or hash navigation never re-counts. If the
+// endpoint is unreachable (e.g. filtered), we simply keep the placeholder dashes.
+function useSiteStats() {
+  const [stats, setStats] = useState(null)
+  useEffect(() => {
+    let alive = true
+    const counted = (() => {
+      try {
+        return sessionStorage.getItem('nova-visit-counted') === '1'
+      } catch {
+        return false
+      }
+    })()
+    const req = counted
+      ? fetch('/api/stats', { headers: { Accept: 'application/json' } })
+      : fetch('/api/stats', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ type: 'visit' }),
+        })
+    req
+      .then((r) => (r.ok ? r.json() : null))
+      .then((data) => {
+        if (!data || !alive) return
+        setStats(data)
+        try {
+          sessionStorage.setItem('nova-visit-counted', '1')
+        } catch {
+          /* private mode — no big deal, worst case we count one extra visit */
+        }
+      })
+      .catch(() => {})
+    return () => {
+      alive = false
+    }
+  }, [])
+  return stats
+}
+
+// Compact, locale-aware number: 12345 → "12.3k", 812 → "812" (or Persian digits).
+function fmtCount(n, lang) {
+  const locale = lang === 'fa' ? 'fa-IR' : 'en-US'
+  if (n == null) return '—'
+  if (n >= 10000) {
+    return (n / 1000).toLocaleString(locale, { maximumFractionDigits: 1 }) + 'k'
+  }
+  return n.toLocaleString(locale)
+}
+
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
@@ -32,6 +83,7 @@ const INSTALLER_URL = './install.html'
 export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
+  const live = useSiteStats()
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
@@ -51,11 +103,17 @@ export default function App() {
   if (route === '#/tools') return <IPTools />
 
   const totalStars = projects.reduce((sum, p) => sum + p.stars, 0)
+  // Live tiles show total up top with today's gain underneath. Until /api/stats
+  // answers they show a dash, so the grid never jumps.
+  const todayLine = (n) =>
+    live && n > 0 ? `+${fmtCount(n, lang)} ${t.stats.today}` : ''
   const stats = [
-    { value: `${(totalStars / 1000).toFixed(1)}k+`, label: t.stats.stars },
-    { value: projects.length, label: t.stats.projects },
-    { value: 'Go · React', label: t.stats.builtWith },
-    { value: '100%', label: t.stats.openSource },
+    { key: 'visits', value: fmtCount(live?.visits.total, lang), label: t.stats.visits, live: true, sub: todayLine(live?.visits.today) },
+    { key: 'installs', value: fmtCount(live?.installs.total, lang), label: t.stats.installs, live: true, sub: todayLine(live?.installs.today) },
+    { key: 'stars', value: `${(totalStars / 1000).toFixed(1)}k+`, label: t.stats.stars },
+    { key: 'projects', value: projects.length, label: t.stats.projects },
+    { key: 'builtWith', value: 'Go · React', label: t.stats.builtWith },
+    { key: 'openSource', value: '100%', label: t.stats.openSource },
   ]
 
   return (
@@ -91,9 +149,10 @@ export default function App() {
             )}
             <div className="stats">
               {stats.map((s) => (
-                <div className="stat" key={s.label}>
+                <div className={s.live ? 'stat live' : 'stat'} key={s.key}>
                   <span className="stat-value">{s.value}</span>
                   <span className="stat-label">{s.label}</span>
+                  {s.live && <span className="stat-sub">{s.sub}</span>}
                 </div>
               ))}
             </div>

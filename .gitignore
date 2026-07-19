@@ -3,3 +3,6 @@ dist
 dist-ssr
 *.local
 .DS_Store
+
+# Local wrangler/miniflare dev state
+.wrangler

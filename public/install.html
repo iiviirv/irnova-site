@@ -328,7 +328,21 @@ async function waitForOnline(url){
   return false;
 }
 
+// Report a real, completed deploy to the site's counter. The id is a hash of the
+// new panel's host, so the server stores only an opaque token (it can't learn the
+// worker URL) and the same deploy re-run counts once. Same-origin + best-effort:
+// if it fails, the install still succeeded, we just didn't tally it.
+async function reportInstall(url){
+  try{
+    var host = new URL(url).host;
+    var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('nova-panel:'+host));
+    var id = 'w_' + Array.from(new Uint8Array(buf)).slice(0,16).map(function(b){return b.toString(16).padStart(2,'0');}).join('');
+    await fetch('/api/stats', {method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({type:'install', id:id}), keepalive:true});
+  }catch(e){/* best-effort */}
+}
+
 function showResult(url, online){
+  reportInstall(url);
   var r=document.getElementById('result'); r.classList.remove('hidden');
   var slowNote = online ? '' : ('<div class="callout warn" style="margin-top:14px;border:1px solid rgba(245,158,11,.3);background:rgba(245,158,11,.08)"><span class="ic">⏳</span><div>'+T('slow')+'</div></div>');
   r.innerHTML='<h3>'+T('done')+'</h3>'

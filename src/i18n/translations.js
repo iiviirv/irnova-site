@@ -151,6 +151,9 @@ export const ui = {
       projects: 'Open Projects',
       builtWith: 'Built With',
       openSource: 'Open Source',
+      visits: 'Visits',
+      installs: 'Installs',
+      today: 'today',
     },
     projectsSection: {
       eyebrow: 'The toolkit',
@@ -382,6 +385,9 @@ export const ui = {
       projects: 'پروژه‌های متن‌باز',
       builtWith: 'ساخته‌شده با',
       openSource: 'متن‌باز',
+      visits: 'بازدیدها',
+      installs: 'نصب‌ها',
+      today: 'امروز',
     },
     projectsSection: {
       eyebrow: 'جعبه‌ابزار',

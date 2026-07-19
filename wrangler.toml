@@ -4,3 +4,16 @@
 # which builds the site and uploads ./dist directly.
 name = "novaproxy"
 pages_build_output_dir = "./dist"
+
+# Visit & install counters used by functions/api/stats.js. Same DB for
+# production and preview — preview traffic is negligible and it keeps setup
+# simple. Created on the account that owns this Pages project (nova-website).
+[[d1_databases]]
+binding = "nova_stats"
+database_name = "nova-stats"
+database_id = "83842750-f0d3-45c1-ba64-08902db29ee2"
+
+[[env.preview.d1_databases]]
+binding = "nova_stats"
+database_name = "nova-stats"
+database_id = "83842750-f0d3-45c1-ba64-08902db29ee2"

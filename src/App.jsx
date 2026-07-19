@@ -79,6 +79,30 @@ const INSTAGRAM = 'https://instagram.com/irnova_proxy'
 // Cloudflare API token and the page builds the Worker + D1/KV on their own
 // account. This is now the single deploy entry point for the whole site.
 const INSTALLER_URL = './install.html'
+const NOVA_PROXY_REPO = 'https://github.com/IRNova/Nova-Proxy'
+// TODO: point this at the dedicated VPS install guide once it has its own page /
+// anchor. For now it opens the Nova-Proxy repo README, which carries the steps.
+const VPS_GUIDE_URL = `${NOVA_PROXY_REPO}#readme`
+
+// The exact Cloudflare API token permissions the in-browser installer needs.
+// These match Cloudflare's own token-editor wording so users can tick them off
+// one-to-one. Names stay in English because that is how the Cloudflare dashboard
+// labels them in every locale.
+const cfTokenPerms = {
+  account: [
+    { name: 'Workers Scripts', level: 'edit' },
+    { name: 'Workers KV Storage', level: 'edit' },
+    { name: 'D1', level: 'edit' },
+    { name: 'Account Settings', level: 'read' },
+    { name: 'Account Analytics', level: 'read' },
+  ],
+  zone: [
+    { name: 'Zone', level: 'read' },
+    { name: 'DNS', level: 'edit' },
+    { name: 'SSL and Certificates', level: 'edit' },
+    { name: 'Zone Settings', level: 'edit' },
+  ],
+}
 
 export default function App() {
   const { t, lang } = useLang()
@@ -192,6 +216,160 @@ export default function App() {
           <p className="platform-note">
             <Icon name="shield" size={16} /> {t.capsSection.note}
           </p>
+        </section>
+
+        <section id="deploy" className="section section-alt">
+          <div className="section-head">
+            <span className="eyebrow">{t.access.eyebrow}</span>
+            <h2>{t.access.title}</h2>
+            <p>{t.access.desc}</p>
+          </div>
+
+          {/* Recommended path: one-click Worker deploy, with the token checklist. */}
+          <article className="access-card is-featured">
+            <div className="access-head">
+              <span className="access-icon">
+                <Icon name="bolt" size={22} />
+              </span>
+              <div className="access-headings">
+                <span className="access-rec">{t.access.recommended}</span>
+                <h3>{t.access.panel.title}</h3>
+                <p className="access-tagline">{t.access.panel.tagline}</p>
+              </div>
+            </div>
+            <p className="access-desc">{t.access.panel.desc}</p>
+
+            <div className="access-need">
+              <span className="access-need-label">{t.access.panel.needLabel}</span>
+              <ul>
+                {t.access.panel.need.map((item, i) => (
+                  <li key={i}>
+                    <Icon name="check" size={15} /> {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="token-check">
+              <div className="token-check-head">
+                <Icon name="key" size={18} />
+                <div>
+                  <strong>{t.access.panel.tokenLabel}</strong>
+                  <span>{t.access.panel.tokenNote}</span>
+                </div>
+              </div>
+              <div className="token-groups">
+                {['account', 'zone'].map((scope) => (
+                  <div className="token-group" key={scope}>
+                    <span className="token-group-title">
+                      {scope === 'account' ? 'Account' : 'Zone'}
+                    </span>
+                    <ul>
+                      {cfTokenPerms[scope].map((p) => (
+                        <li key={p.name}>
+                          <Icon name="check" size={14} />
+                          <span className="token-name">{p.name}</span>
+                          <span className={`token-level ${p.level}`}>
+                            {p.level === 'edit' ? 'Edit' : 'Read'}
+                          </span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="access-actions">
+              <a className="btn btn-primary" href={INSTALLER_URL}>
+                <Icon name="bolt" size={18} /> {t.access.panel.deployCta}
+              </a>
+              <a
+                className="btn btn-ghost"
+                href={NOVA_PROXY_REPO}
+                target="_blank"
+                rel="noreferrer noopener"
+              >
+                <Icon name="github" size={18} /> {t.access.panel.repoCta}
+              </a>
+            </div>
+          </article>
+
+          {/* Secondary paths: bring your own VPS, or reuse an existing link. */}
+          <div className="access-grid">
+            <article className="access-card">
+              <div className="access-head">
+                <span className="access-icon">
+                  <Icon name="route" size={22} />
+                </span>
+                <div className="access-headings">
+                  <h3>{t.access.vps.title}</h3>
+                  <p className="access-tagline">{t.access.vps.tagline}</p>
+                </div>
+              </div>
+              <p className="access-desc">{t.access.vps.desc}</p>
+
+              <div className="access-callout">
+                <Icon name="phone" size={18} />
+                <div>
+                  <strong>{t.access.vps.domainTitle}</strong>
+                  <span>{t.access.vps.domainText}</span>
+                </div>
+              </div>
+
+              <div className="access-need">
+                <span className="access-need-label">{t.access.vps.needLabel}</span>
+                <ul>
+                  {t.access.vps.need.map((item, i) => (
+                    <li key={i}>
+                      <Icon name="check" size={15} /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="access-actions">
+                <a
+                  className="btn btn-ghost"
+                  href={VPS_GUIDE_URL}
+                  target="_blank"
+                  rel="noreferrer noopener"
+                >
+                  <Icon name="book" size={18} /> {t.access.vps.cta}
+                </a>
+              </div>
+            </article>
+
+            <article className="access-card">
+              <div className="access-head">
+                <span className="access-icon">
+                  <Icon name="link" size={22} />
+                </span>
+                <div className="access-headings">
+                  <h3>{t.access.sub.title}</h3>
+                  <p className="access-tagline">{t.access.sub.tagline}</p>
+                </div>
+              </div>
+              <p className="access-desc">{t.access.sub.desc}</p>
+
+              <div className="access-need">
+                <span className="access-need-label">{t.access.sub.needLabel}</span>
+                <ul>
+                  {t.access.sub.need.map((item, i) => (
+                    <li key={i}>
+                      <Icon name="check" size={15} /> {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div className="access-actions">
+                <a className="btn btn-primary" href="#clients">
+                  <Icon name="download" size={18} /> {t.access.sub.cta}
+                </a>
+              </div>
+            </article>
+          </div>
         </section>
 
         <section id="clients" className="section">
@@ -354,7 +532,7 @@ export default function App() {
           <a href="#projects">{t.nav.projects}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#clients">{t.nav.apps}</a>
-          <a href={INSTALLER_URL}>{t.nav.deploy}</a>
+          <a href="#deploy">{t.nav.deploy}</a>
           <a href="#team">{t.teamSection.title}</a>
           <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">

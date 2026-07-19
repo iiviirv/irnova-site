@@ -328,6 +328,19 @@ async function waitForOnline(url){
   return false;
 }
 
+// Count a visit once per browser session. Many people reach this page straight
+// from a shared link without ever loading the React landing page, so without this
+// their visit would go untallied while their deploy still counts. Shares the
+// 'nova-visit-counted' key with the landing page, so a session counts once total.
+(function reportVisit(){
+  try{
+    if(sessionStorage.getItem('nova-visit-counted')==='1') return;
+    fetch('/api/stats',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'visit'}),keepalive:true})
+      .then(function(){ try{ sessionStorage.setItem('nova-visit-counted','1'); }catch(e){} })
+      .catch(function(){});
+  }catch(e){}
+})();
+
 // Report a real, completed deploy to the site's counter. The id is a hash of the
 // new panel's host, so the server stores only an opaque token (it can't learn the
 // worker URL) and the same deploy re-run counts once. Same-origin + best-effort:

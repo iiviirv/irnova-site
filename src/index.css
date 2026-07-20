@@ -2625,6 +2625,51 @@ a.client-card:hover {
   line-height: 1.6;
 }
 
+/* One-line VPS installer with copy-to-clipboard. Box stays LTR so the command
+   never reverses under RTL; the label above follows the page direction. */
+.vps-cmd {
+  margin-bottom: 20px;
+}
+
+.vps-cmd-label {
+  display: block;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: 8px;
+}
+
+.vps-cmd-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 8px 8px 14px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--code-bg);
+}
+
+.vps-cmd-box:focus-within {
+  border-color: color-mix(in srgb, var(--cyan) 40%, var(--border));
+}
+
+.vps-cmd-code {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: #cfe8ff;
+  user-select: all;
+  -webkit-user-select: all;
+}
+
+.vps-cmd-copy {
+  flex-shrink: 0;
+}
+
 /* Cloudflare API token permission checklist */
 .token-check {
   margin: 22px 0;

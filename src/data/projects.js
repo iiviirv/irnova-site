@@ -41,6 +41,25 @@ export const projects = [
     featured: true,
   },
   {
+    name: 'Nova-Server',
+    tagline: {
+      en: 'Self-hosted Nova node on your own VPS',
+      fa: 'نود خودمیزبان نوا روی سرور مجازی خودت',
+    },
+    description: {
+      en: 'Turn any VPS into a full Nova server with a one-line installer. A complete xray and sing-box panel with VLESS, VMess, Trojan, Shadowsocks, Hysteria2, WireGuard, and AmneziaWG, plus per-user quotas and expiry, smart routing, and clean-IP outbound, all managed from a bilingual dashboard.',
+      fa: 'هر سرور مجازی را با یک نصب‌کننده‌ی تک‌خطی به یک سرور کامل نوا تبدیل کن. یک پنل کامل xray و sing-box با VLESS، VMess، Trojan، Shadowsocks، Hysteria2، WireGuard و AmneziaWG، به‌همراه سهمیه و انقضای هر کاربر، مسیریابی هوشمند و خروجی آی‌پی تمیز، همه از یک داشبورد دوزبانه.',
+    },
+    language: 'Node.js',
+    stars: 1,
+    url: 'https://github.com/IRNova/Tools',
+    tags: {
+      en: ['Self-hosted', 'Hysteria2', 'WireGuard', 'AmneziaWG', 'Dashboard'],
+      fa: ['خودمیزبان', 'Hysteria2', 'WireGuard', 'AmneziaWG', 'داشبورد'],
+    },
+    featured: true,
+  },
+  {
     name: 'Nova-Proxy-App',
     tagline: {
       en: 'Local proxy engine that bypasses filtering',

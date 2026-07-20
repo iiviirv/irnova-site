@@ -259,6 +259,9 @@ export const ui = {
           'A VPS with root SSH access',
           'A Cloudflare domain for the censorship-resistant path (optional, go domain-less for a simpler setup)',
         ],
+        cmdLabel: 'Run this on your server',
+        copy: 'Copy',
+        copied: 'Copied',
         cta: 'VPS install guide',
       },
       sub: {
@@ -534,6 +537,9 @@ export const ui = {
           'یک سرور مجازی با دسترسی root از طریق SSH',
           'یک دامنه‌ی کلودفلر برای مسیر مقاوم در برابر سانسور (اختیاری؛ برای راه‌اندازی ساده‌تر بدون دامنه پیش برو)',
         ],
+        cmdLabel: 'این را روی سرورت اجرا کن',
+        copy: 'کپی',
+        copied: 'کپی شد',
         cta: 'راهنمای نصب روی سرور',
       },
       sub: {

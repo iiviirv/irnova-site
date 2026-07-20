@@ -84,6 +84,44 @@ const NOVA_PROXY_REPO = 'https://github.com/IRNova/Nova-Proxy'
 // anchor. For now it opens the Nova-Proxy repo README, which carries the steps.
 const VPS_GUIDE_URL = `${NOVA_PROXY_REPO}#readme`
 
+// The exact one-line installer users run on their own server. Kept verbatim, no
+// sudo, no wrapping. Shared by the copy button in the "Connect your VPS" card.
+const VPS_INSTALL_CMD =
+  'bash <(curl -fsSL https://raw.githubusercontent.com/IRNova/Tools/main/nova-node.sh)'
+
+// Copy-to-clipboard command block for the VPS card. Kept LTR on the box itself so
+// the command never reverses under RTL, while the label above follows the page
+// direction. Success feedback swaps the icon to a check for ~1.5s.
+function VpsCommand({ copy }) {
+  const [copied, setCopied] = useState(false)
+  async function onCopy() {
+    try {
+      await navigator.clipboard.writeText(VPS_INSTALL_CMD)
+    } catch {
+      /* clipboard may be blocked (insecure context / permissions) */
+    }
+    setCopied(true)
+    setTimeout(() => setCopied(false), 1500)
+  }
+  return (
+    <div className="vps-cmd">
+      <span className="vps-cmd-label">{copy.cmdLabel}</span>
+      <div className="vps-cmd-box" dir="ltr">
+        <code className="vps-cmd-code">{VPS_INSTALL_CMD}</code>
+        <button
+          type="button"
+          className="mini-btn vps-cmd-copy"
+          onClick={onCopy}
+          aria-label={copied ? copy.copied : copy.copy}
+        >
+          <Icon name={copied ? 'check' : 'copy'} size={14} />
+          <span>{copied ? copy.copied : copy.copy}</span>
+        </button>
+      </div>
+    </div>
+  )
+}
+
 // The exact Cloudflare API token permissions the in-browser installer needs.
 // These match Cloudflare's own token-editor wording so users can tick them off
 // one-to-one. Names stay in English because that is how the Cloudflare dashboard
@@ -327,6 +365,8 @@ export default function App() {
                   ))}
                 </ul>
               </div>
+
+              <VpsCommand copy={t.access.vps} />
 
               <div className="access-actions">
                 <a

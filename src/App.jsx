@@ -80,14 +80,14 @@ const INSTAGRAM = 'https://instagram.com/irnova_proxy'
 // account. This is now the single deploy entry point for the whole site.
 const INSTALLER_URL = './install.html'
 const NOVA_PROXY_REPO = 'https://github.com/IRNova/Nova-Proxy'
-// TODO: point this at the dedicated VPS install guide once it has its own page /
-// anchor. For now it opens the Nova-Proxy repo README, which carries the steps.
-const VPS_GUIDE_URL = `${NOVA_PROXY_REPO}#readme`
+const NOVA_SERVER_REPO = 'https://github.com/IRNova/Nova-Server'
+// The dedicated Nova Server (VPS) repo: bilingual setup docs plus the one-line installer.
+const VPS_GUIDE_URL = NOVA_SERVER_REPO
 
 // The exact one-line installer users run on their own server. Kept verbatim, no
 // sudo, no wrapping. Shared by the copy button in the "Connect your VPS" card.
 const VPS_INSTALL_CMD =
-  'bash <(curl -fsSL https://raw.githubusercontent.com/IRNova/Tools/main/nova-node.sh)'
+  'bash <(curl -fsSL https://raw.githubusercontent.com/IRNova/Nova-Server/main/nova-node.sh)'
 
 // Copy-to-clipboard command block for the VPS card. Kept LTR on the box itself so
 // the command never reverses under RTL, while the label above follows the page

@@ -51,8 +51,8 @@ export const projects = [
       fa: 'هر سرور مجازی را با یک نصب‌کننده‌ی تک‌خطی به یک سرور کامل نوا تبدیل کن. یک پنل کامل xray و sing-box با VLESS، VMess، Trojan، Shadowsocks، Hysteria2، WireGuard و AmneziaWG، به‌همراه سهمیه و انقضای هر کاربر، مسیریابی هوشمند و خروجی آی‌پی تمیز، همه از یک داشبورد دوزبانه.',
     },
     language: 'Node.js',
-    stars: 27,
-    url: 'https://github.com/IRNova/Tools',
+    stars: 1,
+    url: 'https://github.com/IRNova/Nova-Server',
     tags: {
       en: ['Self-hosted', 'Hysteria2', 'WireGuard', 'AmneziaWG', 'Dashboard'],
       fa: ['خودمیزبان', 'Hysteria2', 'WireGuard', 'AmneziaWG', 'داشبورد'],

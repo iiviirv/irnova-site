@@ -621,6 +621,16 @@ export default function App() {
               </span>
               <span className="btn x-cta">{t.x.cta}</span>
             </a>
+            <a className="tg-banner ig-banner" href={INSTAGRAM} target="_blank" rel="noreferrer noopener">
+              <span className="tg-icon ig-icon">
+                <Icon name="instagram" size={26} />
+              </span>
+              <span className="tg-text">
+                <strong>{t.instagram.title}</strong>
+                <span>{t.instagram.text}</span>
+              </span>
+              <span className="btn ig-cta">{t.instagram.cta}</span>
+            </a>
           </div>
         </section>
       </main>

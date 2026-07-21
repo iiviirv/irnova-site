@@ -202,6 +202,11 @@ export const ui = {
       text: 'Clean IPs, release notes, and announcements as they happen.',
       cta: 'Follow @irNovaProxy',
     },
+    instagram: {
+      title: 'Follow us on Instagram',
+      text: 'Guides, clean-IP drops, and behind-the-scenes updates.',
+      cta: 'Follow @irnova_proxy',
+    },
     youtube: {
       eyebrow: 'Watch',
       title: 'Video tutorials',
@@ -482,6 +487,11 @@ export const ui = {
       title: 'ما را در X دنبال کنید',
       text: 'آی‌پی‌های تمیز، یادداشت‌های انتشار و اخبار را همان لحظه دریافت کنید.',
       cta: 'دنبال کردن @irNovaProxy',
+    },
+    instagram: {
+      title: 'ما را در اینستاگرام دنبال کنید',
+      text: 'آموزش‌ها، آی‌پی‌های تمیز و به‌روزرسانی‌های پشت‌صحنه را دنبال کنید.',
+      cta: 'دنبال کردن @irnova_proxy',
     },
     youtube: {
       eyebrow: 'تماشا',

@@ -122,6 +122,9 @@ export const projects = [
 // installer's success screen. Direct links always resolve to the newest GitHub
 // release, so nothing here needs bumping on new versions.
 export const clientReleasesUrl = 'https://github.com/IRNova/Nova-Client/releases'
+// Each client carries its download URL plus a short, per-platform "how to run"
+// checklist. Sideloaded and unsigned builds need a step or two, so the steps live
+// right on the card. `detect` holds the platform key auto-detect matches against.
 export const clients = [
   {
     key: 'android',
@@ -130,6 +133,18 @@ export const clients = [
     detail: { en: 'Direct APK', fa: 'فایل مستقیم APK' },
     url: `${clientReleasesUrl}/latest/download/nova-client.apk`,
     available: true,
+    steps: {
+      en: [
+        'Download the APK to your phone.',
+        'If prompted, allow installing from unknown sources.',
+        'Open the file and tap Install.',
+      ],
+      fa: [
+        'فایل APK را روی گوشی‌ات دانلود کن.',
+        'اگر پرسیده شد، اجازه‌ی نصب از منابع ناشناس را بده.',
+        'فایل را باز کن و روی نصب بزن.',
+      ],
+    },
   },
   {
     key: 'windows',
@@ -138,6 +153,18 @@ export const clients = [
     detail: { en: 'Portable ZIP', fa: 'نسخه‌ی قابل‌حمل ZIP' },
     url: `${clientReleasesUrl}/latest/download/Nova-Windows.zip`,
     available: true,
+    steps: {
+      en: [
+        'Unzip the downloaded file.',
+        'Run nova_client.exe.',
+        'Nova is not code-signed yet, so if SmartScreen warns, click More info, then Run anyway.',
+      ],
+      fa: [
+        'فایل دانلودشده را از حالت فشرده خارج کن.',
+        'فایل nova_client.exe را اجرا کن.',
+        'نوا هنوز امضای دیجیتال ندارد، پس اگر SmartScreen هشدار داد، روی More info و بعد Run anyway بزن.',
+      ],
+    },
   },
   {
     key: 'macos',
@@ -146,14 +173,44 @@ export const clients = [
     detail: { en: 'Apple Silicon DMG', fa: 'فایل DMG برای اپل سیلیکون' },
     url: `${clientReleasesUrl}/latest/download/Nova-macOS-arm64.dmg`,
     available: true,
+    steps: {
+      en: [
+        'Open the DMG and drag Nova to Applications.',
+        'Launch Nova from Applications.',
+        'It is Apple-notarized, so it opens with no unidentified developer block. Apple Silicon (M-series) Macs only.',
+      ],
+      fa: [
+        'فایل DMG را باز کن و نوا را به پوشه‌ی Applications بکش.',
+        'نوا را از Applications اجرا کن.',
+        'نوا توسط اپل تأیید (notarized) شده، پس بدون هشدار سازنده‌ی ناشناس باز می‌شود. فقط مک‌های اپل سیلیکون (سری M).',
+      ],
+    },
   },
   {
     key: 'ios',
     icon: 'apple',
     name: { en: 'iOS / iPadOS', fa: 'iOS / iPadOS' },
-    detail: { en: 'Coming soon', fa: 'به‌زودی' },
-    url: clientReleasesUrl,
-    available: false,
+    detail: { en: 'TestFlight beta', fa: 'نسخه‌ی آزمایشی TestFlight' },
+    url: 'https://testflight.apple.com/join/bxfK3MyF',
+    available: true,
+    external: true,
+    ctaKey: 'openTestFlight',
+    caveat: {
+      en: 'Apple blocks its services in Iran, so accept the invite with a non-Iranian Apple ID.',
+      fa: 'اپل سرویس‌هایش را در ایران مسدود کرده، پس دعوت را با یک اپل‌آی‌دی غیرایرانی بپذیر.',
+    },
+    steps: {
+      en: [
+        'Install TestFlight from the App Store.',
+        'Open the Nova join link in TestFlight.',
+        'Accept the invite and install Nova.',
+      ],
+      fa: [
+        'اپلیکیشن TestFlight را از اپ‌استور نصب کن.',
+        'لینک دعوت نوا را در TestFlight باز کن.',
+        'دعوت را بپذیر و نوا را نصب کن.',
+      ],
+    },
   },
 ]
 

@@ -86,55 +86,87 @@ h3 {
 }
 
 /* ---------- Top social bar ---------- */
+/* Refined follow strip: neutral glass icon tiles that reveal each brand's color
+   only on hover/focus, matching the soft-tint house style of the follow cards
+   lower on the page. No rainbow of filled pills. */
 .topbar {
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
-  gap: 10px;
-  padding: 8px 16px;
+  gap: 10px 14px;
+  padding: 7px 16px;
   font-size: 0.85rem;
-  background: linear-gradient(90deg, rgba(34, 211, 238, 0.16), rgba(168, 85, 247, 0.16));
+  background: linear-gradient(90deg, rgba(34, 211, 238, 0.06), rgba(168, 85, 247, 0.06));
   border-bottom: 1px solid var(--border);
 }
 
 .topbar-text {
-  color: var(--text);
+  color: var(--muted);
   font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.01em;
+}
+
+.topbar-links {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
 }
 
 .topbar-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 4px 13px;
-  border-radius: 999px;
-  font-weight: 600;
-  font-size: 0.82rem;
-  color: #fff;
-  transition: transform 0.15s, opacity 0.2s;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  color: var(--muted);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  transition: transform 0.15s ease, color 0.18s ease, border-color 0.18s ease,
+    background 0.18s ease;
 }
 
 .topbar-link:hover {
   transform: translateY(-1px);
-  opacity: 0.92;
+  background: var(--surface-2);
 }
 
-.topbar-link.tg {
-  background: linear-gradient(135deg, #2aabee, #229ed9);
+.topbar-link:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 2px;
 }
 
-.topbar-link.x {
-  background: #000;
-  border: 1px solid rgba(255, 255, 255, 0.25);
+/* Brand color surfaces only on hover/focus; neutral glass at rest. */
+.topbar-link.tg:hover,
+.topbar-link.tg:focus-visible {
+  color: #2aabee;
+  border-color: rgba(42, 171, 238, 0.5);
 }
 
-.topbar-link.yt {
-  background: #ff0000;
+.topbar-link.bot:hover,
+.topbar-link.bot:focus-visible {
+  color: var(--cyan);
+  border-color: color-mix(in srgb, var(--cyan) 50%, var(--border));
 }
 
-.topbar-link.ig {
-  background: linear-gradient(45deg, #f09433, #dc2743, #bc1888);
+.topbar-link.ig:hover,
+.topbar-link.ig:focus-visible {
+  color: #d62976;
+  border-color: rgba(214, 41, 118, 0.5);
+}
+
+.topbar-link.x:hover,
+.topbar-link.x:focus-visible {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.topbar-link.yt:hover,
+.topbar-link.yt:focus-visible {
+  color: #ff3b30;
+  border-color: rgba(255, 59, 48, 0.5);
 }
 
 @media (max-width: 420px) {

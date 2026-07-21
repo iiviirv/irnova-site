@@ -78,6 +78,17 @@ const paths = {
   menu: <path d="M4 7h16M4 12h16M4 17h16" />,
   close: <path d="M6 6l12 12M6 18L18 6" />,
   telegram: <path d="M22 3 2 11l6 2 2 6 3-4 5 4 4-16z M8 13l11-7-8 9" />,
+  bot: (
+    <>
+      <rect x="4" y="8" width="16" height="11" rx="3.2" />
+      <path d="M12 4.6V8" />
+      <circle cx="12" cy="3.6" r="1" fill="currentColor" stroke="none" />
+      <path d="M2.6 12.4v2.4M21.4 12.4v2.4" />
+      <circle cx="9.3" cy="12.7" r="1.05" fill="currentColor" stroke="none" />
+      <circle cx="14.7" cy="12.7" r="1.05" fill="currentColor" stroke="none" />
+      <path d="M9.6 16h4.8" />
+    </>
+  ),
   bolt: (
     <path
       d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"

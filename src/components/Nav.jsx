@@ -6,6 +6,7 @@ import novaMark from '../assets/nova-mark.png'
 
 const GITHUB = 'https://github.com/IRNova'
 const TELEGRAM = 'https://t.me/irnova_proxy'
+const BOT = 'https://t.me/IRNovaProxy_Bot'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
 const INSTAGRAM = 'https://instagram.com/irnova_proxy'
@@ -31,18 +32,23 @@ export default function Nav() {
     <>
       <div className="topbar">
         <span className="topbar-text">{t.social.follow}</span>
-        <a className="topbar-link tg" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
-          <Icon name="telegram" size={15} /> Telegram
-        </a>
-        <a className="topbar-link x" href={X} target="_blank" rel="noreferrer noopener">
-          <Icon name="x" size={13} /> X
-        </a>
-        <a className="topbar-link ig" href={INSTAGRAM} target="_blank" rel="noreferrer noopener">
-          <Icon name="instagram" size={15} /> Instagram
-        </a>
-        <a className="topbar-link yt" href={YOUTUBE} target="_blank" rel="noreferrer noopener">
-          <Icon name="youtube" size={15} /> YouTube
-        </a>
+        <div className="topbar-links">
+          <a className="topbar-link tg" href={TELEGRAM} target="_blank" rel="noreferrer noopener" aria-label="Telegram" title="Telegram">
+            <Icon name="telegram" size={16} />
+          </a>
+          <a className="topbar-link bot" href={BOT} target="_blank" rel="noreferrer noopener" aria-label={t.social.bot} title={t.social.bot}>
+            <Icon name="bot" size={16} />
+          </a>
+          <a className="topbar-link ig" href={INSTAGRAM} target="_blank" rel="noreferrer noopener" aria-label="Instagram" title="Instagram">
+            <Icon name="instagram" size={16} />
+          </a>
+          <a className="topbar-link x" href={X} target="_blank" rel="noreferrer noopener" aria-label="X" title="X">
+            <Icon name="x" size={13} />
+          </a>
+          <a className="topbar-link yt" href={YOUTUBE} target="_blank" rel="noreferrer noopener" aria-label="YouTube" title="YouTube">
+            <Icon name="youtube" size={16} />
+          </a>
+        </div>
       </div>
       <header className="nav">
         <a className="brand-link" href="#/" onClick={close}>

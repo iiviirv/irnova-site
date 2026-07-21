@@ -13,7 +13,7 @@ export const projects = [
       fa: 'یک کلاینت پراکسی سریع و ساده با اسکنر آی‌پی تمیز نوا رادار داخل خودش. با یک ضربه وصل شو، پروفایل‌ها و اشتراک‌ها را مدیریت کن و بهترین آی‌پی‌ها را اسکن و اعمال کن، همه در یک اپ دوزبانه و تاریک‌محور برای اندروید، ویندوز و مک.',
     },
     language: 'Flutter',
-    stars: 1,
+    stars: 63,
     url: 'https://github.com/IRNova/Nova-Client',
     tags: {
       en: ['Android', 'Windows', 'macOS', 'Nova Radar', 'sing-box'],
@@ -32,7 +32,7 @@ export const projects = [
       fa: 'یک پراکسی شخصی و مقاوم در برابر سانسور که به‌طور کامل روی ورکر رایگان کلودفلر خودت اجرا می‌شود. VLESS، Trojan و Shadowsocks را روی WebSocket+TLS ارائه می‌دهد، همراه با داشبورد دوزبانه‌ی داخلی، ربات تلگرام، بهینه‌سازی آی‌پی تمیز بر اساس اپراتور و استقرار آسان. کافی است در مرورگر یک رمز بگذاری و لینکت را به اشتراک بگذاری.',
     },
     language: 'JavaScript',
-    stars: 1301,
+    stars: 2830,
     url: 'https://github.com/IRNova/Nova-Proxy',
     tags: {
       en: ['One-click deploy', 'VLESS', 'Trojan', 'Shadowsocks', 'Dashboard'],
@@ -51,7 +51,7 @@ export const projects = [
       fa: 'هر سرور مجازی را با یک نصب‌کننده‌ی تک‌خطی به یک سرور کامل نوا تبدیل کن. یک پنل کامل xray و sing-box با VLESS، VMess، Trojan، Shadowsocks، Hysteria2، WireGuard و AmneziaWG، به‌همراه سهمیه و انقضای هر کاربر، مسیریابی هوشمند و خروجی آی‌پی تمیز، همه از یک داشبورد دوزبانه.',
     },
     language: 'Node.js',
-    stars: 1,
+    stars: 27,
     url: 'https://github.com/IRNova/Tools',
     tags: {
       en: ['Self-hosted', 'Hysteria2', 'WireGuard', 'AmneziaWG', 'Dashboard'],
@@ -70,7 +70,7 @@ export const projects = [
       fa: 'یک پراکسی محلی قدرتمند با قابلیت‌های GSA: Domain Fronting، تکه‌تکه‌سازی TLS، تزریق ECH، بازپخش QUIC، MITM و مسیریابی هوشمند، طراحی‌شده برای عبور از سامانه‌های فیلترینگ.',
     },
     language: 'Go',
-    stars: 709,
+    stars: 839,
     url: 'https://github.com/IRNova/Nova-Proxy-App',
     tags: {
       en: ['Domain Fronting', 'TLS Fragmentation', 'ECH', 'QUIC', 'Smart Routing'],
@@ -89,7 +89,7 @@ export const projects = [
       fa: 'یک اسکنر آی‌پی دسکتاپ ساخته‌شده با Go + React. محدوده‌های آی‌پی کلودفلر را از چند منبع قابل‌انتخاب اسکن می‌کند و با بررسی واقعی دومرحله‌ای (دست‌دادن TCP + TLS) تمیزترین و سریع‌ترین نقاط اتصال را پیدا می‌کند.',
     },
     language: 'Go + React',
-    stars: 97,
+    stars: 224,
     url: 'https://github.com/IRNova/NovaRadar',
     tags: {
       en: ['IP Scanning', 'Cloudflare', 'TCP + TLS', 'Desktop'],
@@ -108,7 +108,7 @@ export const projects = [
       fa: 'مجموعه‌ای رو به رشد از ابزارها و کمک‌ابزارهای کوچک که از مجموعه‌ابزار نوا و کارهای روزمره‌ی شبکه پشتیبانی می‌کنند.',
     },
     language: 'Utilities',
-    stars: 5,
+    stars: 27,
     url: 'https://github.com/IRNova/Tools',
     tags: {
       en: ['Utilities', 'Helpers'],

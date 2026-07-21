@@ -2670,6 +2670,33 @@ a.client-card:hover {
   flex-shrink: 0;
 }
 
+/* On phones the row cramps the command next to a squished button. Stack them:
+   the command scrolls inside its own full-width box, the copy button sits on a
+   comfortably tappable row below. Box stays dir="ltr" so the command never
+   reverses; everything is stretched full-width, so RTL and LTR both read right. */
+@media (max-width: 560px) {
+  /* Grid items default to min-width:auto, so the nowrap command below would grow
+     this card past its column and clip under .app{overflow-x:hidden}. Let it
+     shrink to its track; the command scrolls inside its own box instead. */
+  .access-card {
+    min-width: 0;
+  }
+  .vps-cmd-box {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    padding: 10px;
+  }
+  .vps-cmd-code {
+    flex: 0 0 auto;
+    padding: 2px 4px;
+  }
+  .vps-cmd-copy {
+    justify-content: center;
+    min-height: 40px;
+  }
+}
+
 /* Cloudflare API token permission checklist */
 .token-check {
   margin: 22px 0;

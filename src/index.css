@@ -687,11 +687,17 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 5px;
+  /* Keep the phrase on one line at the narrowest card (4-col desktop). The copy
+     is short enough to fit; nowrap stops a mid-phrase wrap, and min-width:0 lets
+     it shrink instead of overflowing if a translation ever runs long. */
+  flex-shrink: 1;
+  min-width: 0;
+  white-space: nowrap;
   font-size: 0.66rem;
   font-weight: 700;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
-  padding: 4px 9px;
+  padding: 4px 8px;
   border-radius: 999px;
   color: #6366f1;
   background: rgba(129, 140, 248, 0.16);

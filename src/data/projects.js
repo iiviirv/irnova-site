@@ -195,10 +195,6 @@ export const clients = [
     available: true,
     external: true,
     ctaKey: 'openTestFlight',
-    caveat: {
-      en: 'Apple blocks its services in Iran, so accept the invite with a non-Iranian Apple ID.',
-      fa: 'اپل سرویس‌هایش را در ایران مسدود کرده، پس دعوت را با یک اپل‌آی‌دی غیرایرانی بپذیر.',
-    },
     steps: {
       en: [
         'Install TestFlight from the App Store.',

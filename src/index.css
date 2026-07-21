@@ -641,7 +641,10 @@ h3 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
-  align-items: start;
+  /* Stretch so every card fills the row's height. A longer CTA label (iOS
+     wraps "Open in TestFlight" to two lines) no longer makes one card taller
+     than its neighbors. */
+  align-items: stretch;
 }
 
 .client-card {
@@ -723,6 +726,7 @@ h3 {
 .client-btn {
   width: 100%;
   justify-content: center;
+  white-space: nowrap;
 }
 
 /* Short per-platform caveat (currently the iOS / TestFlight note). */
@@ -746,9 +750,11 @@ h3 {
   color: #047857;
 }
 
-/* Expandable "how to run this build" steps, one per card. */
+/* Expandable "how to run this build" steps, one per card. Pinned to the card
+   bottom with margin-top:auto so every card's footer sits on the same baseline
+   even when the card body above it varies in height (e.g. a two-line CTA). */
 .client-steps {
-  margin-top: 14px;
+  margin-top: auto;
   padding-top: 12px;
   border-top: 1px solid var(--border);
 }

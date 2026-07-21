@@ -641,24 +641,72 @@ h3 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 18px;
+  align-items: start;
 }
 
 .client-card {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  padding: 26px;
+  align-items: stretch;
+  padding: 24px;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   background: var(--surface);
   color: inherit;
   text-decoration: none;
-  transition: transform 0.18s, border-color 0.2s;
+  transition: transform 0.18s, border-color 0.2s, background 0.2s;
 }
 
-a.client-card:hover {
+.client-card:hover {
   transform: translateY(-3px);
   border-color: var(--border-strong);
+}
+
+/* Auto-detected platform: same treatment as the featured deploy card. */
+.client-card.is-recommended {
+  border-color: rgba(129, 140, 248, 0.4);
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.09), var(--surface));
+}
+
+.client-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.client-card-top .cap-icon {
+  margin-bottom: 0;
+}
+
+.client-rec {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 4px 9px;
+  border-radius: 999px;
+  color: #6366f1;
+  background: rgba(129, 140, 248, 0.16);
+  border: 1px solid rgba(129, 140, 248, 0.4);
+  line-height: 1.2;
+}
+
+.client-rec svg {
+  color: var(--cyan);
+}
+
+:root[data-theme='dark'] .client-rec {
+  color: #cbd5ff;
+}
+
+[dir='rtl'] .client-rec {
+  letter-spacing: normal;
+  text-transform: none;
 }
 
 .client-card h3 {
@@ -667,19 +715,106 @@ a.client-card:hover {
 }
 
 .client-card p {
-  margin: 0 0 18px;
+  margin: 0 0 16px;
   color: var(--muted);
   font-size: 0.9rem;
 }
 
 .client-btn {
-  margin-top: auto;
   width: 100%;
   justify-content: center;
 }
 
-.client-card.is-soon {
-  opacity: 0.62;
+/* Short per-platform caveat (currently the iOS / TestFlight note). */
+.client-caveat {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin: 12px 0 0;
+  font-size: 0.82rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.client-caveat svg {
+  color: #7ee0b8;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+:root[data-theme='light'] .client-caveat svg {
+  color: #047857;
+}
+
+/* Expandable "how to run this build" steps, one per card. */
+.client-steps {
+  margin-top: 14px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+
+.client-steps summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 2px 0;
+  cursor: pointer;
+  list-style: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.client-steps summary::-webkit-details-marker {
+  display: none;
+}
+
+.client-steps summary:hover {
+  color: var(--cyan);
+}
+
+.client-steps summary:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.client-steps-caret {
+  color: var(--muted);
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.client-steps[open] .client-steps-caret {
+  transform: rotate(90deg);
+}
+
+[dir='rtl'] .client-steps-caret {
+  transform: scaleX(-1);
+}
+
+[dir='rtl'] .client-steps[open] .client-steps-caret {
+  transform: rotate(90deg);
+}
+
+.client-steps ol {
+  margin: 12px 0 2px;
+  padding-inline-start: 1.15rem;
+  display: grid;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 0.86rem;
+  line-height: 1.55;
+}
+
+.client-steps li {
+  padding-inline-start: 2px;
+}
+
+.client-steps li::marker {
+  color: var(--cyan);
+  font-weight: 600;
 }
 
 /* ---------- About ---------- */
@@ -2223,8 +2358,12 @@ a.client-card:hover {
   }
   .btn:hover,
   .project-card:hover,
-  .cap-card:hover {
+  .cap-card:hover,
+  .client-card:hover {
     transform: none;
+  }
+  .client-steps-caret {
+    transition: none;
   }
 }
 

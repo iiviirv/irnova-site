@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
 import IPTools from './components/IPTools.jsx'
@@ -58,6 +58,26 @@ function useSiteStats() {
     }
   }, [])
   return stats
+}
+
+// Best-effort guess of the visitor's platform so we can surface the right Nova
+// download first. Prefers the modern userAgentData.platform, falls back to the
+// legacy navigator.platform / userAgent. Returns a client key ('android',
+// 'windows', 'macos', 'ios') or null when we can't tell (Linux, bots, locked-down
+// browsers), in which case the UI just shows every platform with no highlight.
+function detectPlatform() {
+  if (typeof navigator === 'undefined') return null
+  const plat = (navigator.userAgentData?.platform || navigator.platform || '').toLowerCase()
+  const ua = (navigator.userAgent || '').toLowerCase()
+  const touch = navigator.maxTouchPoints || 0
+  // iPadOS 13+ reports itself as a Mac, so a touch-capable "Mac" is really an iPad.
+  if (/iphone|ipad|ipod/.test(ua) || /ios/.test(plat) || (plat.includes('mac') && touch > 1)) {
+    return 'ios'
+  }
+  if (/android/.test(ua) || plat.includes('android')) return 'android'
+  if (plat.includes('win') || /windows/.test(ua)) return 'windows'
+  if (plat.includes('mac') || /mac os/.test(ua)) return 'macos'
+  return null
 }
 
 // Compact, locale-aware number: 12345 → "12.3k", 812 → "812" (or Persian digits).
@@ -146,6 +166,17 @@ export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
   const live = useSiteStats()
+
+  // Detect the platform once, then float the matching download to the front of the
+  // grid. Everything stays visible and downloadable; detection only reorders and
+  // adds a "Recommended for your device" badge. Null result = no reorder, no badge.
+  const detectedPlatform = useMemo(() => detectPlatform(), [])
+  const orderedClients = useMemo(() => {
+    if (!detectedPlatform) return clients
+    const match = clients.filter((c) => c.key === detectedPlatform)
+    if (match.length === 0) return clients
+    return [...match, ...clients.filter((c) => c.key !== detectedPlatform)]
+  }, [detectedPlatform])
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
@@ -419,29 +450,58 @@ export default function App() {
             <p>{t.clientsSection.desc}</p>
           </div>
           <div className="client-grid">
-            {clients.map((c) =>
-              c.available ? (
-                <a className="client-card" key={c.key} href={c.url} rel="noreferrer noopener">
-                  <span className="cap-icon">
-                    <Icon name={c.icon} size={24} />
-                  </span>
+            {orderedClients.map((c) => {
+              const recommended = c.key === detectedPlatform
+              const ctaLabel = c.ctaKey ? t.clientsSection[c.ctaKey] : t.clientsSection.download
+              return (
+                <article
+                  className={recommended ? 'client-card is-recommended' : 'client-card'}
+                  key={c.key}
+                >
+                  <div className="client-card-top">
+                    <span className="cap-icon">
+                      <Icon name={c.icon} size={24} />
+                    </span>
+                    {recommended && (
+                      <span className="client-rec">
+                        <Icon name="check" size={13} /> {t.clientsSection.recommended}
+                      </span>
+                    )}
+                  </div>
                   <h3>{c.name[lang]}</h3>
                   <p>{c.detail[lang]}</p>
-                  <span className="btn btn-primary client-btn">
-                    <Icon name="download" size={16} /> {t.clientsSection.download}
-                  </span>
-                </a>
-              ) : (
-                <div className="client-card is-soon" key={c.key}>
-                  <span className="cap-icon">
-                    <Icon name={c.icon} size={24} />
-                  </span>
-                  <h3>{c.name[lang]}</h3>
-                  <p>{c.detail[lang]}</p>
-                  <span className="btn btn-ghost client-btn">{t.clientsSection.comingSoon}</span>
-                </div>
+
+                  <a
+                    className="btn btn-primary client-btn"
+                    href={c.url}
+                    target={c.external ? '_blank' : undefined}
+                    rel="noreferrer noopener"
+                  >
+                    <Icon name={c.external ? 'open' : 'download'} size={16} /> {ctaLabel}
+                  </a>
+
+                  {c.caveat && (
+                    <p className="client-caveat">
+                      <Icon name="shield" size={14} /> {c.caveat[lang]}
+                    </p>
+                  )}
+
+                  {c.steps && (
+                    <details className="client-steps">
+                      <summary>
+                        <span>{t.clientsSection.howToInstall}</span>
+                        <Icon name="chevron" size={16} className="client-steps-caret" />
+                      </summary>
+                      <ol>
+                        {c.steps[lang].map((step, i) => (
+                          <li key={i}>{step}</li>
+                        ))}
+                      </ol>
+                    </details>
+                  )}
+                </article>
               )
-            )}
+            })}
           </div>
           <p className="platform-note">
             <Icon name="link" size={16} /> {t.clientsSection.note}{' '}

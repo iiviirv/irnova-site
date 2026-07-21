@@ -1538,7 +1538,9 @@ h3 {
   border-color: var(--text);
 }
 
-.x-icon {
+/* Compound selector so the monochrome X tile beats .tg-icon (defined later in
+   this file) in dark mode; a plain .x-icon lost the cascade and rendered blue. */
+.tg-icon.x-icon {
   background: linear-gradient(135deg, #1d1d1f, #000);
 }
 
@@ -1556,6 +1558,29 @@ h3 {
 :root[data-theme='light'] .x-cta {
   background: #000;
   border-color: #000;
+}
+
+/* Instagram banner: warm purple-to-pink accent, same soft-tint weight as
+   Telegram and X. The vivid brand gradient stays on the icon tile and CTA. */
+.ig-banner {
+  border-color: rgba(214, 41, 118, 0.35);
+  background: linear-gradient(120deg, rgba(214, 41, 118, 0.13), rgba(150, 47, 191, 0.11));
+}
+
+.ig-banner:hover {
+  border-color: rgba(214, 41, 118, 0.62);
+}
+
+.tg-icon.ig-icon {
+  color: #fff;
+  background: linear-gradient(135deg, #feda75, #fa7e1e 24%, #d62976 55%, #962fbf 80%, #4f5bd5);
+}
+
+.ig-cta {
+  white-space: nowrap;
+  color: #fff;
+  background: linear-gradient(135deg, #fa7e1e, #d62976 52%, #962fbf);
+  border: 1px solid rgba(150, 47, 191, 0.5);
 }
 
 .tg-icon {

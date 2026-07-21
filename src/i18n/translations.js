@@ -580,3 +580,35 @@ export const ui = {
     flagship: 'پرچم‌دار',
   },
 }
+
+// Bidirectional text: isolate embedded Latin runs in the Farsi copy.
+// A Latin word inside a Farsi sentence (IRNova, GitHub, Worker, UUID,
+// Sing-box, vless://, @IRNovaProxy_Bot, and so on) can shove adjacent
+// punctuation to the wrong side or reorder awkwardly under the page's RTL
+// base direction. Wrapping each Latin run in Unicode isolates
+// (U+2066 LEFT-TO-RIGHT ISOLATE ... U+2069 POP DIRECTIONAL ISOLATE) keeps the
+// run visually stable without altering the text itself. The document is
+// already dir="rtl" for Farsi, so the base direction needs no marker; only the
+// embedded LTR runs do. Done here at load, so the source strings above stay
+// clean and easy to edit (no invisible characters live in the source).
+const LRI = '\u2066'
+const PDI = '\u2069'
+// One run of Latin letters/digits plus the punctuation that binds a token
+// (@ . _ + - / :) and single spaces between Latin words, e.g. "Nova panel".
+const LATIN_RUN = /[A-Za-z0-9@._+/:-]+(?:[ \t]+[A-Za-z0-9@._+/:-]+)*/g
+const HAS_LATIN_LETTER = /[A-Za-z]/
+function isolateLatin(text) {
+  return text.replace(LATIN_RUN, (run) => (HAS_LATIN_LETTER.test(run) ? LRI + run + PDI : run))
+}
+function isolateDeep(node) {
+  if (typeof node === 'string') return isolateLatin(node)
+  if (Array.isArray(node)) return node.map(isolateDeep)
+  if (node && typeof node === 'object') {
+    for (const key in node) node[key] = isolateDeep(node[key])
+    return node
+  }
+  return node
+}
+
+// Only the Farsi tree is RTL; the English copy needs no isolation.
+ui.fa = isolateDeep(ui.fa)

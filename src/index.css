@@ -3045,3 +3045,427 @@ h3 {
     transform: none;
   }
 }
+
+/* ---------- Nova Server showcase (flagship, self-hosted) ---------- */
+.ns-section {
+  position: relative;
+}
+
+/* Soft spotlight glow behind the flagship intro so the section reads as a
+   distinct band even though it shares the plain page background. Fades out well
+   before the edges, so it never looks boxed. */
+.ns-section::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(72% 55% at 50% -6%, rgba(99, 102, 241, 0.15), transparent 62%);
+}
+
+.ns-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Flagship intro: copy left, at-a-glance spec card right. */
+.ns-hero {
+  display: grid;
+  grid-template-columns: 1.35fr 1fr;
+  gap: clamp(28px, 4vw, 52px);
+  align-items: center;
+  margin-bottom: clamp(48px, 7vw, 80px);
+}
+
+/* Grid children default to min-width:auto, so the nowrap install command inside
+   the copy column would floor the track at its full length and blow the layout
+   past the viewport (same fix the access-card uses). Let the columns shrink;
+   the command scrolls inside its own overflow-x box. */
+.ns-hero > *,
+.ns-installer > * {
+  min-width: 0;
+}
+
+.ns-eyebrow-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.ns-eyebrow-row .eyebrow {
+  margin-bottom: 0;
+}
+
+.ns-flag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  border-radius: 999px;
+  color: #6366f1;
+  background: rgba(129, 140, 248, 0.16);
+  border: 1px solid rgba(129, 140, 248, 0.4);
+}
+
+:root[data-theme='dark'] .ns-flag {
+  color: #cbd5ff;
+}
+
+.ns-flag svg {
+  color: #f59e0b;
+}
+
+[dir='rtl'] .ns-flag {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.ns-title {
+  font-size: clamp(2rem, 4.6vw, 3.1rem);
+  font-weight: 800;
+}
+
+.ns-intro {
+  color: var(--muted);
+  font-size: clamp(1rem, 1.6vw, 1.1rem);
+  margin: 16px 0 24px;
+  max-width: 46ch;
+}
+
+.ns-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 20px;
+}
+
+/* At-a-glance spec card, same gradient-bordered treatment as the About card. */
+.ns-spec {
+  border: 1px solid var(--border-strong);
+  border-radius: 20px;
+  background: linear-gradient(180deg, rgba(99, 102, 241, 0.1), var(--surface));
+  padding: clamp(22px, 3vw, 28px);
+}
+
+.ns-spec-head {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 16px;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.ns-spec-mark {
+  display: block;
+  width: 34px;
+  height: 34px;
+  flex-shrink: 0;
+}
+
+.ns-spec-heading {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.ns-spec-heading strong {
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.ns-spec-heading span {
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.ns-spec-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.ns-spec-list li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.ns-spec-list li:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.ns-spec-k {
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.ns-spec-v {
+  font-weight: 700;
+  font-size: 0.9rem;
+  color: var(--text);
+  white-space: nowrap;
+  text-align: end;
+}
+
+/* Feature families. A deliberate bento: the two chip clusters (protocols,
+   transports) run full-width across the top, the six check-lists below in
+   threes. */
+.ns-features-head {
+  margin-bottom: 40px;
+}
+
+.ns-group-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 18px;
+}
+
+.ns-group:nth-child(1),
+.ns-group:nth-child(2) {
+  grid-column: span 3;
+}
+
+.ns-group:nth-child(n + 3) {
+  grid-column: span 2;
+}
+
+.ns-group {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 2.4vw, 26px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--surface);
+  transition: transform 0.18s, border-color 0.2s, background 0.2s;
+}
+
+.ns-group:hover {
+  transform: translateY(-3px);
+  border-color: var(--border-strong);
+  background: var(--surface-2);
+}
+
+.ns-group-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.ns-group-head .cap-icon {
+  width: 42px;
+  height: 42px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.ns-group-heading {
+  min-width: 0;
+}
+
+.ns-group-heading h3 {
+  font-size: 1.08rem;
+  margin: 0;
+}
+
+.ns-group-heading p {
+  margin: 4px 0 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.ns-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.ns-chip {
+  font-size: 0.78rem;
+  font-weight: 500;
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: var(--text);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+}
+
+.ns-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.ns-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  color: var(--text);
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.ns-list li svg {
+  color: var(--cyan);
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+/* Telegram installer highlight: banner image plus the three install paths. */
+.ns-installer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(24px, 3vw, 44px);
+  align-items: center;
+  margin-top: clamp(48px, 7vw, 80px);
+  padding: clamp(22px, 3vw, 36px);
+  border: 1px solid rgba(34, 211, 238, 0.28);
+  border-radius: 22px;
+  background: linear-gradient(120deg, rgba(34, 211, 238, 0.09), rgba(129, 140, 248, 0.09));
+}
+
+.ns-installer-media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+}
+
+.ns-installer-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.ns-installer-copy h3 {
+  font-size: clamp(1.4rem, 2.6vw, 1.9rem);
+  font-weight: 800;
+  margin: 12px 0 0;
+}
+
+.ns-installer-desc {
+  color: var(--muted);
+  margin: 12px 0 0;
+}
+
+.ns-methods-label {
+  display: block;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 22px 0 12px;
+}
+
+[dir='rtl'] .ns-methods-label {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.ns-methods {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.ns-methods li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.ns-method-num {
+  flex: 0 0 26px;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 0.82rem;
+  background: var(--grad);
+  color: #05060a;
+  margin-top: 1px;
+}
+
+.ns-method-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.ns-method-text strong {
+  font-size: 0.95rem;
+  color: var(--text);
+}
+
+.ns-method-text span {
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.55;
+}
+
+.ns-installer-cta {
+  align-items: center;
+  margin-top: 24px;
+}
+
+.ns-bot-handle {
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--cyan);
+}
+
+.ns-bot-handle:hover {
+  color: var(--text);
+}
+
+@media (max-width: 980px) {
+  .ns-group-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ns-group:nth-child(1),
+  .ns-group:nth-child(2),
+  .ns-group:nth-child(n + 3) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 860px) {
+  .ns-hero {
+    grid-template-columns: 1fr;
+  }
+  .ns-installer {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .ns-group-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .ns-group:hover {
+    transform: none;
+  }
+}

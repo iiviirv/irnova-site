@@ -11,6 +11,7 @@ export const ui = {
     brand: 'Nova Proxy',
     nav: {
       projects: 'Projects',
+      server: 'Nova Server',
       capabilities: 'Capabilities',
       apps: 'Apps',
       guide: 'Deploy & Setup',
@@ -160,6 +161,133 @@ export const ui = {
       title: 'Projects',
       desc: 'Five open-source projects that work together, from a full control panel and a cross-platform client app to a low-level proxy engine and an IP scanner that proves what actually works.',
     },
+    novaServer: {
+      eyebrow: 'Nova Server',
+      flagship: 'Flagship, self-hosted',
+      title: 'Your own server,',
+      titleAccent: 'your own admin panel.',
+      intro:
+        'Nova Server is the self-hosted big brother of Nova Proxy: your own censorship-resistant proxy server and a full admin panel on any VPS. One line installs it, then you run the whole fleet from a dashboard that is yours alone.',
+      specSub: 'Self-hosted on your VPS',
+      specs: [
+        { k: 'Protocols', v: '8 + Reality' },
+        { k: 'Transports', v: '6 + XHTTP' },
+        { k: 'Fleet', v: 'Multi-node' },
+        { k: 'Security', v: '2FA + API' },
+        { k: 'Panel', v: 'EN / FA / RU' },
+      ],
+      cmd: { cmdLabel: 'Install on your VPS in one line', copy: 'Copy', copied: 'Copied' },
+      githubCta: 'GitHub',
+      botCta: 'Open the installer bot',
+      featuresEyebrow: 'Everything in the box',
+      featuresTitle: 'A full proxy panel, on hardware that is yours',
+      featuresDesc:
+        'Every protocol, transport, and control you expect from a premium panel, plus the anti-censorship tooling tuned for Iran.',
+      groups: [
+        {
+          title: 'Protocols',
+          desc: 'Every modern protocol, ready to serve.',
+          chips: [
+            'VLESS',
+            'VMess',
+            'Trojan',
+            'Shadowsocks-2022',
+            'VLESS-Reality (XTLS-Vision)',
+            'Hysteria2',
+            'Native WireGuard',
+            'AmneziaWG',
+          ],
+        },
+        {
+          title: 'Transports',
+          desc: 'Blend into ordinary traffic on any carrier.',
+          chips: ['TCP', 'WebSocket', 'gRPC', 'XHTTP', 'HTTPUpgrade', 'mKCP over TLS or Reality'],
+        },
+        {
+          title: 'Per-user controls',
+          desc: 'Full command over every account.',
+          items: [
+            'Data quota, expiry, and device or IP limits',
+            'One-click data reset, per-user protocol and inbound access',
+            'Auto-updating subscription links with live usage',
+            'QR codes and Clash or sing-box formats',
+          ],
+        },
+        {
+          title: 'Anti-censorship',
+          desc: 'Built to stay online inside Iran.',
+          items: [
+            'VLESS-Reality borrows a real SNI, no domain needed',
+            'Iran bridge tunnels: Backhaul, BackPack, rathole, wstunnel',
+            'WARP with your own WARP+ license, Tor, or Psiphon egress',
+            'Iran block-detection with one-click IP rotation',
+          ],
+        },
+        {
+          title: 'Domain and SSL',
+          desc: 'Certificates handled for you.',
+          items: [
+            'One-click Let’s Encrypt',
+            'Full-auto Cloudflare with DNS and wildcard',
+            'Everything renews on its own',
+          ],
+        },
+        {
+          title: 'Fleet and access',
+          desc: 'Run many nodes, share the keys.',
+          items: [
+            'Multi-node fleet from one panel',
+            'Token-authed REST API',
+            'Multi-admin with reseller roles',
+            'Two-factor auth (Google Authenticator)',
+            'Server-side password reset',
+          ],
+        },
+        {
+          title: 'Automation',
+          desc: 'Set it up once, then let it run.',
+          items: [
+            'Nightly backups to disk and Telegram',
+            'Health alerts and opt-in auto-update',
+            'Clean-IP refresh',
+            'Guided setup wizard',
+          ],
+        },
+        {
+          title: 'The panel',
+          desc: 'A dashboard people actually enjoy.',
+          items: [
+            'Trilingual: English, Persian (RTL), Russian',
+            'Global search',
+            'Per-section guides and a full manual',
+            'Light and dark',
+          ],
+        },
+      ],
+      installer: {
+        eyebrow: 'Runs inside Telegram',
+        title: 'Set it up from Telegram, even with no computer',
+        desc: 'A full Telegram bot and Mini App run the entire panel inside Telegram. And a dedicated installer bot spins up a fresh node for you three ways, whichever suits you.',
+        methodsLabel: 'Three ways to install',
+        methods: [
+          {
+            title: 'Paste a script',
+            text: 'Copy a cloud-init script into your provider’s dashboard. No SSH, no terminal.',
+          },
+          {
+            title: 'Guided',
+            text: 'The bot walks you through it and tells you the moment your node comes online.',
+          },
+          {
+            title: 'Automatic',
+            text: 'Hand the bot your server details and it connects over SSH and installs everything itself.',
+          },
+        ],
+        botLabel: '@NovaServerInstaller_Bot',
+        botCta: 'Open the installer bot',
+        imageAlt: 'Nova Server installer bot for Telegram',
+      },
+    },
     clientsSection: {
       eyebrow: 'Get the apps',
       title: 'Nova Client',
@@ -297,6 +425,7 @@ export const ui = {
     brand: 'نوا پراکسی',
     nav: {
       projects: 'پروژه‌ها',
+      server: 'نوا سرور',
       capabilities: 'قابلیت‌ها',
       apps: 'اپ‌ها',
       guide: 'استقرار و راه‌اندازی',
@@ -445,6 +574,133 @@ export const ui = {
       eyebrow: 'جعبه‌ابزار',
       title: 'پروژه‌ها',
       desc: 'پنج پروژه‌ی متن‌باز که در کنار هم کار می‌کنند، از یک پنل مدیریت کامل و یک اپ چندسکویی تا یک موتور پراکسی سطح‌پایین و یک اسکنر آی‌پی که نشان می‌دهد چه چیزی واقعاً کار می‌کند.',
+    },
+    novaServer: {
+      eyebrow: 'نوا سرور',
+      flagship: 'پرچم‌دار، خودمیزبان',
+      title: 'سرور خودت،',
+      titleAccent: 'پنل مدیریت خودت.',
+      intro:
+        'نوا سرور برادر بزرگ‌تر و خودمیزبان نوا پراکسی است: یک سرور پراکسی مقاوم در برابر سانسور و یک پنل مدیریت کامل روی هر سرور مجازی. با یک خط نصب می‌شود و بعد کل ناوگان را از داشبوردی که فقط مال توست اداره می‌کنی.',
+      specSub: 'خودمیزبان روی سرور مجازی تو',
+      specs: [
+        { k: 'پروتکل‌ها', v: '۸ + Reality' },
+        { k: 'ترنسپورت‌ها', v: '۶ + XHTTP' },
+        { k: 'ناوگان', v: 'چندنودی' },
+        { k: 'امنیت', v: 'دومرحله‌ای + API' },
+        { k: 'پنل', v: 'EN / FA / RU' },
+      ],
+      cmd: { cmdLabel: 'با یک خط روی سرور مجازی‌ات نصب کن', copy: 'کپی', copied: 'کپی شد' },
+      githubCta: 'گیت‌هاب',
+      botCta: 'باز کردن ربات نصب‌کننده',
+      featuresEyebrow: 'همه‌چیز در جعبه',
+      featuresTitle: 'یک پنل پراکسی کامل، روی سخت‌افزاری که مال توست',
+      featuresDesc:
+        'هر پروتکل، ترنسپورت و کنترلی که از یک پنل حرفه‌ای انتظار داری، به‌همراه ابزار ضد سانسور تنظیم‌شده برای ایران.',
+      groups: [
+        {
+          title: 'پروتکل‌ها',
+          desc: 'هر پروتکل مدرنی، آماده‌ی ارائه.',
+          chips: [
+            'VLESS',
+            'VMess',
+            'Trojan',
+            'Shadowsocks-2022',
+            'VLESS-Reality (XTLS-Vision)',
+            'Hysteria2',
+            'Native WireGuard',
+            'AmneziaWG',
+          ],
+        },
+        {
+          title: 'ترنسپورت‌ها',
+          desc: 'روی هر بستری، شبیه ترافیک معمولی.',
+          chips: ['TCP', 'WebSocket', 'gRPC', 'XHTTP', 'HTTPUpgrade', 'mKCP روی TLS یا Reality'],
+        },
+        {
+          title: 'کنترل هر کاربر',
+          desc: 'کنترل کامل روی تک‌تک حساب‌ها.',
+          items: [
+            'سهمیه‌ی داده، تاریخ انقضا و محدودیت دستگاه یا آی‌پی',
+            'ریست داده با یک کلیک و دسترسی پروتکل و اینباند به‌ازای هر کاربر',
+            'لینک‌های اشتراک خودبه‌روزرسان با نمایش مصرف زنده',
+            'کد QR و قالب‌های Clash یا sing-box',
+          ],
+        },
+        {
+          title: 'ضد سانسور',
+          desc: 'ساخته‌شده برای آنلاین‌ماندن در ایران.',
+          items: [
+            'VLESS-Reality یک SNI واقعی قرض می‌گیرد، بدون نیاز به دامنه',
+            'تونل‌های پل ایران: Backhaul، BackPack، rathole، wstunnel',
+            'خروجی از WARP با لایسنس WARP+ خودت، Tor یا Psiphon',
+            'تشخیص مسدودی ایران با چرخش آی‌پی یک‌کلیکی',
+          ],
+        },
+        {
+          title: 'دامنه و SSL',
+          desc: 'گواهی‌ها به‌جای تو مدیریت می‌شوند.',
+          items: [
+            'Let’s Encrypt با یک کلیک',
+            'کلودفلر تمام‌خودکار با DNS و وایلدکارت',
+            'همه‌چیز خودش تمدید می‌شود',
+          ],
+        },
+        {
+          title: 'ناوگان و دسترسی',
+          desc: 'چند نود را اجرا کن، کلیدها را به اشتراک بگذار.',
+          items: [
+            'ناوگان چندنودی از یک پنل',
+            'REST API با احراز توکن',
+            'چند مدیر با نقش‌های نمایندگی',
+            'ورود دومرحله‌ای (Google Authenticator)',
+            'بازنشانی رمز از سمت سرور',
+          ],
+        },
+        {
+          title: 'خودکارسازی',
+          desc: 'یک‌بار راه‌اندازی کن، بعد بگذار خودش کار کند.',
+          items: [
+            'پشتیبان‌گیری شبانه روی دیسک و تلگرام',
+            'هشدارهای سلامت و به‌روزرسانی خودکار اختیاری',
+            'تازه‌سازی آی‌پی تمیز',
+            'راه‌انداز گام‌به‌گام',
+          ],
+        },
+        {
+          title: 'پنل',
+          desc: 'داشبوردی که واقعاً از کارکردن با آن لذت می‌بری.',
+          items: [
+            'سه‌زبانه: انگلیسی، فارسی (راست‌به‌چپ)، روسی',
+            'جست‌وجوی سراسری',
+            'راهنمای هر بخش و یک راهنمای کامل',
+            'روشن و تاریک',
+          ],
+        },
+      ],
+      installer: {
+        eyebrow: 'داخل تلگرام اجرا می‌شود',
+        title: 'حتی بدون رایانه، از تلگرام راهش بینداز',
+        desc: 'یک ربات تلگرام و مینی‌اپ کامل، تمام پنل را داخل تلگرام اجرا می‌کنند. و یک ربات نصب‌کننده‌ی اختصاصی یک نود تازه را به سه روش برایت راه می‌اندازد، هرکدام که برایت راحت‌تر است.',
+        methodsLabel: 'سه روش برای نصب',
+        methods: [
+          {
+            title: 'چسباندن اسکریپت',
+            text: 'یک اسکریپت cloud-init را در داشبورد سرویس‌دهنده‌ات بچسبان. بدون SSH و بدون ترمینال.',
+          },
+          {
+            title: 'راهنمایی‌شده',
+            text: 'ربات مرحله‌به‌مرحله همراهی‌ات می‌کند و لحظه‌ای که نودت آنلاین شد خبرت می‌دهد.',
+          },
+          {
+            title: 'خودکار',
+            text: 'مشخصات سرورت را به ربات بده تا خودش با SSH وصل شود و همه‌چیز را نصب کند.',
+          },
+        ],
+        botLabel: '@NovaServerInstaller_Bot',
+        botCta: 'باز کردن ربات نصب‌کننده',
+        imageAlt: 'ربات نصب‌کننده‌ی نوا سرور برای تلگرام',
+      },
     },
     clientsSection: {
       eyebrow: 'دریافت اپ‌ها',
@@ -595,7 +851,7 @@ const LRI = '\u2066'
 const PDI = '\u2069'
 // One run of Latin letters/digits plus the punctuation that binds a token
 // (@ . _ + - / :) and single spaces between Latin words, e.g. "Nova panel".
-const LATIN_RUN = /[A-Za-z0-9@._+/:-]+(?:[ \t]+[A-Za-z0-9@._+/:-]+)*/g
+const LATIN_RUN = /[A-Za-z0-9@._+/:'’-]+(?:[ \t]+[A-Za-z0-9@._+/:'’-]+)*/g
 const HAS_LATIN_LETTER = /[A-Za-z]/
 function isolateLatin(text) {
   return text.replace(LATIN_RUN, (run) => (HAS_LATIN_LETTER.test(run) ? LRI + run + PDI : run))

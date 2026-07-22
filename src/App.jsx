@@ -6,6 +6,8 @@ import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
 import { projects, capabilities, team, clients, clientReleasesUrl } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
+import novaMark from './assets/nova-mark.png'
+import installerCover from './assets/nova-server-installer.png'
 
 // Tiny hash router: '#/tools' shows the IP tools sub-page, everything else
 // (including in-page anchors like '#projects') shows the landing page.
@@ -103,6 +105,12 @@ const NOVA_PROXY_REPO = 'https://github.com/IRNova/Nova-Proxy'
 const NOVA_SERVER_REPO = 'https://github.com/IRNova/Nova-Server'
 // The dedicated Nova Server (VPS) repo: bilingual setup docs plus the one-line installer.
 const VPS_GUIDE_URL = NOVA_SERVER_REPO
+// The Telegram installer bot that sets up a Nova Server node for people with no
+// computer (paste a script, guided, or fully automatic over SSH).
+const INSTALLER_BOT = 'https://t.me/NovaServerInstaller_Bot'
+// Icons for the eight Nova Server feature-family cards, matched to the group order
+// in translations.js (novaServer.groups). Kept here so the copy stays icon-free.
+const NS_GROUP_ICONS = ['route', 'link', 'gauge', 'shield', 'globe', 'dns', 'bolt', 'book']
 
 // The exact one-line installer users run on their own server. Kept verbatim, no
 // sudo, no wrapping. Shared by the copy button in the "Connect your VPS" card.
@@ -139,6 +147,167 @@ function VpsCommand({ copy }) {
         </button>
       </div>
     </div>
+  )
+}
+
+// Dedicated flagship showcase for Nova Server, the self-hosted big brother of
+// Nova Proxy. Reuses the existing VpsCommand (same one-line installer as the
+// deploy section) plus the site's card/eyebrow/pill vocabulary, so it reads as
+// native to the page. Feature-heavy content is grouped into eight family cards
+// instead of a long wall of one-liners.
+function NovaServerSection({ ns }) {
+  return (
+    <section id="nova-server" className="section ns-section">
+      {/* Flagship intro: copy + one-line installer on the left, at-a-glance spec
+          card on the right. */}
+      <div className="ns-hero">
+        <div className="ns-hero-copy">
+          <div className="ns-eyebrow-row">
+            <span className="eyebrow">{ns.eyebrow}</span>
+            <span className="ns-flag">
+              <Icon name="star" size={13} /> {ns.flagship}
+            </span>
+          </div>
+          <h2 className="ns-title">
+            {ns.title}
+            <span className="grad"> {ns.titleAccent}</span>
+          </h2>
+          <p className="ns-intro">{ns.intro}</p>
+
+          <VpsCommand copy={ns.cmd} />
+
+          <div className="ns-cta-row">
+            <a
+              className="btn btn-primary"
+              href={INSTALLER_BOT}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="bot" size={18} /> {ns.botCta}
+            </a>
+            <a
+              className="btn btn-ghost"
+              href={NOVA_SERVER_REPO}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="github" size={18} /> {ns.githubCta}
+            </a>
+          </div>
+        </div>
+
+        <aside className="ns-spec" aria-label={ns.eyebrow}>
+          <div className="ns-spec-head">
+            <img className="ns-spec-mark" src={novaMark} width="34" height="34" alt="" aria-hidden="true" />
+            <div className="ns-spec-heading">
+              <strong>{ns.eyebrow}</strong>
+              <span>{ns.specSub}</span>
+            </div>
+          </div>
+          <ul className="ns-spec-list">
+            {ns.specs.map((s) => (
+              <li key={s.k}>
+                <span className="ns-spec-k">{s.k}</span>
+                <span className="ns-spec-v">{s.v}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+
+      {/* Grouped feature families: protocols and transports as chip clusters,
+          the rest as short check-lists. */}
+      <div className="section-head ns-features-head">
+        <span className="eyebrow">{ns.featuresEyebrow}</span>
+        <h2>{ns.featuresTitle}</h2>
+        <p>{ns.featuresDesc}</p>
+      </div>
+      <div className="ns-group-grid">
+        {ns.groups.map((g, i) => (
+          <article className="ns-group" key={g.title}>
+            <div className="ns-group-head">
+              <span className="cap-icon">
+                <Icon name={NS_GROUP_ICONS[i]} size={20} />
+              </span>
+              <div className="ns-group-heading">
+                <h3>{g.title}</h3>
+                <p>{g.desc}</p>
+              </div>
+            </div>
+            {g.chips ? (
+              <div className="ns-chips">
+                {g.chips.map((c) => (
+                  <span className="ns-chip" key={c}>
+                    {c}
+                  </span>
+                ))}
+              </div>
+            ) : (
+              <ul className="ns-list">
+                {g.items.map((it, j) => (
+                  <li key={j}>
+                    <Icon name="check" size={14} /> {it}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </article>
+        ))}
+      </div>
+
+      {/* Telegram installer highlight: banner image + the three install paths. */}
+      <div className="ns-installer">
+        <div className="ns-installer-media">
+          <img
+            src={installerCover}
+            alt={ns.installer.imageAlt}
+            width="1280"
+            height="640"
+            loading="lazy"
+          />
+        </div>
+        <div className="ns-installer-copy">
+          <span className="eyebrow ns-installer-eyebrow">
+            <Icon name="telegram" size={14} /> {ns.installer.eyebrow}
+          </span>
+          <h3>{ns.installer.title}</h3>
+          <p className="ns-installer-desc">{ns.installer.desc}</p>
+
+          <span className="ns-methods-label">{ns.installer.methodsLabel}</span>
+          <ol className="ns-methods">
+            {ns.installer.methods.map((m, i) => (
+              <li key={m.title}>
+                <span className="ns-method-num">{i + 1}</span>
+                <div className="ns-method-text">
+                  <strong>{m.title}</strong>
+                  <span>{m.text}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="ns-cta-row ns-installer-cta">
+            <a
+              className="btn btn-primary"
+              href={INSTALLER_BOT}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="bot" size={18} /> {ns.installer.botCta}
+            </a>
+            <a
+              className="ns-bot-handle"
+              href={INSTALLER_BOT}
+              target="_blank"
+              rel="noreferrer noopener"
+              dir="ltr"
+            >
+              {ns.installer.botLabel}
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -264,6 +433,8 @@ export default function App() {
             ))}
           </div>
         </section>
+
+        <NovaServerSection ns={t.novaServer} />
 
         <section id="capabilities" className="section section-alt">
           <div className="section-head">
@@ -640,6 +811,7 @@ export default function App() {
         <p className="footer-note">{t.footer.note}</p>
         <div className="footer-links">
           <a href="#projects">{t.nav.projects}</a>
+          <a href="#nova-server">{t.nav.server}</a>
           <a href="#capabilities">{t.nav.capabilities}</a>
           <a href="#clients">{t.nav.apps}</a>
           <a href="#deploy">{t.nav.deploy}</a>

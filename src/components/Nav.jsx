@@ -59,6 +59,9 @@ export default function Nav() {
         <a href="#projects" onClick={close}>
           {t.nav.projects}
         </a>
+        <a href="#nova-server" onClick={close}>
+          {t.nav.server}
+        </a>
         <a href="#capabilities" onClick={close}>
           {t.nav.capabilities}
         </a>

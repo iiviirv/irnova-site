@@ -215,18 +215,19 @@ export const clients = [
 // no rate limit). Roles are easy to edit; adjust as the team grows.
 export const team = [
   {
+    handle: 'iiviirv',
+    name: 'iiviirv',
+    url: 'https://github.com/iiviirv',
+    avatar: 'https://github.com/iiviirv.png?size=200',
+    role: { en: 'Core developer & maintainer', fa: 'توسعه‌دهنده و نگه‌دارنده اصلی' },
+    lead: true,
+  },
+  {
     handle: 'IRNova',
     name: 'IRNova',
     url: 'https://github.com/IRNova',
     avatar: 'https://github.com/IRNova.png?size=200',
     role: { en: 'Creator & maintainer', fa: 'سازنده و نگه‌دارنده' },
-  },
-  {
-    handle: 'iiviirv',
-    name: 'iiviirv',
-    url: 'https://github.com/iiviirv',
-    avatar: 'https://github.com/iiviirv.png?size=200',
-    role: { en: 'Contributor', fa: 'مشارکت‌کننده' },
   },
   {
     handle: 'Vahid-4444',

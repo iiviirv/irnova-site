@@ -22,6 +22,25 @@ const logo = 'data:image/png;base64,' + readFileSync('brand/nova-logo-badge-roun
 const GLOWS =
   'radial-gradient(circle at 20% 0%, rgba(34,211,238,0.20), transparent 55%), radial-gradient(circle at 85% 20%, rgba(168,85,247,0.22), transparent 55%)'
 
+// A product card: accent bar, product name, one-line description.
+function cardEN(title, sub, accent) {
+  return {
+    type: 'div',
+    props: {
+      style: {
+        display: 'flex', flexDirection: 'column', width: 452,
+        padding: '24px 28px', borderRadius: 16,
+        border: '1px solid rgba(255,255,255,0.12)', background: 'rgba(255,255,255,0.05)',
+      },
+      children: [
+        { type: 'div', props: { style: { width: 46, height: 5, borderRadius: 3, backgroundColor: accent, marginBottom: 16 } } },
+        { type: 'div', props: { style: { fontSize: 32, fontWeight: 800, color: '#eef1f7' }, children: title } },
+        { type: 'div', props: { style: { marginTop: 8, fontSize: 21, fontWeight: 400, color: '#aab3c6' }, children: sub } },
+      ],
+    },
+  }
+}
+
 // ---------------- English card via satori ----------------
 async function renderEN(out) {
   const fonts = [
@@ -33,14 +52,32 @@ async function renderEN(out) {
     props: {
       style: {
         width: '100%', height: '100%', display: 'flex', flexDirection: 'column',
-        alignItems: 'center', justifyContent: 'center',
+        alignItems: 'center', justifyContent: 'center', padding: '0 70px',
         backgroundColor: '#05060a', backgroundImage: GLOWS, fontFamily: 'Inter',
       },
       children: [
-        { type: 'img', props: { src: logo, width: 184, height: 184, style: { marginBottom: 26 } } },
-        { type: 'div', props: { style: { fontSize: 78, fontWeight: 800, color: '#eef1f7', letterSpacing: -1 }, children: 'Nova Proxy' } },
-        { type: 'div', props: { style: { marginTop: 18, fontSize: 34, fontWeight: 400, color: '#aab3c6' }, children: 'Keep the internet open, fast, and reachable.' } },
-        { type: 'div', props: { style: { marginTop: 30, fontSize: 26, fontWeight: 400, color: '#38d6ee' }, children: 'novaproxy.online' } },
+        { type: 'img', props: { src: logo, width: 118, height: 118, style: { marginBottom: 22 } } },
+        {
+          type: 'div',
+          props: {
+            style: {
+              display: 'flex', fontSize: 52, fontWeight: 800, color: '#eef1f7',
+              letterSpacing: -1, lineHeight: 1.1, textAlign: 'center', maxWidth: 1000,
+            },
+            children: 'One platform, two ways to beat censorship',
+          },
+        },
+        {
+          type: 'div',
+          props: {
+            style: { display: 'flex', gap: 28, marginTop: 40 },
+            children: [
+              cardEN('Nova Proxy', 'Free, on your Cloudflare Worker', '#22d3ee'),
+              cardEN('Nova Server', 'Self-hosted on your VPS', '#a855f7'),
+            ],
+          },
+        },
+        { type: 'div', props: { style: { marginTop: 36, fontSize: 24, fontWeight: 400, color: '#38d6ee' }, children: 'novaproxy.online' } },
       ],
     },
   }
@@ -75,10 +112,26 @@ function shape(font, text, size, cx, baseline, rtl) {
   return d
 }
 
+// One product card for the Persian layout: rounded panel, accent bar, name, sub.
+function cardFA(cx, title, sub, accent) {
+  const cardW = 452
+  const cardH = 156
+  const rectY = 308
+  const x = cx - cardW / 2
+  const barW = 46
+  const rect = `<rect x="${x}" y="${rectY}" width="${cardW}" height="${cardH}" rx="16" fill="rgba(255,255,255,0.05)" stroke="rgba(255,255,255,0.12)" stroke-width="1"/>`
+  const bar = `<rect x="${cx - barW / 2}" y="${rectY + 26}" width="${barW}" height="5" rx="2.5" fill="${accent}"/>`
+  const name = shape(vFont, title, 32, cx, rectY + 94, true)
+  const desc = shape(vFontLite, sub, 22, cx, rectY + 138, true)
+  return `${rect}${bar}<path d="${name}" fill="#eef1f7"/><path d="${desc}" fill="#aab3c6"/>`
+}
+
 function renderFA(out) {
-  const wordmark = shape(vFont, 'نوا پراکسی', 76, W / 2, 388, true)
-  const tagline = shape(vFontLite, 'اینترنت را باز، سریع و در دسترس نگه دارید.', 34, W / 2, 452, true)
-  const url = shape(iFont, 'novaproxy.online', 26, W / 2, 520, false)
+  const slogan = shape(vFont, 'یک پلتفرم، دو راه برای عبور از سانسور', 46, W / 2, 262, true)
+  const url = shape(iFont, 'novaproxy.online', 24, W / 2, 528, false)
+  // RTL: the primary product (Nova Proxy) sits on the right.
+  const rightCard = cardFA(W / 2 + 240, 'نوا پراکسی', 'رایگان، روی ورکر کلودفلر خودت', '#22d3ee')
+  const leftCard = cardFA(W / 2 - 240, 'نوا سرور', 'خودمیزبان، روی سرور مجازی خودت', '#a855f7')
 
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
     <defs>
@@ -92,9 +145,10 @@ function renderFA(out) {
     <rect width="${W}" height="${H}" fill="#05060a"/>
     <rect width="${W}" height="${H}" fill="url(#gc)"/>
     <rect width="${W}" height="${H}" fill="url(#gv)"/>
-    <image x="${W / 2 - 92}" y="56" width="184" height="184" href="${logo}"/>
-    <path d="${wordmark}" fill="#eef1f7"/>
-    <path d="${tagline}" fill="#aab3c6"/>
+    <image x="${W / 2 - 59}" y="44" width="118" height="118" href="${logo}"/>
+    <path d="${slogan}" fill="#eef1f7"/>
+    ${rightCard}
+    ${leftCard}
     <path d="${url}" fill="#38d6ee"/>
   </svg>`
   writeFileSync(out, new Resvg(svg, { fitTo: { mode: 'width', value: W } }).render().asPng())

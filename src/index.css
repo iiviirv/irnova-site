@@ -2682,6 +2682,74 @@ h3 {
   color: var(--cyan);
 }
 
+/* Featured lead: the main developer's card, distinct from contributors. */
+.team-card-lead {
+  position: relative;
+  padding-top: 34px;
+  border: 1.5px solid transparent;
+  /* Opaque bg-alt blocker keeps the gradient in the border only; the surface
+     tint on top gives the panel a hair of elevation over the section. */
+  background:
+    linear-gradient(var(--surface-2), var(--surface-2)) padding-box,
+    linear-gradient(var(--bg-alt), var(--bg-alt)) padding-box,
+    var(--grad) border-box;
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--cyan) 14%, transparent),
+    0 18px 44px -22px color-mix(in srgb, var(--violet) 65%, transparent);
+}
+
+.team-card-lead:hover {
+  border-color: transparent;
+  background:
+    linear-gradient(color-mix(in srgb, var(--text) 10%, transparent), color-mix(in srgb, var(--text) 10%, transparent)) padding-box,
+    linear-gradient(var(--bg-alt), var(--bg-alt)) padding-box,
+    var(--grad) border-box;
+}
+
+.team-lead-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 4px 14px;
+  border-radius: 999px;
+  background: var(--grad);
+  color: #05060a;
+  font-size: 0.72rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--violet) 70%, transparent);
+}
+
+.team-card-lead .team-avatar {
+  width: 96px;
+  height: 96px;
+  border-color: transparent;
+  box-shadow:
+    0 0 0 3px color-mix(in srgb, var(--cyan) 55%, transparent),
+    0 0 26px -4px color-mix(in srgb, var(--violet) 70%, transparent);
+}
+
+.team-card-lead .team-name {
+  font-size: 1.32rem;
+  font-weight: 800;
+}
+
+.team-card-lead .team-role {
+  background: var(--grad);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .team-card-lead:hover {
+    transform: none;
+  }
+}
+
 @media (max-width: 560px) {
   .client-grid {
     grid-template-columns: 1fr;

@@ -844,7 +844,6 @@ export default function App() {
                 target="_blank"
                 rel="noreferrer noopener"
               >
-                {m.lead && <span className="team-lead-badge">{t.teamLead}</span>}
                 <img
                   className="team-avatar"
                   src={m.avatar}

@@ -491,6 +491,7 @@ export const ui = {
     },
     footer: { note: 'Open-source networking tools. Built for an open internet.' },
     viewOnGithub: 'View on GitHub',
+    teamLead: 'Lead',
     flagship: 'Flagship',
   },
   fa: {
@@ -977,6 +978,7 @@ export const ui = {
     },
     footer: { note: 'ابزارهای شبکه‌ی متن‌باز. ساخته‌شده برای اینترنتی آزاد.' },
     viewOnGithub: 'مشاهده در گیت‌هاب',
+    teamLead: 'سرپرست',
     flagship: 'پرچم‌دار',
   },
 }

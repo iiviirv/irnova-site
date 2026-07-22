@@ -838,12 +838,13 @@ export default function App() {
           <div className="team-grid">
             {team.map((m) => (
               <a
-                className="team-card"
+                className={`team-card${m.lead ? ' team-card-lead' : ''}`}
                 key={m.handle}
                 href={m.url}
                 target="_blank"
                 rel="noreferrer noopener"
               >
+                {m.lead && <span className="team-lead-badge">{t.teamLead}</span>}
                 <img
                   className="team-avatar"
                   src={m.avatar}

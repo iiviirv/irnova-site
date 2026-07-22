@@ -56,26 +56,23 @@ export default function Nav() {
       </a>
 
       <nav className={`nav-links${open ? ' open' : ''}`}>
-        <a href="#projects" onClick={close}>
-          {t.nav.projects}
+        <a href="#nova-proxy" onClick={close}>
+          {t.nav.proxy}
         </a>
         <a href="#nova-server" onClick={close}>
           {t.nav.server}
         </a>
-        <a href="#capabilities" onClick={close}>
-          {t.nav.capabilities}
+        <a href="#compare" onClick={close}>
+          {t.nav.compare}
         </a>
         <a href="#clients" onClick={close}>
           {t.nav.apps}
         </a>
-        <a href="#deploy" onClick={close}>
-          {t.nav.deploy}
+        <a href="#watch" onClick={close}>
+          {t.nav.guide}
         </a>
-        <a href="#/tools" onClick={close}>
-          {t.nav.tools}
-        </a>
-        <a href="#about" onClick={close}>
-          {t.nav.about}
+        <a href="#support" onClick={close}>
+          {t.nav.support}
         </a>
         <a
           className="nav-cta"

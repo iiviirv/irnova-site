@@ -898,7 +898,7 @@ export default function IPTools() {
             )}
             {(scanning || scanStats.tested > 0) && (
               <span className="tool-stats">
-                <strong>{scanStats.tested}</strong> {tt.autoTested} · <strong>{scanStats.found}</strong>{' '}
+                <strong>{scanStats.tested}</strong> {tt.autoTested}, <strong>{scanStats.found}</strong>{' '}
                 {tt.probeResponded}
               </span>
             )}
@@ -924,7 +924,7 @@ export default function IPTools() {
               <strong>{probeHostCount}</strong> {tt.probeHosts}
               {results.length > 0 && (
                 <>
-                  {' · '}
+                  {', '}
                   <strong>{reachableResults.length}</strong> {tt.probeResponded}
                 </>
               )}
@@ -1084,7 +1084,7 @@ export default function IPTools() {
                 {tt.clear}
               </button>
               <span className="tool-stats">
-                <strong>{fmtHostCount}</strong> {tt.ipCount} · <strong>{fmtOutLines}</strong> {tt.outLines}
+                <strong>{fmtHostCount}</strong> {tt.ipCount}, <strong>{fmtOutLines}</strong> {tt.outLines}
               </span>
             </div>
 
@@ -1132,7 +1132,7 @@ export default function IPTools() {
                   setImportLink(e.target.value)
                   if (importErr) setImportErr(false)
                 }}
-                placeholder="vless://…  ·  vmess://…  ·  trojan://…"
+                placeholder="vless://…    vmess://…    trojan://…"
                 spellCheck="false"
               />
               <button type="button" className="mini-btn" onClick={importConfig} disabled={!importLink.trim()}>
@@ -1325,7 +1325,7 @@ export default function IPTools() {
               <span>{chk.reachable ? tt.chkReachable : tt.chkUnreachable}</span>
               {chk.avgMs !== undefined && (
                 <span className="check-latency">
-                  {tt.chkLatency}: <strong>{chk.avgMs} ms</strong> · {chk.label}
+                  {tt.chkLatency}: <strong>{chk.avgMs} ms</strong>, {chk.label}
                 </span>
               )}
               {chk.mbps != null && (

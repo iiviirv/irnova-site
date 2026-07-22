@@ -85,7 +85,7 @@ function detectPlatform() {
 // Compact, locale-aware number: 12345 → "12.3k", 812 → "812" (or Persian digits).
 function fmtCount(n, lang) {
   const locale = lang === 'fa' ? 'fa-IR' : 'en-US'
-  if (n == null) return '—'
+  if (n == null) return '-'
   if (n >= 10000) {
     return (n / 1000).toLocaleString(locale, { maximumFractionDigits: 1 }) + 'k'
   }
@@ -157,7 +157,7 @@ function VpsCommand({ copy }) {
 // instead of a long wall of one-liners.
 function NovaServerSection({ ns }) {
   return (
-    <section id="nova-server" className="section ns-section">
+    <section id="nova-server" className="section section-alt ns-section">
       {/* Flagship intro: copy + one-line installer on the left, at-a-glance spec
           card on the right. */}
       <div className="ns-hero">
@@ -214,6 +214,15 @@ function NovaServerSection({ ns }) {
           </ul>
         </aside>
       </div>
+
+      {/* Domain-optional reassurance: the app talks straight to the VPS IP, a
+          domain is only ever a nice-to-have. Kept as a short on-brand note. */}
+      <p className="platform-note ns-nodomain-note">
+        <Icon name="globe" size={16} />
+        <span>
+          <strong>{ns.noDomain.title}.</strong> {ns.noDomain.text}
+        </span>
+      </p>
 
       {/* Grouped feature families: protocols and transports as chip clusters,
           the rest as short check-lists. */}
@@ -331,6 +340,216 @@ const cfTokenPerms = {
   ],
 }
 
+// The Cloudflare API token permission checklist, reused by the Nova Proxy
+// get-started band. Kept as its own component so both the old access card and
+// the new flagship section render the exact same list.
+function TokenCheck({ label, note }) {
+  return (
+    <div className="token-check np-token">
+      <div className="token-check-head">
+        <Icon name="key" size={18} />
+        <div>
+          <strong>{label}</strong>
+          <span>{note}</span>
+        </div>
+      </div>
+      <div className="token-groups">
+        {['account', 'zone'].map((scope) => (
+          <div className="token-group" key={scope}>
+            <span className="token-group-title">{scope === 'account' ? 'Account' : 'Zone'}</span>
+            <ul>
+              {cfTokenPerms[scope].map((p) => (
+                <li key={p.name}>
+                  <Icon name="check" size={14} />
+                  <span className="token-name">{p.name}</span>
+                  <span className={`token-level ${p.level}`}>{p.level === 'edit' ? 'Edit' : 'Read'}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+// Dedicated flagship showcase for Nova Proxy, the free, serverless side of Nova.
+// Deliberately mirrors NovaServerSection so the two platforms read as a matched
+// pair: same ns-hero + at-a-glance spec card, the feature grid (reusing the
+// site's cap-grid), and a get-started band (reusing the ns-installer band) that
+// folds in the three deploy steps and the Cloudflare token checklist.
+function NovaProxySection({ np, caps, lang, steps, worksNote, tokenLabels }) {
+  return (
+    <section id="nova-proxy" className="section ns-section np-section">
+      {/* Flagship intro: copy + trust on the left, at-a-glance spec card on the right. */}
+      <div className="ns-hero">
+        <div className="ns-hero-copy">
+          <div className="ns-eyebrow-row">
+            <span className="eyebrow">{np.eyebrow}</span>
+            <span className="ns-flag np-flag">
+              <Icon name="bolt" size={13} /> {np.flag}
+            </span>
+          </div>
+          <h2 className="ns-title">
+            {np.title}
+            <span className="grad"> {np.titleAccent}</span>
+          </h2>
+          <p className="ns-intro">{np.intro}</p>
+
+          <div className="np-trust">
+            {np.trust.map((item, i) => (
+              <span key={i}>
+                <Icon name="check" size={14} /> {item}
+              </span>
+            ))}
+          </div>
+
+          <div className="ns-cta-row">
+            <a className="btn btn-primary" href={INSTALLER_URL}>
+              <Icon name="bolt" size={18} /> {np.deployCta}
+            </a>
+            <a
+              className="btn btn-ghost"
+              href={NOVA_PROXY_REPO}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="github" size={18} /> {np.githubCta}
+            </a>
+          </div>
+        </div>
+
+        <aside className="ns-spec" aria-label={np.eyebrow}>
+          <div className="ns-spec-head">
+            <img className="ns-spec-mark" src={novaMark} width="34" height="34" alt="" aria-hidden="true" />
+            <div className="ns-spec-heading">
+              <strong>{np.eyebrow}</strong>
+              <span>{np.specSub}</span>
+            </div>
+          </div>
+          <ul className="ns-spec-list">
+            {np.specs.map((s) => (
+              <li key={s.k}>
+                <span className="ns-spec-k">{s.k}</span>
+                <span className="ns-spec-v">{s.v}</span>
+              </li>
+            ))}
+          </ul>
+        </aside>
+      </div>
+
+      {/* Feature grid: reuse the site's own capability cards. */}
+      <div className="section-head ns-features-head">
+        <span className="eyebrow">{np.featuresEyebrow}</span>
+        <h2>{np.featuresTitle}</h2>
+        <p>{np.featuresDesc}</p>
+      </div>
+      <div className="cap-grid">
+        {caps.map((c) => (
+          <div className="cap-card" key={c.icon}>
+            <span className="cap-icon">
+              <Icon name={c.icon} size={22} />
+            </span>
+            <h3>{c.title[lang]}</h3>
+            <p>{c.text[lang]}</p>
+          </div>
+        ))}
+      </div>
+      <p className="platform-note">
+        <Icon name="shield" size={16} /> {worksNote}
+      </p>
+
+      {/* Get started band: three deploy steps + the token checklist, in the same
+          gradient band the Nova Server section uses for its Telegram installer. */}
+      <div className="ns-installer np-getstarted">
+        <div className="ns-installer-copy">
+          <span className="eyebrow ns-installer-eyebrow">
+            <Icon name="bolt" size={14} /> {np.getStarted.eyebrow}
+          </span>
+          <h3>{np.getStarted.title}</h3>
+          <p className="ns-installer-desc">{np.getStarted.desc}</p>
+
+          <ol className="ns-methods np-steps">
+            {steps.map((m, i) => (
+              <li key={m.title}>
+                <span className="ns-method-num">{i + 1}</span>
+                <div className="ns-method-text">
+                  <strong>{m.title}</strong>
+                  <span>{m.text}</span>
+                </div>
+              </li>
+            ))}
+          </ol>
+
+          <div className="ns-cta-row ns-installer-cta">
+            <a className="btn btn-primary" href={INSTALLER_URL}>
+              <Icon name="bolt" size={18} /> {np.getStarted.deployCta}
+            </a>
+            <a
+              className="btn btn-ghost"
+              href={NOVA_PROXY_REPO}
+              target="_blank"
+              rel="noreferrer noopener"
+            >
+              <Icon name="github" size={18} /> {np.getStarted.repoCta}
+            </a>
+          </div>
+        </div>
+
+        <TokenCheck label={tokenLabels.tokenLabel} note={tokenLabels.tokenNote} />
+      </div>
+    </section>
+  )
+}
+
+// Friendly side-by-side of the two platforms. Two aligned plan-style cards, one
+// per platform, with the same ordered rows so a reader can scan straight across.
+// The proxy CTA deploys, the server CTA jumps to its showcase section.
+function ComparisonSection({ cmp }) {
+  const cards = [
+    { key: 'proxy', data: cmp.proxy, href: INSTALLER_URL, icon: 'bolt', primary: true },
+    { key: 'server', data: cmp.server, href: '#nova-server', icon: 'route', primary: false },
+  ]
+  return (
+    <section id="compare" className="section">
+      <div className="section-head">
+        <span className="eyebrow">{cmp.eyebrow}</span>
+        <h2>{cmp.title}</h2>
+        <p>{cmp.desc}</p>
+      </div>
+      <div className="cmp-grid">
+        {cards.map((card) => (
+          <article className={`cmp-card cmp-${card.key}`} key={card.key}>
+            <div className="cmp-card-head">
+              <span className="cap-icon">
+                <Icon name={card.icon} size={22} />
+              </span>
+              <div className="cmp-card-heading">
+                <div className="cmp-name-row">
+                  <h3>{card.data.name}</h3>
+                  <span className={`cmp-badge cmp-badge-${card.key}`}>{card.data.badge}</span>
+                </div>
+                <p>{card.data.tagline}</p>
+              </div>
+            </div>
+            <ul className="cmp-rows">
+              {cmp.rows.map((row) => (
+                <li key={row.k}>
+                  <span className="cmp-row-k">{row.k}</span>
+                  <span className="cmp-row-v">{row[card.key]}</span>
+                </li>
+              ))}
+            </ul>
+            <a className={`btn ${card.primary ? 'btn-primary' : 'btn-ghost'} cmp-cta`} href={card.href}>
+              <Icon name={card.icon} size={18} /> {card.data.cta}
+            </a>
+          </article>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 export default function App() {
   const { t, lang } = useLang()
   const route = useHashRoute()
@@ -346,6 +565,14 @@ export default function App() {
     if (match.length === 0) return clients
     return [...match, ...clients.filter((c) => c.key !== detectedPlatform)]
   }, [detectedPlatform])
+
+  // The two flagship platforms (Nova Proxy, Nova Server) now own their own
+  // showcase sections, so the standalone project grid only carries the remaining
+  // supporting tools that power them.
+  const supportingProjects = useMemo(
+    () => projects.filter((p) => ['Nova-Proxy-App', 'NovaRadar', 'Tools'].includes(p.name)),
+    [],
+  )
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
@@ -374,7 +601,7 @@ export default function App() {
     { key: 'installs', value: fmtCount(live?.installs.total, lang), label: t.stats.installs, live: true, sub: todayLine(live?.installs.today) },
     { key: 'stars', value: `${(totalStars / 1000).toFixed(1)}k+`, label: t.stats.stars },
     { key: 'projects', value: projects.length, label: t.stats.projects },
-    { key: 'builtWith', value: 'Go · React', label: t.stats.builtWith },
+    { key: 'builtWith', value: 'Go, React', label: t.stats.builtWith },
     { key: 'openSource', value: '100%', label: t.stats.openSource },
   ]
 
@@ -394,10 +621,10 @@ export default function App() {
             <p className="hero-sub">{t.hero.sub}</p>
             <div className="hero-actions">
               <a className="btn btn-primary" href={INSTALLER_URL}>
-                <Icon name="bolt" size={18} /> {t.hero.deployCta}
+                <Icon name="bolt" size={18} /> {t.hero.proxyCta}
               </a>
-              <a className="btn btn-ghost" href="#projects">
-                <Icon name="app" size={18} /> {t.hero.explore}
+              <a className="btn btn-ghost" href="#nova-server">
+                <Icon name="route" size={18} /> {t.hero.serverCta}
               </a>
             </div>
             {t.hero.trust && (
@@ -421,200 +648,20 @@ export default function App() {
           </div>
         </section>
 
-        <section id="projects" className="section">
-          <div className="section-head">
-            <span className="eyebrow">{t.projectsSection.eyebrow}</span>
-            <h2>{t.projectsSection.title}</h2>
-            <p>{t.projectsSection.desc}</p>
-          </div>
-          <div className="project-grid">
-            {projects.map((p) => (
-              <ProjectCard key={p.name} project={p} />
-            ))}
-          </div>
-        </section>
+        <NovaProxySection
+          np={t.novaProxy}
+          caps={capabilities}
+          lang={lang}
+          steps={t.deploy.steps}
+          worksNote={t.capsSection.note}
+          tokenLabels={t.access.panel}
+        />
 
         <NovaServerSection ns={t.novaServer} />
 
-        <section id="capabilities" className="section section-alt">
-          <div className="section-head">
-            <span className="eyebrow">{t.capsSection.eyebrow}</span>
-            <h2>{t.capsSection.title}</h2>
-            <p>{t.capsSection.desc}</p>
-          </div>
-          <div className="cap-grid">
-            {capabilities.map((c) => (
-              <div className="cap-card" key={c.icon}>
-                <span className="cap-icon">
-                  <Icon name={c.icon} size={22} />
-                </span>
-                <h3>{c.title[lang]}</h3>
-                <p>{c.text[lang]}</p>
-              </div>
-            ))}
-          </div>
-          <p className="platform-note">
-            <Icon name="shield" size={16} /> {t.capsSection.note}
-          </p>
-        </section>
+        <ComparisonSection cmp={t.compare} />
 
-        <section id="deploy" className="section section-alt">
-          <div className="section-head">
-            <span className="eyebrow">{t.access.eyebrow}</span>
-            <h2>{t.access.title}</h2>
-            <p>{t.access.desc}</p>
-          </div>
-
-          {/* Recommended path: one-click Worker deploy, with the token checklist. */}
-          <article className="access-card is-featured">
-            <div className="access-head">
-              <span className="access-icon">
-                <Icon name="bolt" size={22} />
-              </span>
-              <div className="access-headings">
-                <span className="access-rec">{t.access.recommended}</span>
-                <h3>{t.access.panel.title}</h3>
-                <p className="access-tagline">{t.access.panel.tagline}</p>
-              </div>
-            </div>
-            <p className="access-desc">{t.access.panel.desc}</p>
-
-            <div className="access-need">
-              <span className="access-need-label">{t.access.panel.needLabel}</span>
-              <ul>
-                {t.access.panel.need.map((item, i) => (
-                  <li key={i}>
-                    <Icon name="check" size={15} /> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="token-check">
-              <div className="token-check-head">
-                <Icon name="key" size={18} />
-                <div>
-                  <strong>{t.access.panel.tokenLabel}</strong>
-                  <span>{t.access.panel.tokenNote}</span>
-                </div>
-              </div>
-              <div className="token-groups">
-                {['account', 'zone'].map((scope) => (
-                  <div className="token-group" key={scope}>
-                    <span className="token-group-title">
-                      {scope === 'account' ? 'Account' : 'Zone'}
-                    </span>
-                    <ul>
-                      {cfTokenPerms[scope].map((p) => (
-                        <li key={p.name}>
-                          <Icon name="check" size={14} />
-                          <span className="token-name">{p.name}</span>
-                          <span className={`token-level ${p.level}`}>
-                            {p.level === 'edit' ? 'Edit' : 'Read'}
-                          </span>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div className="access-actions">
-              <a className="btn btn-primary" href={INSTALLER_URL}>
-                <Icon name="bolt" size={18} /> {t.access.panel.deployCta}
-              </a>
-              <a
-                className="btn btn-ghost"
-                href={NOVA_PROXY_REPO}
-                target="_blank"
-                rel="noreferrer noopener"
-              >
-                <Icon name="github" size={18} /> {t.access.panel.repoCta}
-              </a>
-            </div>
-          </article>
-
-          {/* Secondary paths: bring your own VPS, or reuse an existing link. */}
-          <div className="access-grid">
-            <article className="access-card">
-              <div className="access-head">
-                <span className="access-icon">
-                  <Icon name="route" size={22} />
-                </span>
-                <div className="access-headings">
-                  <h3>{t.access.vps.title}</h3>
-                  <p className="access-tagline">{t.access.vps.tagline}</p>
-                </div>
-              </div>
-              <p className="access-desc">{t.access.vps.desc}</p>
-
-              <div className="access-callout">
-                <Icon name="phone" size={18} />
-                <div>
-                  <strong>{t.access.vps.domainTitle}</strong>
-                  <span>{t.access.vps.domainText}</span>
-                </div>
-              </div>
-
-              <div className="access-need">
-                <span className="access-need-label">{t.access.vps.needLabel}</span>
-                <ul>
-                  {t.access.vps.need.map((item, i) => (
-                    <li key={i}>
-                      <Icon name="check" size={15} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <VpsCommand copy={t.access.vps} />
-
-              <div className="access-actions">
-                <a
-                  className="btn btn-ghost"
-                  href={VPS_GUIDE_URL}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  <Icon name="book" size={18} /> {t.access.vps.cta}
-                </a>
-              </div>
-            </article>
-
-            <article className="access-card">
-              <div className="access-head">
-                <span className="access-icon">
-                  <Icon name="link" size={22} />
-                </span>
-                <div className="access-headings">
-                  <h3>{t.access.sub.title}</h3>
-                  <p className="access-tagline">{t.access.sub.tagline}</p>
-                </div>
-              </div>
-              <p className="access-desc">{t.access.sub.desc}</p>
-
-              <div className="access-need">
-                <span className="access-need-label">{t.access.sub.needLabel}</span>
-                <ul>
-                  {t.access.sub.need.map((item, i) => (
-                    <li key={i}>
-                      <Icon name="check" size={15} /> {item}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="access-actions">
-                <a className="btn btn-primary" href="#clients">
-                  <Icon name="download" size={18} /> {t.access.sub.cta}
-                </a>
-              </div>
-            </article>
-          </div>
-        </section>
-
-        <section id="clients" className="section">
+        <section id="clients" className="section section-alt">
           <div className="section-head">
             <span className="eyebrow">{t.clientsSection.eyebrow}</span>
             <h2>{t.clientsSection.title}</h2>
@@ -680,6 +727,77 @@ export default function App() {
               {t.clientsSection.allReleases}
             </a>
           </p>
+
+          <div className="section-head apps-tools-head">
+            <span className="eyebrow">{t.clientsSection.toolsEyebrow}</span>
+            <h2>{t.clientsSection.toolsTitle}</h2>
+            <p>{t.clientsSection.toolsDesc}</p>
+          </div>
+          <div className="apps-tools-grid">
+            {supportingProjects.map((p) => (
+              <ProjectCard key={p.name} project={p} />
+            ))}
+          </div>
+        </section>
+
+        <section id="watch" className="section">
+          <div className="section-head">
+            <span className="eyebrow">
+              <Icon name="youtube" size={14} /> {t.youtube.eyebrow}
+            </span>
+            <h2>{t.youtube.title}</h2>
+            <p>{t.youtube.desc}</p>
+          </div>
+          <a
+            className="yt-card"
+            href={YOUTUBE}
+            target="_blank"
+            rel="noreferrer noopener"
+            aria-label={t.youtube.label}
+          >
+            <span className="yt-play">
+              <Icon name="play" size={30} />
+            </span>
+            <span className="yt-label">{t.youtube.label}</span>
+            <span className="yt-cta">
+              {t.youtube.cta} <Icon name="arrow" size={16} className="icon-arrow" />
+            </span>
+          </a>
+        </section>
+
+        <section id="support" className="section tg-section">
+          <div className="social-banners">
+            <a className="tg-banner" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
+              <span className="tg-icon">
+                <Icon name="telegram" size={26} />
+              </span>
+              <span className="tg-text">
+                <strong>{t.telegram.title}</strong>
+                <span>{t.telegram.text}</span>
+              </span>
+              <span className="btn btn-primary tg-cta">{t.telegram.cta}</span>
+            </a>
+            <a className="tg-banner x-banner" href={X} target="_blank" rel="noreferrer noopener">
+              <span className="tg-icon x-icon">
+                <Icon name="x" size={22} />
+              </span>
+              <span className="tg-text">
+                <strong>{t.x.title}</strong>
+                <span>{t.x.text}</span>
+              </span>
+              <span className="btn x-cta">{t.x.cta}</span>
+            </a>
+            <a className="tg-banner ig-banner" href={INSTAGRAM} target="_blank" rel="noreferrer noopener">
+              <span className="tg-icon ig-icon">
+                <Icon name="instagram" size={26} />
+              </span>
+              <span className="tg-text">
+                <strong>{t.instagram.title}</strong>
+                <span>{t.instagram.text}</span>
+              </span>
+              <span className="btn ig-cta">{t.instagram.cta}</span>
+            </a>
+          </div>
         </section>
 
         <section id="about" className="section">
@@ -744,77 +862,18 @@ export default function App() {
             ))}
           </div>
         </section>
-
-        <section id="watch" className="section">
-          <div className="section-head">
-            <span className="eyebrow">
-              <Icon name="youtube" size={14} /> {t.youtube.eyebrow}
-            </span>
-            <h2>{t.youtube.title}</h2>
-            <p>{t.youtube.desc}</p>
-          </div>
-          <a
-            className="yt-card"
-            href={YOUTUBE}
-            target="_blank"
-            rel="noreferrer noopener"
-            aria-label={t.youtube.label}
-          >
-            <span className="yt-play">
-              <Icon name="play" size={30} />
-            </span>
-            <span className="yt-label">{t.youtube.label}</span>
-            <span className="yt-cta">
-              {t.youtube.cta} <Icon name="arrow" size={16} className="icon-arrow" />
-            </span>
-          </a>
-        </section>
-
-        <section className="section tg-section">
-          <div className="social-banners">
-            <a className="tg-banner" href={TELEGRAM} target="_blank" rel="noreferrer noopener">
-              <span className="tg-icon">
-                <Icon name="telegram" size={26} />
-              </span>
-              <span className="tg-text">
-                <strong>{t.telegram.title}</strong>
-                <span>{t.telegram.text}</span>
-              </span>
-              <span className="btn btn-primary tg-cta">{t.telegram.cta}</span>
-            </a>
-            <a className="tg-banner x-banner" href={X} target="_blank" rel="noreferrer noopener">
-              <span className="tg-icon x-icon">
-                <Icon name="x" size={22} />
-              </span>
-              <span className="tg-text">
-                <strong>{t.x.title}</strong>
-                <span>{t.x.text}</span>
-              </span>
-              <span className="btn x-cta">{t.x.cta}</span>
-            </a>
-            <a className="tg-banner ig-banner" href={INSTAGRAM} target="_blank" rel="noreferrer noopener">
-              <span className="tg-icon ig-icon">
-                <Icon name="instagram" size={26} />
-              </span>
-              <span className="tg-text">
-                <strong>{t.instagram.title}</strong>
-                <span>{t.instagram.text}</span>
-              </span>
-              <span className="btn ig-cta">{t.instagram.cta}</span>
-            </a>
-          </div>
-        </section>
       </main>
 
       <footer className="footer">
         <Logo brand={t.brand} />
         <p className="footer-note">{t.footer.note}</p>
         <div className="footer-links">
-          <a href="#projects">{t.nav.projects}</a>
+          <a href="#nova-proxy">{t.nav.proxy}</a>
           <a href="#nova-server">{t.nav.server}</a>
-          <a href="#capabilities">{t.nav.capabilities}</a>
+          <a href="#compare">{t.nav.compare}</a>
           <a href="#clients">{t.nav.apps}</a>
-          <a href="#deploy">{t.nav.deploy}</a>
+          <a href="#watch">{t.nav.guide}</a>
+          <a href="#support">{t.nav.support}</a>
           <a href="#team">{t.teamSection.title}</a>
           <a href="#/tools">{t.nav.tools}</a>
           <a href={GITHUB} target="_blank" rel="noreferrer noopener">

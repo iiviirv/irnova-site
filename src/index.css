@@ -118,8 +118,8 @@ h3 {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
+  width: 40px;
+  height: 40px;
   border-radius: 10px;
   color: var(--muted);
   border: 1px solid var(--border);
@@ -236,8 +236,8 @@ h3 {
   display: none;
   align-items: center;
   justify-content: center;
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 10px;
   border: 1px solid var(--border);
   background: var(--surface);
@@ -802,7 +802,8 @@ h3 {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  padding: 2px 0;
+  padding: 9px 0;
+  min-height: 44px;
   cursor: pointer;
   list-style: none;
   font-size: 0.85rem;
@@ -943,9 +944,21 @@ h3 {
 
 .footer-links {
   display: flex;
-  gap: 24px;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 14px 24px;
   color: var(--muted);
   font-size: 0.92rem;
+}
+
+.footer-links a {
+  /* Give every link a comfortable tap height, and some horizontal padding so a
+     single glyph like "X" is still easy to hit on a touch screen. */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 36px;
+  padding: 4px 8px;
 }
 
 .footer-links a:hover {
@@ -1010,6 +1023,14 @@ h3 {
 .theme-toggle:hover {
   color: var(--text);
   background: var(--surface-2);
+}
+
+/* Comfortable touch targets for the header controls on touch devices, without
+   changing the desktop nav height. */
+@media (pointer: coarse) {
+  .lang-switch { height: 44px; }
+  .lang-switch button { min-height: 38px; }
+  .theme-toggle { width: 44px; height: 44px; }
 }
 
 .guide-controls {
@@ -2458,6 +2479,11 @@ h3 {
   margin-top: 2px;
 }
 
+.platform-note strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
 /* ---------- Deploy / Get started ---------- */
 .deploy-cta-row {
   display: flex;
@@ -3467,5 +3493,230 @@ h3 {
 @media (prefers-reduced-motion: reduce) {
   .ns-group:hover {
     transform: none;
+  }
+}
+
+/* ============================================================
+   Nova Proxy flagship section. Reuses every ns-* style so it
+   reads as a matched sibling to Nova Server; only the accent
+   of the flag pill and a couple of layout tweaks differ.
+   ============================================================ */
+
+/* The Nova Proxy flag leans on the free/serverless cyan accent, where the
+   Server flag uses the flagship indigo. Same shape, different hue. */
+.np-flag {
+  color: #0e7490;
+  background: rgba(34, 211, 238, 0.14);
+  border-color: rgba(34, 211, 238, 0.4);
+}
+:root[data-theme='dark'] .np-flag {
+  color: #a5f3fc;
+}
+.np-flag svg {
+  color: #22d3ee;
+}
+
+/* Trust triplet inside the Nova Proxy intro. The hero version is centered;
+   this one sits left (start) under the copy column. */
+.np-trust {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 18px;
+  margin-top: 2px;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.np-trust span {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  white-space: nowrap;
+}
+.np-trust span svg {
+  color: var(--cyan);
+  opacity: 0.9;
+}
+
+/* The get-started band reuses .ns-installer (the same gradient band the Server
+   section uses for its Telegram installer). Here it holds the three deploy
+   steps beside the Cloudflare token checklist, so align to the top instead of
+   centering, and stack the token groups into one readable column. */
+.np-getstarted {
+  align-items: start;
+}
+.np-getstarted .token-check {
+  margin: 0;
+}
+.np-getstarted .token-groups {
+  grid-template-columns: 1fr;
+}
+
+/* ============================================================
+   Platform comparison. Two aligned plan-style cards, one per
+   platform, with the same ordered rows so the eye scans across.
+   ============================================================ */
+.cmp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.cmp-card {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(22px, 3vw, 30px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+.cmp-proxy {
+  border-color: color-mix(in srgb, var(--cyan) 34%, var(--border));
+  background: linear-gradient(180deg, rgba(34, 211, 238, 0.08), var(--surface));
+}
+
+.cmp-server {
+  border-color: color-mix(in srgb, var(--violet) 30%, var(--border));
+  background: linear-gradient(180deg, rgba(168, 85, 247, 0.08), var(--surface));
+}
+
+.cmp-card-head {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding-bottom: 18px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--border);
+}
+
+.cmp-card-head .cap-icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  margin-bottom: 0;
+}
+
+.cmp-card-heading {
+  min-width: 0;
+}
+
+.cmp-name-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.cmp-name-row h3 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.cmp-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 999px;
+}
+
+[dir='rtl'] .cmp-badge {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.cmp-badge-proxy {
+  color: #0e7490;
+  background: rgba(34, 211, 238, 0.16);
+  border: 1px solid rgba(34, 211, 238, 0.4);
+}
+:root[data-theme='dark'] .cmp-badge-proxy {
+  color: #a5f3fc;
+}
+
+.cmp-badge-server {
+  color: #7c3aed;
+  background: rgba(168, 85, 247, 0.16);
+  border: 1px solid rgba(168, 85, 247, 0.4);
+}
+:root[data-theme='dark'] .cmp-badge-server {
+  color: #d8b4fe;
+}
+
+.cmp-card-heading p {
+  margin: 6px 0 0;
+  color: var(--muted);
+  font-size: 0.92rem;
+}
+
+.cmp-rows {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  flex: 1 1 auto;
+}
+
+.cmp-rows li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.cmp-rows li:last-child {
+  border-bottom: 0;
+}
+
+.cmp-row-k {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+[dir='rtl'] .cmp-row-k {
+  letter-spacing: normal;
+  text-transform: none;
+}
+
+.cmp-row-v {
+  font-size: 0.98rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.cmp-cta {
+  width: 100%;
+  justify-content: center;
+}
+
+@media (max-width: 720px) {
+  .cmp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ============================================================
+   Apps: the supporting open-source tools grid (three cards).
+   ============================================================ */
+.apps-tools-head {
+  margin-top: clamp(48px, 7vw, 76px);
+}
+
+.apps-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 860px) {
+  .apps-tools-grid {
+    grid-template-columns: 1fr;
   }
 }

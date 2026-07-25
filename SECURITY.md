@@ -11,9 +11,11 @@ built from this source, and how to report a problem.
   by Cloudflare with `npm run build` and published. The Pages project is named
   `novaproxy` in [`wrangler.toml`](wrangler.toml), which also lists the production
   domains that project serves.
-- Every push also runs the [`Build`](.github/workflows/build.yml) CI, which runs
-  the same `npm ci && npm run build` and records the output hash, proving this
-  source builds cleanly and reproducibly.
+- A public, credential-free CI in
+  [`IRNova/reproducible-builds`](https://github.com/IRNova/reproducible-builds)
+  checks out this source, runs the same `npm ci && npm run build`, and publishes
+  the output hash on every push and weekly, proving this source builds cleanly
+  and reproducibly.
 - To confirm the live site matches this source, check out the deployed commit and
   build it yourself:
 

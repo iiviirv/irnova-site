@@ -1,0 +1,28 @@
+# Reproducible-build CI for the installer site (novaproxy.online, including
+# /install). This job builds the site from source on every push and pull
+# request, proving that this repository's source produces the deployed site.
+# Cloudflare Pages deploys the SAME `npm run build` output from the connected
+# Git repo (branch main), so a visitor can check out this commit, run the same
+# build, and compare it to what novaproxy.online serves. No credentials are used.
+name: Build
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run build
+      - name: Record the build output hash
+        run: |
+          TREE=$(find dist -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum | awk '{print $1}')
+          echo "dist tree SHA-256: \`$TREE\`" | tee -a "$GITHUB_STEP_SUMMARY"

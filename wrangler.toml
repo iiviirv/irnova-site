@@ -5,6 +5,12 @@
 name = "novaproxy"
 pages_build_output_dir = "./dist"
 
+# Custom domains served by this Pages project (production). The domain-to-project
+# binding is verifiable in the Cloudflare dashboard for the "novaproxy" project
+# named above; declared here so the deployed hostnames are visible in source:
+#   - novaproxy.online            (site + the /install wizard)
+#   - www.novaproxy.online
+
 # Visit & install counters used by functions/api/stats.js. Same DB for
 # production and preview — preview traffic is negligible and it keeps setup
 # simple. Created on the account that owns this Pages project (nova-website).

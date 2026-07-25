@@ -205,7 +205,7 @@ export const ui = {
         {
           k: 'Protocols',
           proxy: 'VLESS, Trojan, Shadowsocks',
-          server: 'Everything, plus Reality, Hysteria2, WireGuard',
+          server: 'Everything, plus Reality, Hysteria2, TUIC, NaiveProxy, WireGuard',
         },
         { k: 'Scale', proxy: 'Personal', server: 'Multi-node fleet and resellers' },
         { k: 'Setup', proxy: 'One click in the browser', server: 'One command on your server' },
@@ -692,7 +692,7 @@ export const ui = {
         {
           k: 'پروتکل‌ها',
           proxy: 'VLESS، Trojan، Shadowsocks',
-          server: 'همه‌چیز، به‌همراه Reality، Hysteria2، WireGuard',
+          server: 'همه‌چیز، به‌همراه Reality، Hysteria2، TUIC، NaiveProxy، WireGuard',
         },
         { k: 'مقیاس', proxy: 'شخصی', server: 'ناوگان چندنودی و نمایندگی' },
         { k: 'راه‌اندازی', proxy: 'یک کلیک در مرورگر', server: 'یک دستور روی سرورت' },

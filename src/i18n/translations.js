@@ -331,6 +331,7 @@ export const ui = {
           desc: 'A dashboard people actually enjoy.',
           items: [
             'Trilingual: English, Persian (RTL), Russian',
+            'Traffic charts, overall and per inbound',
             'Global search',
             'Per-section guides and a full manual',
             'Light and dark',
@@ -822,6 +823,7 @@ export const ui = {
           desc: 'داشبوردی که واقعاً از کارکردن با آن لذت می‌بری.',
           items: [
             'سه‌زبانه: انگلیسی، فارسی (راست‌به‌چپ)، روسی',
+            'نمودار ترافیک، کلی و به‌ازای هر ورودی',
             'جست‌وجوی سراسری',
             'راهنمای هر بخش و یک راهنمای کامل',
             'روشن و تاریک',

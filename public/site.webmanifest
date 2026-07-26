@@ -1,7 +1,7 @@
 {
   "name": "Nova Proxy",
   "short_name": "Nova Proxy",
-  "description": "Open-source proxy & networking tools to keep the internet open, fast, and reachable.",
+  "description": "Proxy & networking tools to keep the internet open, fast, and reachable.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#05060a",

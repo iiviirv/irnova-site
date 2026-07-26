@@ -1,4 +1,4 @@
-// Project data for IRNova's open-source tools.
+// Project data for IRNova's projects.
 // Sourced from https://github.com/IRNova
 // Translatable fields carry both English (en) and Farsi (fa) values.
 export const projects = [

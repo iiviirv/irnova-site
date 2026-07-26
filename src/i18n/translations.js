@@ -140,17 +140,17 @@ export const ui = {
       chkNote: 'A real download is pulled from this site (Cloudflare’s edge) to measure your bandwidth. It shows the speed you get to Cloudflare; it can’t measure one specific IP.',
     },
     hero: {
-      pill: 'Two open-source platforms for an open internet',
+      pill: 'Two platforms for an open internet',
       titleLine1: 'One platform,',
       titleAccent: 'two ways to beat censorship.',
-      sub: 'Nova gives you two open-source ways to get online: Nova Proxy, free on your own Cloudflare Worker, and Nova Server, a full self-hosted panel on your own VPS. Same apps, same clean-IP tech, your choice of power.',
+      sub: 'Nova gives you two ways to get online: Nova Proxy, free and open source on your own Cloudflare Worker, and Nova Server, a full self-hosted panel on your own VPS. Same apps, same clean-IP tech, your choice of power.',
       proxyCta: 'Deploy Nova Proxy',
       serverCta: 'Explore Nova Server',
       explore: 'Explore Projects',
       guide: 'Deploy & Setup guide',
       deployCta: 'Deploy your own',
       follow: 'View on GitHub',
-      trust: ['Open source', 'Free to start', 'Censorship-resistant'],
+      trust: ['Self-hosted', 'Free to start', 'Censorship-resistant'],
     },
     novaProxy: {
       eyebrow: 'Nova Proxy',
@@ -186,7 +186,7 @@ export const ui = {
     compare: {
       eyebrow: 'Which one is right for you',
       title: 'Two ways to run Nova',
-      desc: 'Both are open source, censorship-resistant, and work with the same Nova apps. Pick the free serverless proxy, or the full self-hosted server. You can always start with one and move to the other.',
+      desc: 'Both are free, censorship-resistant, and work with the same Nova apps. Pick the free serverless proxy, or the full self-hosted server. You can always start with one and move to the other.',
       proxy: {
         name: 'Nova Proxy',
         tagline: 'Free and instant, no server',
@@ -214,9 +214,9 @@ export const ui = {
     },
     stats: {
       stars: 'GitHub Stars',
-      projects: 'Open Projects',
+      projects: 'Projects',
       builtWith: 'Built With',
-      openSource: 'Open Source',
+      openSource: 'Self-hosted',
       visits: 'Visits',
       installs: 'Installs',
       today: 'today',
@@ -224,7 +224,7 @@ export const ui = {
     projectsSection: {
       eyebrow: 'The toolkit',
       title: 'Projects',
-      desc: 'Five open-source projects that work together, from a full control panel and a cross-platform client app to a low-level proxy engine and an IP scanner that proves what actually works.',
+      desc: 'Five projects that work together, from a full control panel and a cross-platform client app to a low-level proxy engine and an IP scanner that proves what actually works.',
     },
     novaServer: {
       eyebrow: 'Nova Server',
@@ -374,7 +374,7 @@ export const ui = {
       allReleases: 'All releases and changelog',
       note: 'After deploying your panel, import your subscription link into the app and you are online.',
       toolsEyebrow: 'The rest of the toolkit',
-      toolsTitle: 'More open-source tools',
+      toolsTitle: 'More tools on GitHub',
       toolsDesc: 'The other Nova projects that power the two platforms: a low-level proxy engine, a clean-IP scanner, and shared utilities.',
     },
     capsSection: {
@@ -386,14 +386,14 @@ export const ui = {
     about: {
       eyebrow: 'About',
       title: 'Built in the open',
-      p1: 'Nova Proxy is an open-source project focused on connectivity and circumvention tooling, built by IRNova. Every tool ships openly on GitHub, auditable, free to run, and shaped by a community that depends on an open internet.',
+      p1: 'Nova Proxy is an open-source project focused on connectivity and circumvention tooling, built by IRNova. Its Worker and most of our tools ship openly on GitHub, free to run, and shaped by a community that depends on an open internet.',
       p2: 'Written primarily in Go and React, the tools favor real-world reliability: two-phase endpoint verification, intelligent routing, and a steady stream of techniques to stay ahead of filtering.',
       cta: 'Visit the GitHub profile',
       list: [
         'Proxy & routing infrastructure',
         'Network scanning & verification',
         'Anti-censorship techniques',
-        'Fully open source',
+        'Free to run, no lock-in',
       ],
     },
     social: { follow: 'Follow us', bot: 'Support bot' },
@@ -494,7 +494,7 @@ export const ui = {
       title: 'Contributors',
       desc: 'Nova Proxy is built and maintained in the open. These are the people behind it. Contributions and pull requests are always welcome.',
     },
-    footer: { note: 'Open-source networking tools. Built for an open internet.' },
+    footer: { note: 'Networking tools for an open internet.' },
     viewOnGithub: 'View on GitHub',
     teamLead: 'Lead',
     flagship: 'Flagship',
@@ -632,17 +632,17 @@ export const ui = {
       chkNote: 'یک دانلود واقعی از همین سایت (لبه‌ی کلودفلر) برای سنجش پهنای باند شما انجام می‌شود. سرعتی که به کلودفلر می‌رسید را نشان می‌دهد؛ آی‌پی خاصی را اندازه نمی‌گیرد.',
     },
     hero: {
-      pill: 'دو پلتفرم متن‌باز برای اینترنتی آزاد',
+      pill: 'دو پلتفرم برای اینترنتی آزاد',
       titleLine1: 'یک پلتفرم،',
       titleAccent: 'دو راه برای عبور از سانسور.',
-      sub: 'نوا دو راه متن‌باز برای آنلاین‌شدن به تو می‌دهد: نوا پراکسی، رایگان روی ورکر کلودفلر خودت، و نوا سرور، یک پنل کامل خودمیزبان روی سرور مجازی خودت. همان اپ‌ها، همان فناوری آی‌پی تمیز، انتخاب قدرت با خودت.',
+      sub: 'نوا دو راه برای آنلاین‌شدن به تو می‌دهد: نوا پراکسی، رایگان و متن‌باز روی ورکر کلودفلر خودت، و نوا سرور، یک پنل کامل خودمیزبان روی سرور مجازی خودت. همان اپ‌ها، همان فناوری آی‌پی تمیز، انتخاب قدرت با خودت.',
       proxyCta: 'استقرار نوا پراکسی',
       serverCta: 'کاوش نوا سرور',
       explore: 'مشاهده پروژه‌ها',
       guide: 'راهنمای استقرار و راه‌اندازی',
       deployCta: 'راه‌اندازی کن',
       follow: 'مشاهده در گیت‌هاب',
-      trust: ['متن‌باز', 'شروع رایگان', 'مقاوم در برابر سانسور'],
+      trust: ['خودمیزبان', 'شروع رایگان', 'مقاوم در برابر سانسور'],
     },
     novaProxy: {
       eyebrow: 'نوا پراکسی',
@@ -678,7 +678,7 @@ export const ui = {
     compare: {
       eyebrow: 'کدام برای تو مناسب است',
       title: 'دو راه برای اجرای نوا',
-      desc: 'هر دو متن‌باز و مقاوم در برابر سانسور هستند و با همان اپ‌های نوا کار می‌کنند. پراکسی رایگان و بدون‌سرور را انتخاب کن، یا سرور کامل خودمیزبان را. همیشه می‌توانی با یکی شروع کنی و بعد به دیگری بروی.',
+      desc: 'هر دو رایگان و مقاوم در برابر سانسور هستند و با همان اپ‌های نوا کار می‌کنند. پراکسی رایگان و بدون‌سرور را انتخاب کن، یا سرور کامل خودمیزبان را. همیشه می‌توانی با یکی شروع کنی و بعد به دیگری بروی.',
       proxy: {
         name: 'نوا پراکسی',
         tagline: 'رایگان و فوری، بدون سرور',
@@ -706,9 +706,9 @@ export const ui = {
     },
     stats: {
       stars: 'ستاره‌های گیت‌هاب',
-      projects: 'پروژه‌های متن‌باز',
+      projects: 'پروژه‌ها',
       builtWith: 'ساخته‌شده با',
-      openSource: 'متن‌باز',
+      openSource: 'خودمیزبان',
       visits: 'بازدیدها',
       installs: 'نصب‌ها',
       today: 'امروز',
@@ -716,7 +716,7 @@ export const ui = {
     projectsSection: {
       eyebrow: 'جعبه‌ابزار',
       title: 'پروژه‌ها',
-      desc: 'پنج پروژه‌ی متن‌باز که در کنار هم کار می‌کنند، از یک پنل مدیریت کامل و یک اپ چندسکویی تا یک موتور پراکسی سطح‌پایین و یک اسکنر آی‌پی که نشان می‌دهد چه چیزی واقعاً کار می‌کند.',
+      desc: 'پنج پروژه که در کنار هم کار می‌کنند، از یک پنل مدیریت کامل و یک اپ چندسکویی تا یک موتور پراکسی سطح‌پایین و یک اسکنر آی‌پی که نشان می‌دهد چه چیزی واقعاً کار می‌کند.',
     },
     novaServer: {
       eyebrow: 'نوا سرور',
@@ -866,7 +866,7 @@ export const ui = {
       allReleases: 'همه‌ی نسخه‌ها و تغییرات',
       note: 'بعد از راه‌اندازی پنل، لینک اشتراکت را در اپ وارد کن تا آنلاین شوی.',
       toolsEyebrow: 'بقیه‌ی جعبه‌ابزار',
-      toolsTitle: 'ابزارهای متن‌باز بیشتر',
+      toolsTitle: 'ابزارهای بیشتر در گیت‌هاب',
       toolsDesc: 'بقیه‌ی پروژه‌های نوا که دو پلتفرم را نیرو می‌دهند: یک موتور پراکسی سطح‌پایین، یک اسکنر آی‌پی تمیز و ابزارهای مشترک.',
     },
     capsSection: {
@@ -877,15 +877,15 @@ export const ui = {
     },
     about: {
       eyebrow: 'درباره',
-      title: 'ساخته‌شده به‌صورت متن‌باز',
-      p1: 'نوا پراکسی یک پروژه‌ی متن‌باز با تمرکز بر ابزارهای اتصال و عبور از محدودیت است که توسط IRNova ساخته می‌شود. هر ابزار به‌صورت متن‌باز روی گیت‌هاب منتشر می‌شود، قابل‌بازبینی، رایگان برای اجرا و شکل‌گرفته توسط جامعه‌ای که به اینترنت آزاد وابسته است.',
+      title: 'ساخته‌شده در فضای باز',
+      p1: 'نوا پراکسی یک پروژه‌ی متن‌باز با تمرکز بر ابزارهای اتصال و عبور از محدودیت است که توسط IRNova ساخته می‌شود. ورکر آن و بیشتر ابزارهای ما به‌صورت متن‌باز روی گیت‌هاب منتشر می‌شوند، رایگان برای اجرا و شکل‌گرفته توسط جامعه‌ای که به اینترنت آزاد وابسته است.',
       p2: 'این ابزارها که عمدتاً با Go و React نوشته شده‌اند، بر پایداری در دنیای واقعی تمرکز دارند: بررسی دومرحله‌ای نقاط اتصال، مسیریابی هوشمند و جریانی پیوسته از تکنیک‌ها برای پیشی‌گرفتن از فیلترینگ.',
       cta: 'مشاهده پروفایل گیت‌هاب',
       list: [
         'زیرساخت پراکسی و مسیریابی',
         'اسکن و بررسی شبکه',
         'تکنیک‌های ضد سانسور',
-        'کاملاً متن‌باز',
+        'رایگان برای اجرا، بدون قفل',
       ],
     },
     social: { follow: 'ما را دنبال کنید', bot: 'ربات پشتیبانی' },
@@ -986,7 +986,7 @@ export const ui = {
       title: 'مشارکت‌کنندگان',
       desc: 'نوا پراکسی به‌صورت متن‌باز ساخته و نگهداری می‌شود. این‌ها افراد پشت آن هستند. از مشارکت و Pull Request شما همیشه استقبال می‌کنیم.',
     },
-    footer: { note: 'ابزارهای شبکه‌ی متن‌باز. ساخته‌شده برای اینترنتی آزاد.' },
+    footer: { note: 'ابزارهای شبکه برای اینترنتی آزاد.' },
     viewOnGithub: 'مشاهده در گیت‌هاب',
     teamLead: 'سرپرست',
     flagship: 'پرچم‌دار',

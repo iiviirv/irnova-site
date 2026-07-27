@@ -6,9 +6,10 @@
   "description": "Showcase site for IRNova, open-source networking & proxy tools",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "pull-guides": "node scripts/pull-guides.mjs",
+    "build": "node scripts/pull-guides.mjs && vite build",
     "preview": "vite preview",
-    "deploy": "vite build && npx --yes wrangler pages deploy dist --branch main",
+    "deploy": "npm run build && npx --yes wrangler pages deploy dist --branch main",
     "cover": "node scripts/build-cover.mjs",
     "icons": "node scripts/build-icons.mjs",
     "og": "node scripts/build-og.mjs"

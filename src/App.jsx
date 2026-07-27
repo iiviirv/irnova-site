@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import NetworkBackground from './components/NetworkBackground.jsx'
 import ProjectCard from './components/ProjectCard.jsx'
 import IPTools from './components/IPTools.jsx'
+import GuidePage from './components/GuidePage.jsx'
 import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
 import { projects, capabilities, team, clients, clientReleasesUrl } from './data/projects.js'
@@ -9,16 +10,33 @@ import { useLang } from './i18n/LanguageContext.jsx'
 import novaMark from './assets/nova-mark.png'
 import installerCover from './assets/nova-server-installer.png'
 
-// Tiny hash router: '#/tools' shows the IP tools sub-page, everything else
-// (including in-page anchors like '#projects') shows the landing page.
-function useHashRoute() {
-  const [hash, setHash] = useState(() => window.location.hash)
-  useEffect(() => {
-    const onChange = () => setHash(window.location.hash)
-    window.addEventListener('hashchange', onChange)
-    return () => window.removeEventListener('hashchange', onChange)
-  }, [])
+// Tiny router. Sub-pages are addressable two ways so the canonical clean URLs
+// work as well as the hash fallback: '#/tools' or a real '/tools' path both
+// resolve to the tools page, and '#/guide' or '/guide' to the guide. Everything
+// else (including in-page anchors like '#projects') shows the landing page.
+// An explicit hash always wins, so the brand link (#/) and anchors keep working
+// even while the browser bar still reads a clean path.
+function currentRoute() {
+  const hash = window.location.hash
+  if (hash && hash !== '#') return hash
+  const path = window.location.pathname
+  if (/\/guide\/?$/.test(path)) return '#/guide'
+  if (/\/tools\/?$/.test(path)) return '#/tools'
   return hash
+}
+
+function useHashRoute() {
+  const [route, setRoute] = useState(currentRoute)
+  useEffect(() => {
+    const onChange = () => setRoute(currentRoute())
+    window.addEventListener('hashchange', onChange)
+    window.addEventListener('popstate', onChange)
+    return () => {
+      window.removeEventListener('hashchange', onChange)
+      window.removeEventListener('popstate', onChange)
+    }
+  }, [])
+  return route
 }
 
 // Live visit + install counters from the /api/stats Pages Function. On the first
@@ -576,7 +594,7 @@ export default function App() {
 
   // Scroll to top whenever we enter a sub-page view.
   useEffect(() => {
-    if (route === '#/tools') {
+    if (route === '#/tools' || route === '#/guide') {
       window.scrollTo(0, 0)
     } else if (route && route.length > 1 && route.startsWith('#') && !route.startsWith('#/')) {
       // In-page anchor (e.g. #projects) clicked from a sub-page: the landing page
@@ -589,6 +607,7 @@ export default function App() {
     }
   }, [route])
 
+  if (route === '#/guide') return <GuidePage />
   if (route === '#/tools') return <IPTools />
 
   const totalStars = projects.reduce((sum, p) => sum + p.stars, 0)
@@ -872,7 +891,7 @@ export default function App() {
           <a href="#nova-server">{t.nav.server}</a>
           <a href="#compare">{t.nav.compare}</a>
           <a href="#clients">{t.nav.apps}</a>
-          <a href="#watch">{t.nav.guide}</a>
+          <a href="/guide">{t.nav.guide}</a>
           <a href="#support">{t.nav.support}</a>
           <a href="#team">{t.teamSection.title}</a>
           <a href="#/tools">{t.nav.tools}</a>

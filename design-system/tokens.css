@@ -3,7 +3,7 @@
    -----------------------------------------------------------------------------
    The single source of truth for the Nova Proxy visual language (colors,
    gradient, typography, radii, layout, elevation), extracted from the marketing
-   site (novaproxy.online) so the in-Worker dashboard, /install wizard, /login,
+   site (novaproxy.online) so the in-Worker dashboard, /setup guide, /login,
    and Telegram Mini App all share one look.
 
    Framework-agnostic: plain CSS custom properties, no build step, no

@@ -1,14 +1,13 @@
-// Pull the latest guide markdown from the canonical GitHub sources at build time,
-// so the website /guide page stays in sync with the repos without a manual copy.
-// If GitHub is unreachable (network hiccup on the build host), we keep the
-// committed copies so the build never fails and the page always has content.
+// Pull guides that are safe to mirror verbatim from their canonical GitHub
+// sources. The Nova Proxy guide is intentionally maintained in this repository
+// because its setup URLs and anti-phishing instructions are site-specific.
+// If GitHub is unreachable, keep the committed copy.
 import { writeFileSync } from 'node:fs'
 import { fileURLToPath } from 'node:url'
 import { dirname, join } from 'node:path'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 const GUIDES = [
-  { url: 'https://raw.githubusercontent.com/IRNova/Nova-Proxy/main/GUIDE.md', out: 'src/guides/nova-proxy.md' },
   { url: 'https://raw.githubusercontent.com/IRNova/Nova-Server/main/GUIDE.md', out: 'src/guides/nova-server.md' },
 ]
 

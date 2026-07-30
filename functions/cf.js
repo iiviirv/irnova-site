@@ -1,81 +1,146 @@
-// Cloudflare Pages Function — same-origin proxy for the Nova auto-installer.
-//
-// Why this exists: install.html runs in the visitor's browser, usually inside
-// Iran, where *.workers.dev is filtered. It therefore can't reach a workers.dev
-// proxy, and it can't call api.cloudflare.com directly either (that API sends no
-// CORS headers). This function is served from the site's own custom domain
-// (novaproxy.online — reachable in Iran), so the browser only ever talks to a
-// same-origin URL. The actual upstream calls happen here, on Cloudflare's edge,
-// where every host below is reachable.
-//
-// Usage from the page:  fetch('/cf?url=<encoded target>', { method, headers, body })
-//
-// Locked to the hosts the installer needs, so it can't be abused as an open proxy.
-// dash.cloudflare.com is the OAuth token endpoint the Nova app exchanges its
-// sign-in code at; the app falls back to this proxy when the direct call is
-// filtered (Iran), the same way the web installer routes api.cloudflare.com.
-const ALLOW_EXACT = ['api.cloudflare.com', 'dash.cloudflare.com', 'raw.githubusercontent.com']
+// Narrow same-origin relay used by the Nova installer and Nova Client when
+// Cloudflare/GitHub endpoints are unreachable from Iran. This is intentionally
+// an endpoint allowlist, not a general-purpose URL proxy.
 
-function hostAllowed(hostname) {
-  if (ALLOW_EXACT.includes(hostname)) return true
-  // The freshly deployed panel lives at <name>.<subdomain>.workers.dev; the
-  // installer polls it (and downloads worker.js) through this proxy.
-  return hostname.endsWith('.workers.dev')
-}
+const MAX_REQUEST_BYTES = 2 * 1024 * 1024
+const API_PREFIX = '/client/v4'
 
 const CORS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET,POST,PUT,DELETE,OPTIONS',
   'Access-Control-Allow-Headers': 'Authorization,Content-Type',
+  'Access-Control-Max-Age': '86400',
 }
 
-export async function onRequest(context) {
-  const { request } = context
+const SAFE = {
+  'Cache-Control': 'no-store',
+  'Referrer-Policy': 'no-referrer',
+  'X-Content-Type-Options': 'nosniff',
+}
 
-  if (request.method === 'OPTIONS') {
-    return new Response(null, { status: 204, headers: CORS })
+function response(body, status, extra = {}) {
+  return new Response(body, { status, headers: { ...CORS, ...SAFE, ...extra } })
+}
+
+function apiAllowed(method, path) {
+  if (method === 'GET' && path === `${API_PREFIX}/user/tokens/verify`) return true
+  if (method === 'GET' && path === `${API_PREFIX}/accounts`) return true
+  if (method === 'POST' && path === `${API_PREFIX}/graphql`) return true
+
+  const account = `${API_PREFIX}/accounts/[^/]+`
+  if (new RegExp(`^${account}/workers/subdomain$`).test(path)) {
+    return method === 'GET' || method === 'PUT'
+  }
+  if (new RegExp(`^${account}/workers/scripts$`).test(path)) return method === 'GET'
+  if (new RegExp(`^${account}/workers/scripts/[^/]+$`).test(path)) {
+    return method === 'GET' || method === 'PUT' || method === 'DELETE'
+  }
+  if (new RegExp(`^${account}/workers/scripts/[^/]+/content$`).test(path)) {
+    return method === 'PUT'
+  }
+  if (new RegExp(`^${account}/workers/scripts/[^/]+/settings$`).test(path)) {
+    return method === 'GET'
+  }
+  if (new RegExp(`^${account}/workers/scripts/[^/]+/subdomain$`).test(path)) {
+    return method === 'POST'
+  }
+  if (new RegExp(`^${account}/storage/kv/namespaces$`).test(path)) {
+    return method === 'GET' || method === 'POST'
+  }
+  if (new RegExp(`^${account}/storage/kv/namespaces/[^/]+$`).test(path)) {
+    return method === 'DELETE'
+  }
+  if (new RegExp(`^${account}/d1/database$`).test(path)) {
+    return method === 'GET' || method === 'POST'
+  }
+  if (new RegExp(`^${account}/d1/database/[^/]+$`).test(path)) {
+    return method === 'DELETE'
+  }
+  return false
+}
+
+function targetPolicy(method, target) {
+  const path = target.pathname.replace(/\/+$/, '') || '/'
+
+  if (target.hostname === 'api.cloudflare.com' &&
+      apiAllowed(method, path)) {
+    return { auth: true, contentType: true }
   }
 
-  const target = new URL(request.url).searchParams.get('url')
-  if (!target) {
-    return new Response('Missing url parameter', { status: 400, headers: CORS })
+  if (target.hostname === 'dash.cloudflare.com' &&
+      method === 'POST' && path === '/oauth2/token') {
+    return { auth: false, contentType: true }
   }
 
-  let t
+  if (target.hostname === 'raw.githubusercontent.com' && method === 'GET' &&
+      /^\/IRNova\/Nova-Proxy\/(?:main|refs\/heads\/main|[0-9a-f]{7,40})\/worker\.js$/.test(path)) {
+    return { auth: false, contentType: false }
+  }
+
+  if (target.hostname.endsWith('.workers.dev') &&
+      (method === 'GET' || method === 'HEAD') && path === '/install') {
+    return { auth: false, contentType: false }
+  }
+
+  return null
+}
+
+export async function onRequest({ request }) {
+  if (request.method === 'OPTIONS') return response(null, 204)
+
+  let target
   try {
-    t = new URL(target)
+    const raw = new URL(request.url).searchParams.get('url')
+    if (!raw) return response('Missing url parameter', 400)
+    target = new URL(raw)
   } catch {
-    return new Response('Invalid url', { status: 400, headers: CORS })
-  }
-  if (t.protocol !== 'https:' || !hostAllowed(t.hostname)) {
-    return new Response('Host not allowed', { status: 403, headers: CORS })
+    return response('Invalid url', 400)
   }
 
-  // Forward only the headers the installer relies on.
+  if (target.protocol !== 'https:' || target.username || target.password) {
+    return response('Target not allowed', 403)
+  }
+
+  const method = request.method.toUpperCase()
+  const policy = targetPolicy(method, target)
+  if (!policy) return response('Target not allowed', 403)
+
   const headers = new Headers()
-  const auth = request.headers.get('Authorization')
-  if (auth) headers.set('Authorization', auth)
-  const ctype = request.headers.get('Content-Type')
-  if (ctype) headers.set('Content-Type', ctype)
-
-  const init = { method: request.method, headers }
-  if (request.method !== 'GET' && request.method !== 'HEAD') {
-    init.body = await request.arrayBuffer()
+  if (policy.auth) {
+    const auth = request.headers.get('Authorization')
+    if (auth) headers.set('Authorization', auth)
+  }
+  if (policy.contentType) {
+    const contentType = request.headers.get('Content-Type')
+    if (contentType) headers.set('Content-Type', contentType)
   }
 
-  let resp
+  const init = { method, headers, redirect: 'manual' }
+  if (method !== 'GET' && method !== 'HEAD') {
+    const declared = Number(request.headers.get('Content-Length') || 0)
+    if (declared > MAX_REQUEST_BYTES) return response('Request too large', 413)
+    const body = await request.arrayBuffer()
+    if (body.byteLength > MAX_REQUEST_BYTES) return response('Request too large', 413)
+    init.body = body
+  }
+
+  let upstream
   try {
-    resp = await fetch(t.toString(), init)
-  } catch (e) {
-    return new Response('Upstream fetch failed: ' + ((e && e.message) || e), {
-      status: 502,
-      headers: CORS,
-    })
+    upstream = await fetch(target.toString(), init)
+  } catch {
+    return response('Upstream fetch failed', 502)
   }
 
-  // Pass the upstream status + body straight back, adding permissive CORS.
-  // `new Response(body, resp)` keeps body and its content-encoding header together.
-  const out = new Response(resp.body, resp)
-  out.headers.set('Access-Control-Allow-Origin', '*')
+  // Do not follow redirects: a permitted URL must not be able to bounce the
+  // relay to a destination outside this allowlist.
+  const out = new Response(upstream.body, {
+    status: upstream.status,
+    statusText: upstream.statusText,
+    headers: upstream.headers,
+  })
+  for (const [key, value] of Object.entries({ ...CORS, ...SAFE })) {
+    out.headers.set(key, value)
+  }
+  out.headers.delete('Set-Cookie')
   return out
 }

@@ -115,10 +115,9 @@ const TELEGRAM = 'https://t.me/irnova_proxy'
 const YOUTUBE = 'https://youtube.com/@novaproxyir'
 const X = 'https://x.com/irNovaProxy'
 const INSTAGRAM = 'https://instagram.com/irnova_proxy'
-// In-browser auto-installer (public/install.html): the visitor pastes one
-// Cloudflare API token and the page builds the Worker + D1/KV on their own
-// account. This is now the single deploy entry point for the whole site.
-const INSTALLER_URL = './install.html'
+// Credential-free setup guidance. Cloudflare authorization happens only on
+// Cloudflare-owned domains; the site never collects passwords or API tokens.
+const INSTALLER_URL = './setup/'
 const NOVA_PROXY_REPO = 'https://github.com/IRNova/Nova-Proxy'
 const NOVA_SERVER_REPO = 'https://github.com/IRNova/Nova-Server'
 // The dedicated Nova Server (VPS) repo: bilingual setup docs plus the one-line installer.

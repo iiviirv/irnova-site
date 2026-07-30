@@ -6,6 +6,7 @@
   "description": "Showcase site for IRNova, open-source networking & proxy tools",
   "scripts": {
     "dev": "vite",
+    "test": "node --test",
     "pull-guides": "node scripts/pull-guides.mjs",
     "build": "node scripts/pull-guides.mjs && vite build",
     "preview": "vite preview",

@@ -1,8 +1,8 @@
 # Security and verification
 
-novaproxy.online (this repository) hosts the project site and the one-click
-`/install` wizard. This document explains how to verify that the live site is
-built from this source, and how to report a problem.
+novaproxy.online (this repository) hosts the project site and the credential-free
+`/setup/` instructions. This document explains how to verify that the live site
+is built from this source, and how to report a problem.
 
 ## Verify that the live site is this source
 
@@ -23,8 +23,18 @@ built from this source, and how to report a problem.
   npm ci && npm run build   # then compare ./dist with what novaproxy.online serves
   ```
 
-- The `/install` page and its `/cf` helper are in `public/install.html` and
-  `functions/`, in the open, in this repo.
+- The `/setup/` page is in `public/setup/index.html`. It does not accept a
+  Cloudflare password or API token and makes no background network requests.
+- The retired `/install` and `/install.html` routes return `410 Gone` from
+  `functions/` and do not redirect visitors.
+
+## Cloudflare account safety
+
+- Never enter your Cloudflare password or API token on novaproxy.online.
+- Cloudflare sign-in and deployment approval must happen only on
+  `dash.cloudflare.com` or `deploy.workers.cloudflare.com`.
+- The official Telegram bot username must be checked before use:
+  `@IRNovaProxy_Bot`.
 
 ## Reporting a vulnerability
 

@@ -27,6 +27,9 @@ for (const [route, handler] of [
 
 test("/setup is a credential-free static page", async () => {
   const html = await readFile(new URL("../public/setup/index.html", import.meta.url), "utf8");
+  const persianFont = await readFile(
+    new URL("../public/fonts/Vazirmatn-arabic.woff2", import.meta.url),
+  );
 
   assert.match(html, /IRNovaProxy_Bot\?start=install/);
   assert.match(html, /IRNovaProxy_Bot\?start=update/);
@@ -35,6 +38,8 @@ test("/setup is a credential-free static page", async () => {
     /https:\/\/deploy\.workers\.cloudflare\.com\/\?url=https:\/\/github\.com\/IRNova\/Nova-Proxy/,
   );
   assert.match(html, /novaproxy\.online\/setup/);
+  assert.match(html, /@font-face[\s\S]*Vazirmatn-arabic\.woff2/);
+  assert.ok(persianFont.byteLength > 40_000);
   assert.doesNotMatch(html, /<input\b/i);
   assert.doesNotMatch(html, /<form\b/i);
   assert.doesNotMatch(html, /<script\b/i);

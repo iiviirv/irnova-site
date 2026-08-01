@@ -163,7 +163,7 @@ export const ui = {
       pill: 'Two platforms for an open internet',
       titleLine1: 'One platform,',
       titleAccent: 'two ways to beat censorship.',
-      sub: 'Nova gives you two ways to get online: Nova Proxy, free and open source on your own Cloudflare Worker, and Nova Server, a full self-hosted panel on your own VPS. Same apps, same clean-IP tech, your choice of power.',
+      sub: 'Nova gives you two ways to get online: Nova Proxy, a free, protected release you run on your own Cloudflare Worker, and Nova Server, a full self-hosted panel on your own VPS. Same apps, same clean-IP tech, your choice of power.',
       proxyCta: 'Deploy Nova Proxy',
       serverCta: 'Explore Nova Server',
       explore: 'Explore Projects',
@@ -188,7 +188,7 @@ export const ui = {
         { k: 'Dashboard', v: 'EN / FA' },
         { k: 'Best for', v: 'Individuals' },
       ],
-      trust: ['Open source', '2,800+ stars', 'No server in the middle'],
+      trust: ['Protected build', '2,800+ stars', 'No server in the middle'],
       deployCta: 'Deploy your own',
       githubCta: 'GitHub',
       featuresEyebrow: 'Everything in the box',
@@ -406,7 +406,7 @@ export const ui = {
     about: {
       eyebrow: 'About',
       title: 'Built in the open',
-      p1: 'Nova Proxy is an open-source project focused on connectivity and circumvention tooling, built by IRNova. Its Worker and most of our tools ship openly on GitHub, free to run, and shaped by a community that depends on an open internet.',
+      p1: 'Nova Proxy is a connectivity and circumvention project built by IRNova. Its panel ships as a free, protected, hash-verified release you run on your own Cloudflare Worker, while many of our tools stay open on GitHub, free to run, and shaped by a community that depends on an open internet.',
       p2: 'Written primarily in Go and React, the tools favor real-world reliability: two-phase endpoint verification, intelligent routing, and a steady stream of techniques to stay ahead of filtering.',
       cta: 'Visit the GitHub profile',
       list: [
@@ -675,7 +675,7 @@ export const ui = {
       pill: 'دو پلتفرم برای اینترنتی آزاد',
       titleLine1: 'یک پلتفرم،',
       titleAccent: 'دو راه برای عبور از سانسور.',
-      sub: 'نوا دو راه برای آنلاین‌شدن به تو می‌دهد: نوا پراکسی، رایگان و متن‌باز روی ورکر کلودفلر خودت، و نوا سرور، یک پنل کامل خودمیزبان روی سرور مجازی خودت. همان اپ‌ها، همان فناوری آی‌پی تمیز، انتخاب قدرت با خودت.',
+      sub: 'نوا دو راه برای آنلاین‌شدن به تو می‌دهد: نوا پراکسی، یک نسخهٔ محافظت‌شدهٔ رایگان روی ورکر کلودفلر خودت، و نوا سرور، یک پنل کامل خودمیزبان روی سرور مجازی خودت. همان اپ‌ها، همان فناوری آی‌پی تمیز، انتخاب قدرت با خودت.',
       proxyCta: 'استقرار نوا پراکسی',
       serverCta: 'کاوش نوا سرور',
       explore: 'مشاهده پروژه‌ها',
@@ -700,7 +700,7 @@ export const ui = {
         { k: 'داشبورد', v: 'EN / FA' },
         { k: 'مناسب برای', v: 'افراد' },
       ],
-      trust: ['متن‌باز', '۲٬۸۰۰+ ستاره', 'بدون سرور واسط'],
+      trust: ['نسخهٔ محافظت‌شده', '۲٬۸۰۰+ ستاره', 'بدون سرور واسط'],
       deployCta: 'راه‌اندازی کن',
       githubCta: 'گیت‌هاب',
       featuresEyebrow: 'همه‌چیز در جعبه',
@@ -918,7 +918,7 @@ export const ui = {
     about: {
       eyebrow: 'درباره',
       title: 'ساخته‌شده در فضای باز',
-      p1: 'نوا پراکسی یک پروژه‌ی متن‌باز با تمرکز بر ابزارهای اتصال و عبور از محدودیت است که توسط IRNova ساخته می‌شود. ورکر آن و بیشتر ابزارهای ما به‌صورت متن‌باز روی گیت‌هاب منتشر می‌شوند، رایگان برای اجرا و شکل‌گرفته توسط جامعه‌ای که به اینترنت آزاد وابسته است.',
+      p1: 'نوا پراکسی پروژه‌ای برای ابزارهای اتصال و عبور از محدودیت است که توسط IRNova ساخته می‌شود. پنل آن به‌صورت یک نسخهٔ محافظت‌شده و تأییدشده با هش روی ورکر کلودفلر خودت اجرا می‌شود، در حالی که بسیاری از ابزارهای ما همچنان روی گیت‌هاب متن‌باز و رایگان می‌مانند و توسط جامعه‌ای که به اینترنت آزاد وابسته است شکل می‌گیرند.',
       p2: 'این ابزارها که عمدتاً با Go و React نوشته شده‌اند، بر پایداری در دنیای واقعی تمرکز دارند: بررسی دومرحله‌ای نقاط اتصال، مسیریابی هوشمند و جریانی پیوسته از تکنیک‌ها برای پیشی‌گرفتن از فیلترینگ.',
       cta: 'مشاهده پروفایل گیت‌هاب',
       list: [

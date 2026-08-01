@@ -512,7 +512,7 @@ export const ui = {
     teamSection: {
       eyebrow: 'The people',
       title: 'Contributors',
-      desc: 'Nova Proxy is built and maintained in the open. These are the people behind it. Contributions and pull requests are always welcome.',
+      desc: 'Nova is built and maintained by IRNova and its community. These are the people behind it. Contributions and pull requests to our open tools are always welcome.',
     },
     footer: { note: 'Networking tools for an open internet.' },
     viewOnGithub: 'View on GitHub',
@@ -1024,7 +1024,7 @@ export const ui = {
     teamSection: {
       eyebrow: 'افراد',
       title: 'مشارکت‌کنندگان',
-      desc: 'نوا پراکسی به‌صورت متن‌باز ساخته و نگهداری می‌شود. این‌ها افراد پشت آن هستند. از مشارکت و Pull Request شما همیشه استقبال می‌کنیم.',
+      desc: 'نوا توسط IRNova و جامعهٔ آن ساخته و نگهداری می‌شود. این‌ها افراد پشت آن هستند. مشارکت و Pull Request شما برای ابزارهای متن‌باز ما همیشه پذیرفته می‌شود.',
     },
     footer: { note: 'ابزارهای شبکه برای اینترنتی آزاد.' },
     viewOnGithub: 'مشاهده در گیت‌هاب',

@@ -20,7 +20,11 @@ function useNetStatus() {
     fetch(`${NET_URL}/api/summary`, { signal: ctrl.signal, headers: { Accept: 'application/json' } })
       .then((r) => (r.ok ? r.json() : null))
       .then((j) => {
-        if (alive && j && j.ok && typeof j.percent_ir === 'number') setData(j)
+        // Render as soon as the endpoint answers. percent_ir may still be null
+        // when no probe inside Iran has reported yet; that case gets an honest
+        // waiting state rather than a fabricated number, and rather than the
+        // whole section vanishing and leaving the nav link pointing at nothing.
+        if (alive && j && j.ok) setData(j)
       })
       .catch(() => {})
       .finally(() => clearTimeout(timer))
@@ -51,7 +55,8 @@ export default function NetStatus() {
 
   const s = t.netStatus
   const pct = data.percent_ir
-  const tone = pct >= 90 ? 'ok' : pct >= 50 ? 'warn' : 'bad'
+  const waiting = typeof pct !== 'number'
+  const tone = waiting ? 'idle' : pct >= 90 ? 'ok' : pct >= 50 ? 'warn' : 'bad'
   const blocked = data.blocked_in_iran || 0
 
   return (
@@ -64,14 +69,14 @@ export default function NetStatus() {
 
       <div className="net-card">
         <div className={`net-gauge net-${tone}`}>
-          <span className="net-pct">{fmtNum(pct, lang)}%</span>
-          <span className="net-pct-label">{s.reachable}</span>
+          <span className="net-pct">{waiting ? '-' : `${fmtNum(pct, lang)}%`}</span>
+          <span className="net-pct-label">{waiting ? s.waiting : s.reachable}</span>
         </div>
 
         <div className="net-body">
           <div className="net-figures">
             <div className="net-fig">
-              <span className="net-fig-v">{fmtNum(blocked, lang)}</span>
+              <span className="net-fig-v">{waiting ? '-' : fmtNum(blocked, lang)}</span>
               <span className="net-fig-l">{s.blocked}</span>
             </div>
             <div className="net-fig">
@@ -83,6 +88,8 @@ export default function NetStatus() {
               <span className="net-fig-l">{s.abroad}</span>
             </div>
           </div>
+
+          {waiting && <p className="net-waiting">{s.waitingNote}</p>}
 
           {data.blocked?.length > 0 && (
             <ul className="net-list">

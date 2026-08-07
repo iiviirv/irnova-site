@@ -252,6 +252,8 @@ export const ui = {
       abroad: 'reachable abroad',
       cta: 'Open the full dashboard',
       updated: 'updated',
+      waiting: 'awaiting the first report',
+      waitingNote: 'The Cloudflare side is running. The inside-Iran figure appears once a probe there sends its first cycle.',
     },
     projectsSection: {
       eyebrow: 'The toolkit',
@@ -776,6 +778,8 @@ export const ui = {
       abroad: 'باز از خارج',
       cta: 'دیدن داشبورد کامل',
       updated: 'به‌روزرسانی',
+      waiting: 'در انتظار اولین گزارش',
+      waitingNote: 'سمت \u2066Cloudflare\u2069 در حال کار است. عدد داخل ایران وقتی نشان داده می‌شود که یک پروب از داخل، اولین گزارشش را بفرستد.',
     },
     projectsSection: {
       eyebrow: 'جعبه‌ابزار',

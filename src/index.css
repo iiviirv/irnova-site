@@ -3788,3 +3788,309 @@ h3 {
     grid-template-columns: 1fr;
   }
 }
+
+/* ============================================================
+   Nova Net: what is reachable from inside Iran right now.
+   Read as an instrument, not an alarm: one tone-colored reading
+   on a plate, supporting figures beside it, action at the foot.
+   The percentage itself always states the situation in text; the
+   tone class (net-ok / net-warn / net-bad / net-idle) only colors
+   it, so nothing here is conveyed by color alone. That tint is
+   spent on the reading and nowhere else.
+   Everything is logical-property based, so the whole card mirrors
+   itself in RTL without a single direction-specific rule.
+   ============================================================ */
+.net-status {
+  position: relative;
+}
+
+.net-card {
+  display: grid;
+  max-width: 920px;
+  margin-inline: auto;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+}
+
+/* Grid children floor at their content width by default; a long site
+   name in the chip row would otherwise push the card past the viewport. */
+.net-card > * {
+  min-width: 0;
+}
+
+/* ---------- The reading ---------- */
+/* --reach is the one color token in the card. Every state sets it,
+   the wash and the dot halo are mixed from it, so a new state only
+   ever needs one line. */
+.net-gauge {
+  --reach: var(--muted);
+  --reach-wash: color-mix(in srgb, var(--reach) 10%, transparent);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: clamp(26px, 4vw, 34px) clamp(20px, 3vw, 26px);
+  text-align: center;
+  /* Halo centered on the reading rather than a top-down fade, so the tint
+     surrounds the number wherever the column height puts it. */
+  background: radial-gradient(105% 68% at 50% 50%, var(--reach-wash), transparent 74%);
+  /* Sits in the card's top corners on mobile; 1px inside the border. */
+  border-start-start-radius: 19px;
+  border-start-end-radius: 19px;
+  border-block-end: 1px solid var(--border);
+}
+
+.net-gauge.net-ok {
+  --reach: #34d399;
+}
+
+.net-gauge.net-warn {
+  --reach: #fbbf24;
+}
+
+.net-gauge.net-bad {
+  --reach: #fb7185;
+}
+
+/* Amber and emerald go muddy on the light background; rose goes shrill.
+   Deeper, less saturated versions of the same three hues instead. */
+:root[data-theme='light'] .net-gauge.net-ok {
+  --reach: #047857;
+}
+
+:root[data-theme='light'] .net-gauge.net-warn {
+  --reach: #b45309;
+}
+
+:root[data-theme='light'] .net-gauge.net-bad {
+  --reach: #be123c;
+}
+
+/* Nothing to report yet is not a failure, so the plate takes the site's live
+   accent instead of a grey wash: the Cloudflare half really is running and
+   the dot below is listening. Only the reading itself stays neutral. */
+.net-gauge.net-idle {
+  --reach: var(--cyan);
+  --reach-wash: color-mix(in srgb, var(--reach) 7%, transparent);
+}
+
+.net-pct {
+  font-size: clamp(2.9rem, 8vw, 4rem);
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--reach);
+  font-variant-numeric: tabular-nums;
+}
+
+/* No reading yet: a lone hyphen at hero size looks like a broken glyph.
+   Smaller, neutral and dimmed reads as a dial that has not settled. */
+.net-gauge.net-idle .net-pct {
+  font-size: clamp(2.1rem, 5vw, 2.6rem);
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+.net-pct-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--muted);
+  line-height: 1.4;
+  text-wrap: balance;
+}
+
+.net-pct-label::before {
+  content: '';
+  flex-shrink: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--reach);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--reach) 20%, transparent);
+}
+
+/* With no figure to carry the plate, the sentence has to. */
+.net-gauge.net-idle .net-pct-label {
+  font-size: 0.92rem;
+}
+
+/* Settled readings get a still dot. While we are waiting on the first
+   report from inside Iran it breathes, so the empty state says
+   "listening" rather than "nothing here". */
+.net-gauge.net-idle .net-pct-label::before {
+  animation: net-listen 2.6s ease-in-out infinite;
+}
+
+@keyframes net-listen {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ---------- Supporting figures, chips and action ---------- */
+.net-body {
+  display: flex;
+  flex-direction: column;
+  padding: clamp(20px, 3vw, 26px);
+}
+
+.net-figures {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.net-fig {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+/* Hairline between readings, on the start side so it mirrors in RTL. */
+.net-fig + .net-fig {
+  padding-inline-start: 12px;
+  border-inline-start: 1px solid var(--border);
+}
+
+.net-fig-v {
+  font-size: clamp(1.2rem, 2.4vw, 1.4rem);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.net-fig-l {
+  font-size: 0.76rem;
+  font-weight: 500;
+  line-height: 1.4;
+  color: var(--muted);
+  overflow-wrap: break-word;
+}
+
+/* With no probe reporting, the blocked count is a placeholder too. Demote it
+   so it matches the idle gauge instead of looking like a real zero. */
+.net-gauge.net-idle ~ .net-body .net-fig:first-child .net-fig-v {
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* The honest empty state. A margin note with a live-cyan rail, not an error
+   panel: the Cloudflare half of the project really is running. */
+.net-waiting {
+  margin: 20px 0 0;
+  padding: 12px 15px;
+  max-width: 62ch;
+  border-radius: 4px;
+  border-inline-start: 2px solid color-mix(in srgb, var(--cyan) 55%, var(--border));
+  background: var(--surface-2);
+  color: var(--muted);
+  font-size: 0.88rem;
+  line-height: 1.7;
+  text-wrap: pretty;
+}
+
+.net-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+/* Site names are Latin even in the Persian build, so each chip is isolated
+   to keep names like "X / Twitter" from being reordered by the bidi pass. */
+.net-list li {
+  max-width: 100%;
+  padding: 5px 11px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  background: var(--surface);
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+  unicode-bidi: isolate;
+}
+
+.net-foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px 16px;
+  margin-block-start: 22px;
+  padding-block-start: 20px;
+  border-block-start: 1px solid var(--border);
+}
+
+/* Site-wide buttons have no focus ring; give this one the same treatment the
+   topbar links use so the card is keyboard-complete. */
+.net-foot .btn:focus-visible {
+  outline: 2px solid var(--cyan);
+  outline-offset: 3px;
+}
+
+.net-updated {
+  font-size: 0.8rem;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Persian is cursive: negative tracking on the big reading crowds the digits. */
+[dir='rtl'] .net-pct {
+  letter-spacing: normal;
+}
+
+/* The percentages are deliberately left un-isolated. Farsi puts the sign on the
+   opposite side of the digits from English, and the bidi pass already gets that
+   right; forcing isolation or a direction would flip it the wrong way. Each
+   value is its own flex item, so there is no neighboring text to leak into. */
+
+@media (max-width: 560px) {
+  /* One clear action at the bottom of a phone screen, full width to hit. */
+  .net-foot {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .net-foot .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (min-width: 720px) {
+  /* Wide enough for the plate to sit beside the readings. 250px against the
+     rest says the number is the headline and the figures support it. */
+  .net-card {
+    grid-template-columns: minmax(200px, 250px) 1fr;
+  }
+
+  .net-gauge {
+    border-start-end-radius: 0;
+    border-end-start-radius: 19px;
+    border-block-end: 0;
+    border-inline-end: 1px solid var(--border);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .net-gauge.net-idle .net-pct-label::before {
+    animation: none;
+    opacity: 0.7;
+  }
+}

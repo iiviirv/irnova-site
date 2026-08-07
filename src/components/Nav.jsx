@@ -68,6 +68,9 @@ export default function Nav() {
         <a href="#clients" onClick={close}>
           {t.nav.apps}
         </a>
+        <a href="#net-status" onClick={close}>
+          {t.nav.netStatus}
+        </a>
         <a href="/guide" onClick={close}>
           {t.nav.guide}
         </a>

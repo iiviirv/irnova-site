@@ -5,6 +5,7 @@ import IPTools from './components/IPTools.jsx'
 import GuidePage from './components/GuidePage.jsx'
 import Icon from './components/Icon.jsx'
 import Nav, { Logo } from './components/Nav.jsx'
+import NetStatus from './components/NetStatus'
 import { projects, capabilities, team, clients, clientReleasesUrl } from './data/projects.js'
 import { useLang } from './i18n/LanguageContext.jsx'
 import novaMark from './assets/nova-mark.png'
@@ -665,6 +666,8 @@ export default function App() {
             </div>
           </div>
         </section>
+
+        <NetStatus />
 
         <NovaProxySection
           np={t.novaProxy}

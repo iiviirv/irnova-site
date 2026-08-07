@@ -1,8 +1,11 @@
-# Cloudflare Pages config for the "novaproxy" project.
-# Production deploys automatically from the connected Git repo (branch: main).
-# For a manual one-off deploy you can also run:  npm run deploy
-# which builds the site and uploads ./dist directly.
-name = "novaproxy"
+# Cloudflare Pages config for the "nova-website" project.
+# Production deploys automatically from the connected Git repo (branch: main),
+# which is the normal path: push to main and Pages builds it.
+#
+# The name below must match the Pages project exactly. It read "novaproxy" until
+# 2026-08-07, so `npm run deploy` failed with "project does not exist"; the Git
+# integration masked it because nobody needed the manual path.
+name = "nova-website"
 pages_build_output_dir = "./dist"
 compatibility_date = "2026-07-30"
 
